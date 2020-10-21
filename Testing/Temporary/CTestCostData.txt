@@ -1,0 +1,5 @@
+game_test_edatrier_dummy 7 0.000309532
+test_dummy 0 0
+s 1 0
+game_test_mlecoeuvre_dummy 2 0.00043316
+---
