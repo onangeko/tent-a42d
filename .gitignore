@@ -1,4 +1,5 @@
-*.cmake
-CMakeCache.txt
-/CMakeFiles
-Makefile
+*
+!game.o
+!*.h
+!*.c
+!CMakeLists.txt
