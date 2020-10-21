@@ -1,0 +1,33 @@
+Start testing: Oct 21 18:38 CEST
+----------------------------------------------------------
+1/2 Testing: game_test_edatrier_dummy
+1/2 Test: game_test_edatrier_dummy
+Command: "/net/cremi/mlecoeuvre/travail/Cours/PT/TD_GIT/tent-a42d/game_test_edatrier" "dummy"
+Directory: /net/cremi/mlecoeuvre/travail/Cours/PT/TD_GIT/tent-a42d
+"game_test_edatrier_dummy" start time: Oct 21 18:38 CEST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"game_test_edatrier_dummy" end time: Oct 21 18:38 CEST
+"game_test_edatrier_dummy" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/2 Testing: game_test_mlecoeuvre_dummy
+2/2 Test: game_test_mlecoeuvre_dummy
+Command: "/net/cremi/mlecoeuvre/travail/Cours/PT/TD_GIT/tent-a42d/game_test_mlecoeuvre" "test_dummy"
+Directory: /net/cremi/mlecoeuvre/travail/Cours/PT/TD_GIT/tent-a42d
+"game_test_mlecoeuvre_dummy" start time: Oct 21 18:38 CEST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"game_test_mlecoeuvre_dummy" end time: Oct 21 18:38 CEST
+"game_test_mlecoeuvre_dummy" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 21 18:38 CEST

@@ -4,6 +4,10 @@ cmake_minimum_required(VERSION 3.7)
 enable_testing()
 add_executable(game_test_edatrier game_test_edatrier.c)
 add_test(game_test_edatrier_dummy ./game_test_edatrier dummy)
+
+add_executable(game_test_mlecoeuvre game_test_mlecoeuvre.c)
+add_test(game_test_mlecoeuvre_dummy ./game_test_mlecoeuvre test_dummy)
+
 #Create the projects
 project(game_text C)
 #Put standard options
@@ -17,3 +21,4 @@ set(CMAKE_C_FLAGS "-std=c99 -g -Wall")
 add_executable(game_text game_text.c)
 #Set links to math library used in both projets
 target_link_libraries(game_text game)
+
