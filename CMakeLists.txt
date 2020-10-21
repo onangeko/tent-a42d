@@ -8,6 +8,9 @@ add_test(game_test_edatrier_dummy ./game_test_edatrier dummy)
 add_executable(game_test_mlecoeuvre game_test_mlecoeuvre.c)
 add_test(game_test_mlecoeuvre_dummy ./game_test_mlecoeuvre test_dummy)
 
+add_executable(game_test_bjgiraud game_test_bjgiraud.c)
+add_test(game_test_bjgiraud_dummy ./game_test_bjgiraud dummy)
+
 #Create the projects
 project(game_text C)
 #Put standard options
