@@ -1,33 +1,63 @@
-Start testing: Oct 21 18:38 CEST
+Start testing: Nov 03 18:00 CET
 ----------------------------------------------------------
-1/2 Testing: game_test_edatrier_dummy
-1/2 Test: game_test_edatrier_dummy
-Command: "/net/cremi/mlecoeuvre/travail/Cours/PT/TD_GIT/tent-a42d/game_test_edatrier" "dummy"
-Directory: /net/cremi/mlecoeuvre/travail/Cours/PT/TD_GIT/tent-a42d
-"game_test_edatrier_dummy" start time: Oct 21 18:38 CEST
+1/4 Testing: game_test_edatrier_dummy
+1/4 Test: game_test_edatrier_dummy
+Command: "/mnt/d/Dev/L2/S3/ProjetTech/tent-a42d/game_test_edatrier" "dummy"
+Directory: /mnt/d/Dev/L2/S3/ProjetTech/tent-a42d
+"game_test_edatrier_dummy" start time: Nov 03 18:00 CET
 Output:
 ----------------------------------------------------------
 <end of output>
-Test time =   0.00 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"game_test_edatrier_dummy" end time: Oct 21 18:38 CEST
+"game_test_edatrier_dummy" end time: Nov 03 18:00 CET
 "game_test_edatrier_dummy" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-2/2 Testing: game_test_mlecoeuvre_dummy
-2/2 Test: game_test_mlecoeuvre_dummy
-Command: "/net/cremi/mlecoeuvre/travail/Cours/PT/TD_GIT/tent-a42d/game_test_mlecoeuvre" "test_dummy"
-Directory: /net/cremi/mlecoeuvre/travail/Cours/PT/TD_GIT/tent-a42d
-"game_test_mlecoeuvre_dummy" start time: Oct 21 18:38 CEST
+2/4 Testing: game_test_mlecoeuvre_dummy
+2/4 Test: game_test_mlecoeuvre_dummy
+Command: "/mnt/d/Dev/L2/S3/ProjetTech/tent-a42d/game_test_mlecoeuvre" "dummy"
+Directory: /mnt/d/Dev/L2/S3/ProjetTech/tent-a42d
+"game_test_mlecoeuvre_dummy" start time: Nov 03 18:00 CET
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"game_test_mlecoeuvre_dummy" end time: Nov 03 18:00 CET
+"game_test_mlecoeuvre_dummy" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/4 Testing: game_test_bjgiraud_dummy
+3/4 Test: game_test_bjgiraud_dummy
+Command: "/mnt/d/Dev/L2/S3/ProjetTech/tent-a42d/game_test_bjgiraud" "dummy"
+Directory: /mnt/d/Dev/L2/S3/ProjetTech/tent-a42d
+"game_test_bjgiraud_dummy" start time: Nov 03 18:00 CET
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"game_test_bjgiraud_dummy" end time: Nov 03 18:00 CET
+"game_test_bjgiraud_dummy" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/4 Testing: game_test_onangeko_dummy
+4/4 Test: game_test_onangeko_dummy
+Command: "/mnt/d/Dev/L2/S3/ProjetTech/tent-a42d/game_test_onangeko" "dummy"
+Directory: /mnt/d/Dev/L2/S3/ProjetTech/tent-a42d
+"game_test_onangeko_dummy" start time: Nov 03 18:00 CET
 Output:
 ----------------------------------------------------------
 <end of output>
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"game_test_mlecoeuvre_dummy" end time: Oct 21 18:38 CEST
-"game_test_mlecoeuvre_dummy" time elapsed: 00:00:00
+"game_test_onangeko_dummy" end time: Nov 03 18:00 CET
+"game_test_onangeko_dummy" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Oct 21 18:38 CEST
+End testing: Nov 03 18:00 CET
