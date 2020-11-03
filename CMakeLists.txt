@@ -6,7 +6,7 @@ add_executable(game_test_edatrier game_test_edatrier.c)
 add_test(game_test_edatrier_dummy ./game_test_edatrier dummy)
 
 add_executable(game_test_mlecoeuvre game_test_mlecoeuvre.c)
-add_test(game_test_mlecoeuvre_dummy ./game_test_mlecoeuvre dummy)
+add_test(test_mlecoeuvre_dummy ./game_test_mlecoeuvre dummy)
 
 add_executable(game_test_bjgiraud game_test_bjgiraud.c)
 add_test(game_test_bjgiraud_dummy ./game_test_bjgiraud dummy)
