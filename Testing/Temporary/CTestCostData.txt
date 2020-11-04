@@ -1,8 +1,0 @@
-game_test_edatrier_dummy 10 0.00072912
-test_dummy 0 0
-s 1 0
-game_test_mlecoeuvre_dummy 4 0.00166817
-game_test_bjgiraud_dummy 3 0.00224673
-game_test_onangeko_dummy 3 0.00226287
-test_mlecoeuvre_dummy 1 0.0075402
----
