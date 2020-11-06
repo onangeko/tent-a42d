@@ -16,7 +16,7 @@ add_executable(game_test_bjgiraud game_test_bjgiraud.c)
 add_test(game_test_bjgiraud_dummy ./game_test_bjgiraud dummy)
 
 add_executable(game_test_onangeko game_test_onangeko.c)
-add_test(test_onangeko_dummy ./game_test_onangeko dummy)
+add_test(game_test_onangeko_dummy ./game_test_onangeko dummy)
 
 #Create the projects
 project(game_text C)
@@ -25,7 +25,7 @@ include(CTest)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${game_text_SOURCE_DIR}/cmake)
 #Create library
-add_library(game game00.o game_aux.c)
+add_library(game game.o game_aux.c)
 #Set flags for compiling
 set(CMAKE_C_FLAGS "-std=c99 -g -Wall")
 #Put executables with dependencies on projets
