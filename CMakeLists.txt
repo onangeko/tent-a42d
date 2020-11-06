@@ -13,7 +13,7 @@ add_executable(game_test_mlecoeuvre game_test_mlecoeuvre.c)
 add_test(test_mlecoeuvre_dummy ./game_test_mlecoeuvre dummy)
 
 add_executable(game_test_bjgiraud game_test_bjgiraud.c)
-add_test(game_test_bjgiraud_dummy ./game_test_bjgiraud dummy)
+add_test(test_bjgiraud_dummy ./game_test_bjgiraud dummy)
 
 add_executable(game_test_onangeko game_test_onangeko.c)
 add_test(test_onangeko_dummy ./game_test_onangeko dummy)
