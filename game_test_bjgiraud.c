@@ -35,6 +35,17 @@ int test_game_set_expected_nb_tents_row(cgame g)
 
 }
 
+///
+
+int test_game_set_expected_nb_tents_col(cgame g)
+{
+    game_set_expected_nb_tents_col(g, 0, 4);
+
+    assert (game_get_expected_nb_tents_col(g,0) == 4);
+
+
+}
+
 ///////
 
 int main(int argc, char* argv[]){
@@ -45,5 +56,6 @@ int main(int argc, char* argv[]){
     test_game_get_expected_nb_tents_all(g1);
     test_game_get_expected_nb_tents_col(g1);
     test_game_set_expected_nb_tents_row(g1);
+    test_game_set_expected_nb_tents_col(g1);
 
 }
