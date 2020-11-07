@@ -17,6 +17,8 @@ add_executable(game_test_bjgiraud game_test_bjgiraud.c game.o)
 add_test(test_bjgiraud_test_game_get_expected_nb_tents_row ./game_test_bjgiraud test_game_get_expected_nb_tents_row)
 add_test(test_bjgiraud_test_game_get_expected_nb_tents_all ./game_test_bjgiraud test_game_get_expected_nb_tents_all)
 add_test(test_bjgiraud_test_game_get_expected_nb_tents_col ./game_test_bjgiraud test_game_get_expected_nb_tents_col)
+add_test(test_bjgiraud_test_game_set_expected_nb_tents_row ./game_test_bjgiraud test_game_set_expected_nb_tents_row)
+add_test(test_bjgiraud_test_game_set_expected_nb_tents_col ./game_test_bjgiraud test_game_set_expected_nb_tents_col)
 
 add_executable(game_test_onangeko game_test_onangeko.c)
 add_test(test_onangeko_dummy ./game_test_onangeko dummy)
@@ -46,10 +48,7 @@ add_executable(game_text game_text.c)
 #Set links to math library used in both projets
 
 target_link_libraries(game_text game)
-<<<<<<< HEAD
 target_link_libraries(game_test_bjgiraud game)
-=======
 target_link_libraries(game_test_mlecoeuvre game)
->>>>>>> 63a2b104ced0b783fd8634f96de48e7c04866267
 
     

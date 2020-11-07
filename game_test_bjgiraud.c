@@ -26,6 +26,17 @@ int test_game_get_expected_nb_tents_col(cgame g)
 
 ///////
 
+int test_game_set_expected_nb_tents_row(cgame g)
+{
+    game_set_expected_nb_tents_row(g, 0, 3);
+
+    assert (game_get_expected_nb_tents_row(g,0) == 3);
+
+
+}
+
+///////
+
 int main(int argc, char* argv[]){
 
     cgame g1 = game_default();
@@ -33,5 +44,6 @@ int main(int argc, char* argv[]){
     test_game_get_expected_nb_tents_row(g1);
     test_game_get_expected_nb_tents_all(g1);
     test_game_get_expected_nb_tents_col(g1);
+    test_game_set_expected_nb_tents_row(g1);
 
 }
