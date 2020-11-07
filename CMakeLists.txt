@@ -15,6 +15,7 @@ add_test(test_game_set_square ./game_test_mlecoeuvre game_set_square)
 add_test(test_game_fill_grass_row ./game_test_mlecoeuvre game_fill_grass_row)
 add_test(test_game_fill_grass_col ./game_test_mlecoeuvre game_fill_grass_col)
 add_test(test_game_play_move ./game_test_mlecoeuvre game_play_move)
+add_test(test_game_check_move ./game_test_mlecoeuvre game_check_move)
 
 add_executable(game_test_bjgiraud game_test_bjgiraud.c game.o)
 add_test(test_bjgiraud_test_game_get_expected_nb_tents_row ./game_test_bjgiraud test_game_get_expected_nb_tents_row)
@@ -37,9 +38,13 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${game_text_SOURCE_DIR}/cmake)
 
 #Create library
+<<<<<<< HEAD
 
 add_library(game game.o game_aux.c)
 
+=======
+add_library(game game00.o game_aux.c)
+>>>>>>> mathis
 #Set flags for compiling
 
 set(CMAKE_C_FLAGS "-std=c99 -g -Wall")
