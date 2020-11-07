@@ -10,7 +10,8 @@ add_executable(game_test_edatrier game_test_edatrier.c)
 add_test(game_test_edatrier_dummy ./game_test_edatrier dummy)
 
 add_executable(game_test_mlecoeuvre game_test_mlecoeuvre.c)
-add_test(test_mlecoeuvre_dummy ./game_test_mlecoeuvre dummy)
+add_test(test_game_get_square ./game_test_mlecoeuvre game_get_square)
+add_test(test_game_set_square ./game_test_mlecoeuvre game_set_square)
 
 add_executable(game_test_bjgiraud game_test_bjgiraud.c)
 add_test(test_bjgiraud_dummy ./game_test_bjgiraud dummy)
@@ -32,5 +33,6 @@ set(CMAKE_C_FLAGS "-std=c99 -g -Wall")
 add_executable(game_text game_text.c)
 #Set links to math library used in both projets
 target_link_libraries(game_text game)
+target_link_libraries(game_test_mlecoeuvre game)
 
     
