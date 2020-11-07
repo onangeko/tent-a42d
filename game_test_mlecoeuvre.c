@@ -70,6 +70,21 @@ bool test_game_fill_grass_row(){
     return true;
 }
 
+/* ********** TEST FILL_GRASS_COL ********** */
+bool test_game_fill_grass_col(){
+    //default game
+    game g = game_default();
+    // fill [0] col with grass
+    game_fill_grass_col(g,0);
+    for(int i = 0;i<DEFAULT_SIZE;i++){
+        // square(1,0) and square(3,0) and square(5,0) and square(7,0) are trees in default game
+        if(i!=1 && i!=3 && i!=5 && i!=7 && game_get_square(g,i,0) != GRASS){
+            return false;
+        }
+    }
+    return true;
+}
+
 int main(int argc, char *argv[])
 {
     bool ok = false;
@@ -79,6 +94,8 @@ int main(int argc, char *argv[])
         ok = test_game_set_square();
     else if(strcmp("game_fill_grass_row", argv[1]) == 0)
         ok = test_game_fill_grass_row();
+    else if(strcmp("game_fill_grass_col", argv[1]) == 0)
+        ok = test_game_fill_grass_col();
     else {
         fprintf(stderr, "Error: test \"%s\" not found!\n", argv[1]);
         exit(EXIT_FAILURE);
