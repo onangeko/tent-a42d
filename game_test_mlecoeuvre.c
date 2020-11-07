@@ -107,6 +107,53 @@ bool test_game_play_move(){
     return true;
 }
 
+/* ********** TEST CHECK_MOVE ********** */
+bool test_game_check_move(){
+    //default game
+    game g = game_default();
+    //Illegal moves
+    //* plant a tent on a tree
+    if(game_check_move(g,1,0,TENT) != ILLEGAL)
+        return false;
+    //* put a grass on a tree
+    if(game_check_move(g,1,0,GRASS) != ILLEGAL)
+        return false;
+    //* erase square on a tree
+    if(game_check_move(g,1,0,EMPTY) != ILLEGAL)
+        return false;
+    //Losing moves
+    //* plant tent adjacent to another orthogonally
+    game_play_move(g,0,6,TENT);
+    if(game_check_move(g,0,7,TENT) != LOSING)
+        return false;
+    //* plant tent adjacent to another diagonally
+    game_play_move(g,2,3,TENT);
+    if(game_check_move(g,3,4,TENT) != LOSING)
+        return false;
+    //* plant n+1 tents when n tents are expected
+    if(game_check_move(g,1,1,TENT) != LOSING)
+        return false;
+    //* put grass when number of empty squares is not enough to reach the expected number of tents
+    if(game_check_move(g,0,0,GRASS) != LOSING)
+        return false;
+    //* plant a tent not adjacent to a tree
+    if(game_check_move(g,0,1,TENT) != LOSING)
+        return false;
+    //Regular moves
+    if(game_check_move(g,0,0,TENT) != REGULAR)
+        return false;
+    if(game_check_move(g,1,1,GRASS) != REGULAR)
+        return false;
+    if(game_check_move(g,0,6,EMPTY) != REGULAR)
+        return false;
+    game_play_move(g,0,0,TENT);
+    game_play_move(g,0,3,TENT);
+    game_play_move(g,0,6,TENT);
+    if(game_check_move(g,0,1,GRASS) != REGULAR)
+        return false;
+    return true;
+}
+
 int main(int argc, char *argv[])
 {
     bool ok = false;
@@ -120,6 +167,8 @@ int main(int argc, char *argv[])
         ok = test_game_fill_grass_col();
     else if(strcmp("game_play_move", argv[1]) == 0)
         ok = test_game_play_move();
+    else if(strcmp("game_check_move", argv[1]) == 0)
+        ok = test_game_check_move();
     else {
         fprintf(stderr, "Error: test \"%s\" not found!\n", argv[1]);
         exit(EXIT_FAILURE);
