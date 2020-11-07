@@ -7,9 +7,6 @@ Bjorn:
 * game_get_expected_nb_tents_row
 * game_get_expected_nb_tents_col
 * game_get_expected_nb_tents_all
-* game_get_current_nb_tents_all
-* game_get_current_nb_tents_col
-* game_get_current_nb_tents_row
 
 Emile:
 * game_equal
@@ -29,6 +26,9 @@ Mathis:
 Olivier:
 * game_restart
 * game_is_over
+* game_get_current_nb_tents_all
+* game_get_current_nb_tents_col
+* game_get_current_nb_tents_row
 
 ### game_aux.h
 
