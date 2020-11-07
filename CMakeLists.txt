@@ -14,6 +14,7 @@ add_test(test_game_get_square ./game_test_mlecoeuvre game_get_square)
 add_test(test_game_set_square ./game_test_mlecoeuvre game_set_square)
 add_test(test_game_fill_grass_row ./game_test_mlecoeuvre game_fill_grass_row)
 add_test(test_game_fill_grass_col ./game_test_mlecoeuvre game_fill_grass_col)
+add_test(test_game_play_move ./game_test_mlecoeuvre game_play_move)
 
 add_executable(game_test_bjgiraud game_test_bjgiraud.c game.o)
 add_test(test_bjgiraud_test_game_get_expected_nb_tents_row ./game_test_bjgiraud test_game_get_expected_nb_tents_row)

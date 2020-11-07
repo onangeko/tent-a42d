@@ -85,6 +85,28 @@ bool test_game_fill_grass_col(){
     return true;
 }
 
+/* ********** TEST PLAY_MOVE ********** */
+bool test_game_play_move(){
+    //default game
+    game g = game_default();
+    //Set tent on square(0,0)
+    game_play_move(g,0,0,TENT);
+    square s = game_get_square(g,0,0);
+    if(s != TENT)
+        return false;
+    //Set grass on square(0,0)
+    game_play_move(g,0,0,GRASS);
+    s = game_get_square(g,0,0);
+    if(s != GRASS)
+        return false;
+    //Set empty on square(0,0)
+    game_play_move(g,0,0,EMPTY);
+    s = game_get_square(g,0,0);
+    if(s != EMPTY)
+        return false;
+    return true;
+}
+
 int main(int argc, char *argv[])
 {
     bool ok = false;
@@ -96,6 +118,8 @@ int main(int argc, char *argv[])
         ok = test_game_fill_grass_row();
     else if(strcmp("game_fill_grass_col", argv[1]) == 0)
         ok = test_game_fill_grass_col();
+    else if(strcmp("game_play_move", argv[1]) == 0)
+        ok = test_game_play_move();
     else {
         fprintf(stderr, "Error: test \"%s\" not found!\n", argv[1]);
         exit(EXIT_FAILURE);
