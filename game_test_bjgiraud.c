@@ -6,43 +6,53 @@
 #include "game_aux.h"
 
 
-void test_game_get_expected_nb_tents_row(game g)
+int test_game_get_expected_nb_tents_row(game g)
 {
-    assert ((game_get_expected_nb_tents_row(g,0)) == 3);
+    if((game_get_expected_nb_tents_row(g,0)) == 3)
+        return EXIT_SUCCESS;
+    return EXIT_FAILURE;
 }
 
 ///
 
-void test_game_get_expected_nb_tents_all(game g)
+int test_game_get_expected_nb_tents_all(game g)
 {
-    assert(game_get_expected_nb_tents_all(g) == 12);
+    if(game_get_expected_nb_tents_all(g) == 12)
+        return EXIT_SUCCESS;
+    return EXIT_FAILURE;
 }
 
 ///
 
-void test_game_get_expected_nb_tents_col(game g)
+int test_game_get_expected_nb_tents_col(game g)
 {
-    assert(game_get_expected_nb_tents_col(g,0) == 4);
+    if(game_get_expected_nb_tents_col(g,0) == 4)
+        return EXIT_SUCCESS;
+    return EXIT_FAILURE;
 }
 
 ///////
 
-void test_game_set_expected_nb_tents_row(game g)
+int test_game_set_expected_nb_tents_row(game g)
 {
     game_set_expected_nb_tents_row(g, 0, 3);
 
-    assert (game_get_expected_nb_tents_row(g,0) == 3);
+    if(game_get_expected_nb_tents_row(g,0) == 3)
+        return EXIT_SUCCESS;
+    return EXIT_FAILURE;
 
 
 }
 
 ///
 
-void test_game_set_expected_nb_tents_col(game g)
+int test_game_set_expected_nb_tents_col(game g)
 {
     game_set_expected_nb_tents_col(g, 0, 4);
 
-    assert (game_get_expected_nb_tents_col(g,0) == 4);
+    if(game_get_expected_nb_tents_col(g,0) == 4)
+        return EXIT_SUCCESS;
+    return EXIT_FAILURE;
 
 
 }
