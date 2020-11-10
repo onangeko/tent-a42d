@@ -63,5 +63,6 @@ target_link_libraries(game_text game)
 target_link_libraries(game_test_onangeko game)
 target_link_libraries(game_test_bjgiraud game)
 target_link_libraries(game_test_mlecoeuvre game)
+target_link_libraries(game_test_edatrier game)
 
     
