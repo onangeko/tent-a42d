@@ -7,7 +7,12 @@ cmake_minimum_required(VERSION 3.7)
 enable_testing()
 
 add_executable(game_test_edatrier game_test_edatrier.c)
-add_test(game_test_edatrier_dummy ./game_test_edatrier dummy)
+add_test(test_game_new ./game_test_edatrier game_new)
+add_test(test_game_new_empty ./game_test_edatrier game_new_empty)
+add_test(test_game_copy ./game_test_edatrier game_copy)
+add_test(test_game_equal ./game_test_edatrier game_equal)
+add_test(test_game_delete ./game_test_edatrier game_delete)
+
 
 add_executable(game_test_mlecoeuvre game_test_mlecoeuvre.c)
 add_test(test_game_get_square ./game_test_mlecoeuvre game_get_square)
@@ -38,13 +43,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${game_text_SOURCE_DIR}/cmake)
 
 #Create library
-<<<<<<< HEAD
-
 add_library(game game.o game_aux.c)
-
-=======
-add_library(game game00.o game_aux.c)
->>>>>>> mathis
 #Set flags for compiling
 
 set(CMAKE_C_FLAGS "-std=c99 -g -Wall")
