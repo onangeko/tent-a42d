@@ -98,9 +98,9 @@ bool test_game_default_solution(void)
     uint nb_tents_row[8] = {3, 0, 4, 0, 4, 0, 1, 0};
     uint nb_tents_col[8] = {4, 0, 1, 2, 1, 1, 2, 1};
     //Asserting that the game_default_solution() is equal to the solution game we created
-    game g1 = game_default_solution();    
+    game g1 = game_default_solution();
     game g2 = game_new(squares, nb_tents_row, nb_tents_col);
-    return game_equal(g1, g2);
+    return game_equal(g1,g2);
 }
 
 int main(int argc, char *argv[])
@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
         ok = test_game_equal(squares, nb_tents_row, nb_tents_col);
     else if (strcmp("game_delete", argv[1]) == 0)
         ok = test_game_delete();
-    else if (strcmp("game_default", argv[1]) == 0)
+    else if (strcmp("game_default_solution", argv[1]) == 0)
         ok = test_game_default_solution();
     else
     {
