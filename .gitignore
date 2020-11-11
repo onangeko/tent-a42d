@@ -1,6 +1,7 @@
 *
 !game.o
 !game00.o
+!game06.o
 !*.h
 !*.c
 !CMakeLists.txt
