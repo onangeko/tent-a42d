@@ -33,6 +33,10 @@ Olivier:
 ### game_aux.h
 
 Olivier:
-* game_default
-* game_default_solution
 * game_print
+
+Bjorn:
+* game_default_solution
+
+Emile:
+* game_default
