@@ -70,7 +70,36 @@ bool test_game_delete(void)
     game g1 = game_new_empty();
     game g2 = game_copy(g1);
     game_delete(g1);
-    return !game_equal(g1,g2);
+    return !game_equal(g1, g2);
+}
+
+bool test_game_default(void)
+{
+    square squares[64] = {
+        EMPTY, EMPTY, EMPTY, EMPTY, TREE, TREE, EMPTY, EMPTY,
+        TREE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, TREE,
+        EMPTY, EMPTY, EMPTY, EMPTY, TREE, EMPTY, EMPTY, EMPTY,
+        TREE, EMPTY, EMPTY, EMPTY, EMPTY, TREE, EMPTY, EMPTY,
+        EMPTY, TREE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        TREE, EMPTY, EMPTY, EMPTY, TREE, EMPTY, TREE, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        TREE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
+    uint nb_tents_row[8] = {3, 0, 4, 0, 4, 0, 1, 0};
+    uint nb_tents_col[8] = {4, 0, 1, 2, 1, 1, 2, 1};
+    //Creates the game using the default game parameters
+    game g = game_default();
+    //Tests, for each square, if it is the same as the parameters we put in
+    for (int i = 0; i < DEFAULT_SIZE; i++)
+    {
+        if (game_get_expected_nb_tents_row(g, i) != nb_tents_row[i])
+        {
+            return false;
+        }
+        for (int j = 0; j < DEFAULT_SIZE; j++)
+            if (game_get_square(g, i, j) != squares[(i * 8) + j] || game_get_expected_nb_tents_col(g, j) != nb_tents_col[j])
+                return false;
+    }
+    return true;
 }
 
 int main(int argc, char *argv[])
@@ -79,13 +108,13 @@ int main(int argc, char *argv[])
     square squares[64] = {
         EMPTY, EMPTY, EMPTY, EMPTY, TREE, TREE, EMPTY, EMPTY,
         TREE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, TREE,
-        EMPTY, EMPTY, EMPTY, EMPTY, TREE, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, TREE, EMPTY, TREE, EMPTY, EMPTY, EMPTY,
         TREE, EMPTY, EMPTY, EMPTY, EMPTY, TREE, EMPTY, EMPTY,
-        EMPTY, TREE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, TREE, EMPTY, EMPTY, TREE, EMPTY, EMPTY, EMPTY,
         TREE, EMPTY, EMPTY, EMPTY, TREE, EMPTY, TREE, EMPTY,
         EMPTY, TREE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
         TREE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
-    uint nb_tents_row[8] = {1, 0, 4, 0, 4, 0, 1, 0};
+    uint nb_tents_row[8] = {3, 5, 4, 0, 4, 2, 1, 0};
     uint nb_tents_col[8] = {4, 0, 1, 2, 1, 1, 2, 1};
 
     bool ok = false;
@@ -99,6 +128,8 @@ int main(int argc, char *argv[])
         ok = test_game_equal(squares, nb_tents_row, nb_tents_col);
     else if (strcmp("game_delete", argv[1]) == 0)
         ok = test_game_delete();
+    else if (strcmp("game_default", argv[1]) == 0)
+        ok = test_game_default();
     else
     {
         fprintf(stderr, "Error: test \"%s\" not found!\n", argv[1]);

@@ -10,6 +10,7 @@ add_test(test_game_new_empty ./game_test_edatrier game_new_empty)
 add_test(test_game_copy ./game_test_edatrier game_copy)
 add_test(test_game_equal ./game_test_edatrier game_equal)
 add_test(test_game_delete ./game_test_edatrier game_delete)
+add_test(test_game_default ./game_test_edatrier game_default)
 
 
 add_executable(game_test_mlecoeuvre game_test_mlecoeuvre.c)
