@@ -34,6 +34,7 @@ add_test(test_game_get_current_nb_tents_all ./game_test_onangeko game_current_te
 add_test(test_game_get_current_nb_tents_row ./game_test_onangeko game_current_tents_row)
 add_test(test_game_get_current_nb_tents_col ./game_test_onangeko game_current_tents_col)
 
+
 #Create the projects
 
 project(game_text C)
