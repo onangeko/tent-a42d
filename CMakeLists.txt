@@ -27,6 +27,7 @@ add_test(test_game_get_expected_nb_tents_all ./game_test_bjgiraud game_get_expec
 add_test(test_game_get_expected_nb_tents_col ./game_test_bjgiraud game_get_expected_nb_tents_col)
 add_test(test_game_set_expected_nb_tents_row ./game_test_bjgiraud game_set_expected_nb_tents_row)
 add_test(test_game_set_expected_nb_tents_col ./game_test_bjgiraud game_set_expected_nb_tents_col)
+add_test(test_game_default ./game_test_bjgiraud game_default)
 
 add_executable(game_test_onangeko game.o game_test_onangeko.c)
 add_test(test_onangeko_game_is_over ./game_test_onangeko game_is_over)
