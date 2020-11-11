@@ -32,7 +32,7 @@ test_game_restart()
     game_play_move(g1,7,7,GRASS);
     game_restart(g1);
 
-    if (game_get_current_nb_tents_all(g1) == 0 && game_get_square(g1,7,7) == GRASS)
+    if (game_get_current_nb_tents_all(g1) == 0 && game_get_square(g1,7,7) == EMPTY)
     {
         return EXIT_SUCCESS;
     }
