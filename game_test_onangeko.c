@@ -8,7 +8,7 @@
 
 
 
-bool
+int
 test_game_is_over()
 {
     game g1 = game_default();
@@ -24,7 +24,7 @@ test_game_is_over()
 }
 
 
-bool
+int
 test_game_restart()
 {
     game g1 = game_default();
@@ -42,7 +42,7 @@ test_game_restart()
 }
  
 
-uint test_game_get_current_nb_tents_all ()
+int test_game_get_current_nb_tents_all ()
 {
     game g1 = game_default();
     game_play_move(g1, 0,0, TENT);
@@ -55,7 +55,9 @@ uint test_game_get_current_nb_tents_all ()
 }
 
 
-uint test_game_get_current_nb_tents_row ()
+
+
+int test_game_get_current_nb_tents_row ()
 {
 
     game g1 = game_default();
@@ -69,7 +71,7 @@ uint test_game_get_current_nb_tents_row ()
 
 }
 
-uint test_game_get_current_nb_tents_col ()
+int test_game_get_current_nb_tents_col ()
 {
 
     game g1 = game_default();
@@ -83,6 +85,12 @@ uint test_game_get_current_nb_tents_col ()
 
 }
 
+int test_game_print()
+{
+    game g1 = game_default();
+    game_print(g1);
+    return EXIT_SUCCESS;
+}
 
 int
 main(int argc, char *argv[])    
@@ -109,6 +117,10 @@ main(int argc, char *argv[])
     if (strcmp("game_current_tents_col", argv[1]) == 0)
     {
         return test_game_get_current_nb_tents_col();
+    } 
+    if (strcmp("game_print", argv[1]) == 0)
+    {
+        return test_game_print();
     } 
 
 }
