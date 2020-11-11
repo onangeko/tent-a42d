@@ -55,6 +55,8 @@ int test_game_get_current_nb_tents_all ()
 }
 
 
+
+
 int test_game_get_current_nb_tents_row ()
 {
 

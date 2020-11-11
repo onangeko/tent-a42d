@@ -37,6 +37,9 @@ add_test(test_game_get_current_nb_tents_col ./game_test_onangeko game_current_te
 add_test(test_game_get_print ./game_test_onangeko game_print)
 
 
+
+
+
 #Create the projects
 
 project(game_text C)
