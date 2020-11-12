@@ -5,7 +5,7 @@
 #include "game_aux.h"
 
 /* ********** TEST GET_SQUARE ********** */
-bool test_game_get_square(){
+int test_game_get_square(){
     //default game
     game g = game_default();
     //EMPTY square
@@ -32,7 +32,7 @@ bool test_game_get_square(){
 }
 
 /* ********** TEST SET_SQUARE ********** */
-bool test_game_set_square(){
+int test_game_set_square(){
     //default game
     game g = game_default();
     //EMPTY square
@@ -56,7 +56,7 @@ bool test_game_set_square(){
 }
 
 /* ********** TEST FILL_GRASS_ROW ********** */
-bool test_game_fill_grass_row(){
+int test_game_fill_grass_row(){
     //default game
     game g = game_default();
     // fill [0] row with grass
@@ -71,7 +71,7 @@ bool test_game_fill_grass_row(){
 }
 
 /* ********** TEST FILL_GRASS_COL ********** */
-bool test_game_fill_grass_col(){
+int test_game_fill_grass_col(){
     //default game
     game g = game_default();
     // fill [0] col with grass
@@ -86,7 +86,7 @@ bool test_game_fill_grass_col(){
 }
 
 /* ********** TEST PLAY_MOVE ********** */
-bool test_game_play_move(){
+int test_game_play_move(){
     //default game
     game g = game_default();
     //Set tent on square(0,0)
@@ -108,7 +108,7 @@ bool test_game_play_move(){
 }
 
 /* ********** TEST CHECK_MOVE ********** */
-bool test_game_check_move(){
+int test_game_check_move(){
     //default game
     game g = game_default();
     //Illegal moves
