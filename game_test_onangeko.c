@@ -39,7 +39,7 @@ test_game_is_over()
         // we check if each square is correctly place , more precisly if each tent is set right 
         // we also sheck if the number of expected tents in each col is correct
         for (int j = 0; j < DEFAULT_SIZE; j++)
-            if (game_get_square(g1, i, j) == squares[(i * 8) + j] && game_get_expected_nb_tents_col(g1, j) == nb_tents_col[j] && game_is_over(g1) )
+            if ( (game_get_square(g1, i, j) == squares[(i * 8) + j]) && (game_get_expected_nb_tents_col(g1, j) == nb_tents_col[j]) &&(game_is_over(g1) == true ))
                 return EXIT_SUCCESS;
     }
     return EXIT_FAILURE;
