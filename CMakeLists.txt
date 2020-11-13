@@ -40,7 +40,6 @@ add_test(test_onangeko_game_get_print ./game_test_onangeko game_print)
 
 
 
-
 #Create the projects
 
 project(game_text C)
