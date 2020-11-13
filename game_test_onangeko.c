@@ -24,11 +24,10 @@ test_game_is_over()
     uint nb_tents_row[8] = {3, 0, 4, 0, 4, 0, 1, 0};
     uint nb_tents_col[8] = {4, 0, 1, 2, 1, 1, 2, 1};
  
-
     game g1 = game_default_solution();
-    game g2 = game_new(squares,nb_tents_row, nb_tents_col);
+    game g2 = game_new(squares,nb_tents_row,nb_tents_col);
 
-    if (game_is_over(g2) == true)
+    if (game_is_over(g2) == true && game_equal(g1,g2) == true)
     {
         return EXIT_SUCCESS;
     }
