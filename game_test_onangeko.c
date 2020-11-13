@@ -32,7 +32,7 @@ test_game_is_over()
    for (int i = 0; i < DEFAULT_SIZE; i++)
     {
         // we check if the number of expected tents in each row is correct
-        if (game_get_expected_nb_tents_row(g, i) != nb_tents_row[i])
+        if (game_get_expected_nb_tents_row(g1, i) != nb_tents_row[i])
         {
             return EXIT_FAILURE;
         }
