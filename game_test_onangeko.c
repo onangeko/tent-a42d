@@ -7,23 +7,61 @@
 
 
 
-
+/* ********** TEST GAME_IS_OVER ********** */
 int
 test_game_is_over()
 {
-   return EXIT_SUCCESS;
+    
+    square squares[64] = {
+        TENT, GRASS, GRASS, TENT, TREE, TREE, TENT, GRASS,
+        TREE, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, TREE,
+        TENT, GRASS, GRASS, TENT, TREE, TENT, GRASS, TENT,
+        TREE, GRASS, GRASS, GRASS, GRASS, TREE, GRASS, GRASS,
+        TENT, TREE, TENT, GRASS, TENT, GRASS, TENT, GRASS,
+        TREE, GRASS, GRASS, GRASS, TREE, GRASS, TREE, GRASS,
+        TENT, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS,
+        TREE, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS};
+    uint nb_tents_row[8] = {3, 0, 4, 0, 4, 0, 1, 0};
+    uint nb_tents_col[8] = {4, 0, 1, 2, 1, 1, 2, 1};
+   
+
+    // default game solution
+    game g1 = game_new(squares, nb_tents_row, nb_tents_col);
+   
+
+   for (int i = 0; i < DEFAULT_SIZE; i++)
+    {
+        // we check if the number of expected tents in each row is correct
+        if (game_get_expected_nb_tents_row(g, i) != nb_tents_row[i])
+        {
+            return EXIT_FAILURE;
+        }
+        // we check if each square is correctly place , more precisly if each tent is set right 
+        // we also sheck if the number of expected tents in each col is correct
+        for (int j = 0; j < DEFAULT_SIZE; j++)
+            if (game_get_square(g1, i, j) != squares[(i * 8) + j] || game_get_expected_nb_tents_col(g1, j) != nb_tents_col[j])
+                return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
+
+
+   
 
 }
 
-
+/* ********** TEST GAME_RESTART ********** */
 int
 test_game_restart()
-{
+{   
+    //default game
     game g1 = game_default();
-    game_play_move(g1, 0,0, TENT);
+    // play a tent
+    game_play_move(g1,0,0,TENT);
+    // play a grass
     game_play_move(g1,7,7,GRASS);
+    // restart the game
     game_restart(g1);
-
+    // since we restarted the game , the tent and the grass we played should no longer be and the squares should be reseted back to EMPTY
     if (game_get_current_nb_tents_all(g1) == 0 && game_get_square(g1,7,7) == EMPTY)
     {
         return EXIT_SUCCESS;
@@ -37,9 +75,12 @@ test_game_restart()
 
 int test_game_get_current_nb_tents_all ()
 {
+    //default game
     game g1 = game_default();
+    // play a tent
     game_play_move(g1, 0,0, TENT);
 
+    // since we played only a tent , the overall number of tents should be one
     if (game_get_current_nb_tents_all(g1) == 1)
     {
         return EXIT_SUCCESS;
@@ -69,6 +110,8 @@ int test_game_get_current_nb_tents_row ()
 
 }
 
+
+/* ********** TEST GAME_CURRENT_NB_TENTS_COL ********** */
 int test_game_get_current_nb_tents_col ()
 {
     //default game 
@@ -82,9 +125,12 @@ int test_game_get_current_nb_tents_col ()
 
 }
 
+/* ********** TEST GAME_PRINT ********** */
 int test_game_print()
 {
+    //default game 
     game g1 = game_default();
+    // printing the default game
     game_print(g1);
     return EXIT_SUCCESS;
 }
