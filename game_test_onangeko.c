@@ -11,16 +11,31 @@
 int
 test_game_is_over()
 {
-    game g1 = game_default();
-    
-    if (game_is_over(g1) == false)
+    square squares[64] = {
+        TENT, GRASS, GRASS, TENT, TREE, TREE, TENT, GRASS,
+        TREE, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, TREE,
+        TENT, GRASS, GRASS, TENT, TREE, TENT, GRASS, TENT,
+        TREE, GRASS, GRASS, GRASS, GRASS, TREE, GRASS, GRASS,
+        TENT, TREE, TENT, GRASS, TENT, GRASS, TENT, GRASS,
+        TREE, GRASS, GRASS, GRASS, TREE, GRASS, TREE, GRASS,
+        TENT, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS,
+        TREE, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS};
+
+    uint nb_tents_row[8] = {3, 0, 4, 0, 4, 0, 1, 0};
+    uint nb_tents_col[8] = {4, 0, 1, 2, 1, 1, 2, 1};
+ 
+
+    game g1 = game_default_solution();
+    game g2 = game_new(squares,nb_tents_row, nb_tents_col);
+
+    if (game_is_over(g2) == true)
     {
         return EXIT_SUCCESS;
     }
     else
     {
         return EXIT_FAILURE;
-    }
+    } 
 }
 
 
@@ -64,7 +79,7 @@ int test_game_get_current_nb_tents_row ()
     game g1 = game_default();
     game_play_move(g1, 0,0, TENT);
 
-    if (game_get_current_nb_tents_row(g1,0) == 1) 
+    if (game_get_current_nb_tents_row(g1,0) == 1 ) 
     {
         return EXIT_SUCCESS;
     }
