@@ -61,6 +61,7 @@ void test_game_set_expected_nb_tents_col(game g)
 }
 
 ///////
+/*
 
     void test_game_default(game g)
 {
@@ -108,7 +109,26 @@ void test_game_set_expected_nb_tents_col(game g)
 
 
 
+*/
 
+void test_game_default(game g)
+{
+    //Parameters corresponding to the solution of the default game
+    square squares[64] = {
+        EMPTY, EMPTY, EMPTY, EMPTY, TREE, TREE, EMPTY, EMPTY,
+        TREE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, TREE,
+        EMPTY, EMPTY, EMPTY, EMPTY, TREE, EMPTY, EMPTY, EMPTY,
+        TREE, EMPTY, EMPTY, EMPTY, EMPTY, TREE, EMPTY, EMPTY,
+        EMPTY, TREE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        TREE, EMPTY, EMPTY, EMPTY, TREE, EMPTY, TREE, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY,
+        TREE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
+    uint nb_tents_row[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+    uint nb_tents_col[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+    //Asserting that the game_default_solution() is equal to the solution game we created
+    game g2 = game_new(squares, nb_tents_row, nb_tents_col);
+    assert (game_equal(g,g2) == 0);
+}
 
 int main(int argc, char* argv[]){
 
