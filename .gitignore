@@ -1,5 +1,5 @@
 *
-!game.o
+!game.c
 !*.h
 !*.c
 !CMakeLists.txt
