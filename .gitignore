@@ -5,3 +5,4 @@
 !CMakeLists.txt
 !README.md
 !.gitignore
+!.clang-format
