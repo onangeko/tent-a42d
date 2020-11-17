@@ -29,7 +29,7 @@ add_test(test_bjgiraud_game_set_expected_nb_tents_row ./game_test_bjgiraud game_
 add_test(test_bjgiraud_game_set_expected_nb_tents_col ./game_test_bjgiraud game_set_expected_nb_tents_col)
 add_test(test_bjgiraud_game_default ./game_test_bjgiraud game_default)
 
-add_executable(game_test_onangeko game.o game_test_onangeko.c)
+add_executable(game_test_onangeko game_test_onangeko.c)
 add_test(test_onangeko_game_is_over ./game_test_onangeko game_is_over)
 add_test(test_onangeko_game_restart ./game_test_onangeko game_restart)
 add_test(test_onangeko_game_get_current_nb_tents_all ./game_test_onangeko game_current_tents_all)
@@ -53,7 +53,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${game_text_SOURCE_DIR}/cmake)
 
 #Create library
 
-add_library(game game.o game_aux.c)
+add_library(game game.c game_aux.c)
 
 #Set flags for compiling
 

@@ -1,0 +1,1 @@
+clang-format-8 -style=google -dump-config
