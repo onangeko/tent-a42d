@@ -9,24 +9,35 @@ typedef struct game_s {
 } game_s;
 
 game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col) {
-  if(squares==NULL || nb_tents_row == NULL || nb_tents_col == NULL){
-        exit(EXIT_FAILURE);
+  if (squares == NULL || nb_tents_row == NULL || nb_tents_col == NULL) {
+    exit(EXIT_FAILURE);
+  }
+  struct game_s* game = (struct game_s*)malloc(sizeof(struct game_s));
+  game->board = (square**)malloc(sizeof(square) * DEFAULT_SIZE * DEFAULT_SIZE);
+  game->expected_nb_tents_row = nb_tents_row;
+  game->expected_nb_tents_row = nb_tents_col;
+  for (int i = 0; i < DEFAULT_SIZE; i++) {
+    for (int j = 0; j < DEFAULT_SIZE; j++) {
+      game->board[i][j] = squares[i * DEFAULT_SIZE + j];
     }
-    struct game_s *game =(struct game_s*) malloc(sizeof(struct game_s));
-    game->board = (square **) malloc(sizeof(square)*DEFAULT_SIZE*DEFAULT_SIZE);
-    game->expected_nb_tents_row = nb_tents_row;
-    game->expected_nb_tents_row = nb_tents_col;
-    for(int i=0;i<DEFAULT_SIZE;i++)
-    {
-        for(int j=0;j<DEFAULT_SIZE;j++)
-        {
-            game->board[i][j]=squares[i*DEFAULT_SIZE+j];
-        }
-    }
-    return game;
+  }
+  return game;
 }
 
-game game_new_empty(void) { return NULL; }
+game game_new_empty(void) {
+  square* squares =
+      (square*)malloc(sizeof(square) * DEFAULT_SIZE * DEFAULT_SIZE);
+  for (int i = 0; i < DEFAULT_SIZE * DEFAULT_SIZE; i++) {
+    squares[i] = EMPTY;
+  }
+  uint* nb_tents_row = (uint*)malloc(sizeof(uint) * DEFAULT_SIZE);
+  uint* nb_tents_col = (uint*)malloc(sizeof(uint) * DEFAULT_SIZE);
+  for (int i = 0; i < DEFAULT_SIZE; i++) {
+    nb_tents_row[i] = 0;
+    nb_tents_col[i] = 0;
+  }
+  return game_new(squares, nb_tents_row, nb_tents_col);
+}
 
 game game_copy(cgame g) { return NULL; }
 
