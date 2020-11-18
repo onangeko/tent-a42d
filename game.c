@@ -6,7 +6,6 @@ typedef struct game_s{
     square** board;
     int* expected_nb_tents_col;
     int* expected_nb_tents_row;
-    bool is_over;
 }game_s;
 
 game game_new(square *squares, uint *nb_tents_row, uint *nb_tents_col){
