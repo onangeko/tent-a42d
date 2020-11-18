@@ -8,7 +8,7 @@
 
 
 /* ********** TEST GAME_IS_OVER ********** */
-int
+void
 test_game_is_over()
 {
     
