@@ -92,3 +92,8 @@ void game_fill_grass_col(game g, uint j){
 void game_restart(game g){
 
 }
+
+int main(int argc, char const *argv[])
+{
+    return 0;
+}
