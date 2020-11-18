@@ -2,12 +2,11 @@
 #include <stdlib.h>
 #include "game.h"
 
-struct game_s{
+typedef struct game_s{
     square** board;
     int* expected_nb_tents_col;
     int* expected_nb_tents_row;
-    bool is_over;
-};
+}game_s;
 
 game game_new(square *squares, uint *nb_tents_row, uint *nb_tents_col){
     if(squares==NULL || nb_tents_row == NULL || nb_tents_col == NULL){
