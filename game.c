@@ -3,7 +3,10 @@
 #include "game.h"
 
 struct game_s{
-    int yeet;
+    square** board;
+    int* expected_nb_tents_col;
+    int* expected_nb_tents_row;
+    bool is_over;
 };
 
 game game_new(square *squares, uint *nb_tents_row, uint *nb_tents_col){
