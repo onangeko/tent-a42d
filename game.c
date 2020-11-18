@@ -9,7 +9,21 @@ typedef struct game_s {
 } game_s;
 
 game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col) {
-  return NULL;
+  if(squares==NULL || nb_tents_row == NULL || nb_tents_col == NULL){
+        exit(EXIT_FAILURE);
+    }
+    struct game_s *game =(struct game_s*) malloc(sizeof(struct game_s));
+    game->board = (square **) malloc(sizeof(square)*DEFAULT_SIZE*DEFAULT_SIZE);
+    game->expected_nb_tents_row = nb_tents_row;
+    game->expected_nb_tents_row = nb_tents_col;
+    for(int i=0;i<DEFAULT_SIZE;i++)
+    {
+        for(int j=0;j<DEFAULT_SIZE;j++)
+        {
+            game->board[i][j]=squares[i*DEFAULT_SIZE+j];
+        }
+    }
+    return game;
 }
 
 game game_new_empty(void) { return NULL; }
@@ -50,4 +64,7 @@ void game_fill_grass_row(game g, uint i) {}
 
 void game_fill_grass_col(game g, uint j) {}
 
+<<<<<<< HEAD
 void game_restart(game g) {}
+=======
+>>>>>>> 863cb1a1b2915fe5d05a151cce0ef5bc02cfca2b
