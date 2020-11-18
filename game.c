@@ -64,7 +64,4 @@ void game_fill_grass_row(game g, uint i) {}
 
 void game_fill_grass_col(game g, uint j) {}
 
-<<<<<<< HEAD
 void game_restart(game g) {}
-=======
->>>>>>> 863cb1a1b2915fe5d05a151cce0ef5bc02cfca2b
