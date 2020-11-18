@@ -40,7 +40,7 @@ bool test_game_new_empty(void)
             if (game_get_square(g, i, j) != EMPTY || game_get_expected_nb_tents_col(g, j) != 0)
                 return false;
     }
-    return true;
+    return true && g != NULL;
 }
 
 bool test_game_copy(square *squares, uint *nb_tents_row, uint *nb_tents_col)
@@ -60,7 +60,7 @@ bool test_game_copy(square *squares, uint *nb_tents_row, uint *nb_tents_col)
             if (game_get_square(g1, i, j) != game_get_square(g2, i, j) || game_get_expected_nb_tents_col(g1, j) != game_get_expected_nb_tents_col(g1, j))
                 return false;
     }
-    return true;
+    return true && g1 != NULL && g2 != NULL;
 }
 
 bool test_game_equal(square *squares, uint *nb_tents_row, uint *nb_tents_col)
@@ -79,6 +79,9 @@ bool test_game_delete(void)
     //Creates an empty game, copies it then deletes the 1st one and checks if the 2 games are different asserting that the 1st one is indeed deleted
     game g1 = game_new_empty();
     game g2 = game_copy(g1);
+    if (g1 == NULL || g2 == NULL){
+        return false;
+    }
     game_delete(g1);
     return !game_equal(g1, g2);
 }
