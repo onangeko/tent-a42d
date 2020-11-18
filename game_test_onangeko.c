@@ -8,10 +8,9 @@
 
 
 /* ********** TEST GAME_IS_OVER ********** */
-void
+int
 test_game_is_over()
 {
-    
     square squares[64] = {
         TENT, GRASS, GRASS, TENT, TREE, TREE, TENT, GRASS,
         TREE, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, TREE,
@@ -43,6 +42,7 @@ test_game_is_over()
     if ((game_get_current_nb_tents_all(g1)) == (game_get_expected_nb_tents_all(g1)) && (game_is_over(g1) == true ))
         return EXIT_SUCCESS;
 
+    return EXIT_SUCCESS;
 }
 
 /* ********** TEST GAME_RESTART ********** */
