@@ -1,6 +1,6 @@
+#include "game_aux.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "game_aux.h"
 
 /**
  * Turns square state into it character correspondance.
@@ -9,8 +9,7 @@
  */
 char sqrToChar(square s)
 {
-    switch (s)
-    {
+    switch (s) {
     case EMPTY:
         return ' ';
     case TREE:
@@ -31,11 +30,9 @@ void game_print(cgame g)
 {
     printf("   01234567\n");
     printf("   --------\n");
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-    {
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
         printf("%d |", i);
-        for (int j = 0; j < DEFAULT_SIZE; j++)
-        {
+        for (int j = 0; j < DEFAULT_SIZE; j++) {
             square s = game_get_square(g, i, j);
             printf("%c", sqrToChar(s));
         }
@@ -43,8 +40,7 @@ void game_print(cgame g)
     }
     printf("   --------\n");
     printf("   ");
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-    {
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
         printf("%d", game_get_expected_nb_tents_col(g, i));
     }
     printf("\n\n");
@@ -122,8 +118,9 @@ game game_default_solution(void)
         TENT, TREE, TENT, GRASS, TENT, GRASS, TENT, GRASS,
         TREE, GRASS, GRASS, GRASS, TREE, GRASS, TREE, GRASS,
         TENT, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS,
-        TREE, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS};
-    uint nb_tents_row[8] = {3, 0, 4, 0, 4, 0, 1, 0};
-    uint nb_tents_col[8] = {4, 0, 1, 2, 1, 1, 2, 1};
+        TREE, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS
+    };
+    uint nb_tents_row[8] = { 3, 0, 4, 0, 4, 0, 1, 0 };
+    uint nb_tents_col[8] = { 4, 0, 1, 2, 1, 1, 2, 1 };
     return game_new(squares, nb_tents_row, nb_tents_col);
 }

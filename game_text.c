@@ -1,6 +1,6 @@
+#include "game_aux.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "game_aux.h"
 
 /**
  * Prints the help guide in the terminal.
@@ -33,14 +33,16 @@ void printCongratulation()
 /**
  * Prints the illegal message in the terminal.
  */
-void printIllegal(){
+void printIllegal()
+{
     printf("Wait... It's illegal.\n");
 }
 
 /**
  * Prints the losing message in the terminal.
  */
-void printLosing(){
+void printLosing()
+{
     printf("Warning: losing move...\n");
 }
 
@@ -64,29 +66,29 @@ game game_default_solution_without_grass(void)
     //Plant tents and grass by rows
     //row 0
     //Tents
-    game_set_square(defaultSolution,0,0,TENT);
-    game_set_square(defaultSolution,0,3,TENT);
-    game_set_square(defaultSolution,0,6,TENT);
+    game_set_square(defaultSolution, 0, 0, TENT);
+    game_set_square(defaultSolution, 0, 3, TENT);
+    game_set_square(defaultSolution, 0, 6, TENT);
     //row 1
     //No tent
     //row 2
     //Tents
-    game_set_square(defaultSolution,2,0,TENT);
-    game_set_square(defaultSolution,2,3,TENT);
-    game_set_square(defaultSolution,2,5,TENT);
-    game_set_square(defaultSolution,2,7,TENT);
+    game_set_square(defaultSolution, 2, 0, TENT);
+    game_set_square(defaultSolution, 2, 3, TENT);
+    game_set_square(defaultSolution, 2, 5, TENT);
+    game_set_square(defaultSolution, 2, 7, TENT);
     //row 3
     //No tent
     //row 4
     //Tents
-    for(int i = 0;i<7;i+=2){
-        game_set_square(defaultSolution,4,i,TENT);
+    for (int i = 0; i < 7; i += 2) {
+        game_set_square(defaultSolution, 4, i, TENT);
     }
     //row 5
     //No tent
     //row 6
     //Tent
-    game_set_square(defaultSolution,6,0,TENT);
+    game_set_square(defaultSolution, 6, 0, TENT);
     //row 7
     //No tent
     //Grass
@@ -104,10 +106,8 @@ game game_default_solution_without_grass(void)
 int answerProcessing(game g, char inst, int row, int column)
 {
     // 1st treatment of scanf()
-    if (row == -1 && column == -1)
-    {
-        switch (inst)
-        {
+    if (row == -1 && column == -1) {
+        switch (inst) {
         case 'r':
             restartGame(g);
             return 1;
@@ -124,29 +124,22 @@ int answerProcessing(game g, char inst, int row, int column)
         return 0;
     }
     //2nd treatment of scanf()
-    else
-    {
-        switch (inst)
-        {
+    else {
+        switch (inst) {
         // Tent planting
         case 't':
-            if (game_check_move(g, row, column, TENT) == REGULAR)
-            {
-                printf("> Plant a tent on %d %d\n",row,column);
+            if (game_check_move(g, row, column, TENT) == REGULAR) {
+                printf("> Plant a tent on %d %d\n", row, column);
                 game_play_move(g, row, column, TENT);
-                if (game_equal(g, game_default_solution()) || game_equal(g, game_default_solution_without_grass()))
-                {
+                if (game_equal(g, game_default_solution()) || game_equal(g, game_default_solution_without_grass())) {
                     printCongratulation();
                 }
                 return 1;
-            }
-            else if (game_check_move(g, row, column, TENT) == LOSING)
-            {
+            } else if (game_check_move(g, row, column, TENT) == LOSING) {
                 game_play_move(g, row, column, TENT);
                 printLosing();
                 return 1;
-            }
-            else //illegal move
+            } else //illegal move
             {
                 printIllegal();
                 return 1;
@@ -154,23 +147,18 @@ int answerProcessing(game g, char inst, int row, int column)
             break;
         // Grass puting
         case 'g':
-            if (game_check_move(g, row, column, GRASS) == REGULAR)
-            {
-                printf("> Plant a grass bloc on %d %d\n",row,column);
+            if (game_check_move(g, row, column, GRASS) == REGULAR) {
+                printf("> Plant a grass bloc on %d %d\n", row, column);
                 game_play_move(g, row, column, GRASS);
-                if (game_equal(g, game_default_solution()) || game_equal(g,game_default_solution_without_grass()))
-                {
+                if (game_equal(g, game_default_solution()) || game_equal(g, game_default_solution_without_grass())) {
                     printCongratulation();
                 }
                 return 1;
-            }
-            else if (game_check_move(g, row, column, GRASS) == LOSING)
-            {
+            } else if (game_check_move(g, row, column, GRASS) == LOSING) {
                 game_play_move(g, row, column, GRASS);
                 printLosing();
                 return 1;
-            }
-            else //illegal move
+            } else //illegal move
             {
                 printIllegal();
                 return 1;
@@ -178,14 +166,11 @@ int answerProcessing(game g, char inst, int row, int column)
             break;
         // Square erasing
         case 'e':
-            if (game_check_move(g, row, column, EMPTY) == REGULAR)
-            {
-                printf("> Set %d %d bloc to empty\n",row,column);
+            if (game_check_move(g, row, column, EMPTY) == REGULAR) {
+                printf("> Set %d %d bloc to empty\n", row, column);
                 game_play_move(g, row, column, EMPTY);
                 return 1;
-            }
-            else if (game_check_move(g, row, column, EMPTY) == ILLEGAL)
-            {
+            } else if (game_check_move(g, row, column, EMPTY) == ILLEGAL) {
                 printIllegal();
                 return 1;
             }
@@ -202,8 +187,7 @@ int answerProcessing(game g, char inst, int row, int column)
 int main(void)
 {
     game g = game_default();
-    while (!game_is_over(g))
-    {
+    while (!game_is_over(g)) {
         //Default values
         char instruction = '\n';
         int row = -1;
@@ -211,14 +195,13 @@ int main(void)
         game_print(g);
         printf("> ? [h for help]\n");
         //While the client press enter without a command
-        while (instruction == '\n')
-        {
+        while (instruction == '\n') {
             scanf(" %c", &instruction);
             // Answer will be 0 if the command is not a single term expression ('h','r','q')
             int answer = answerProcessing(g, instruction, row, column);
             // Process the other arguments
-            if(!answer && scanf(" %d %d", &row, &column) == 2){
-                answerProcessing(g,instruction,row,column);
+            if (!answer && scanf(" %d %d", &row, &column) == 2) {
+                answerProcessing(g, instruction, row, column);
             }
         }
     }
