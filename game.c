@@ -56,6 +56,11 @@ void game_delete(game g)
 
 void game_set_square(game g, uint i, uint j, square s)
 {
+    if (g == NULL || g->board == NULL || i > DEFAULT_SIZE || j > DEFAULT_SIZE) {
+        fprintf(stderr, "Error: Invalid argument | game_get_square()");
+        exit(EXIT_FAILURE);
+    }
+    g->board[i][j] = s;
 }
 
 square
@@ -109,6 +114,7 @@ uint game_get_current_nb_tents_all(cgame g)
 
 void game_play_move(game g, uint i, uint j, square s)
 {
+    game_set_square(g, i, j, s);
 }
 
 int game_check_move(cgame g, uint i, uint j, square s)
@@ -123,10 +129,20 @@ bool game_is_over(cgame g)
 
 void game_fill_grass_row(game g, uint i)
 {
+    for (int j = 0; j < DEFAULT_SIZE; j++) {
+        if (g->board[i][j] == EMPTY) {
+            g->board[i][j] = GRASS;
+        }
+    }
 }
 
 void game_fill_grass_col(game g, uint j)
 {
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        if (g->board[i][j] == EMPTY) {
+            g->board[i][j] = GRASS;
+        }
+    }
 }
 
 void game_restart(game g)
