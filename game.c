@@ -61,7 +61,12 @@ void game_set_square(game g, uint i, uint j, square s)
 square
 game_get_square(cgame g, uint i, uint j)
 {
-    return EMPTY;
+    if (g == NULL || g->board == NULL || i > DEFAULT_SIZE || j > DEFAULT_SIZE) {
+        fprintf(stderr, "Error: Invalid argument | game_get_square()");
+        exit(EXIT_FAILURE);
+    }
+
+    return g->board[i][j];
 }
 
 void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)

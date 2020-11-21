@@ -71,4 +71,8 @@ target_link_libraries(game_test_bjgiraud game)
 target_link_libraries(game_test_mlecoeuvre game)
 target_link_libraries(game_test_edatrier game)
 
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND clang-format-8 -i *.c
+        COMMENT "Formating all .c files.")
+
     
