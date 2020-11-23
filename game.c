@@ -4,8 +4,8 @@
 
 typedef struct game_s {
     square** board;
-    int* expected_nb_tents_col;
-    int* expected_nb_tents_row;
+    uint* expected_nb_tents_col;
+    uint* expected_nb_tents_row;
 } game_s;
 
 game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
@@ -16,7 +16,7 @@ game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
     struct game_s* game = (struct game_s*)malloc(sizeof(struct game_s));
     game->board = (square**)malloc(sizeof(square) * DEFAULT_SIZE * DEFAULT_SIZE);
     game->expected_nb_tents_row = nb_tents_row;
-    game->expected_nb_tents_row = nb_tents_col;
+    game->expected_nb_tents_col = nb_tents_col;
     for (int i = 0; i < DEFAULT_SIZE; i++) {
         for (int j = 0; j < DEFAULT_SIZE; j++) {
             game->board[i][j] = squares[i * DEFAULT_SIZE + j];
@@ -84,17 +84,33 @@ void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 
 uint game_get_expected_nb_tents_row(cgame g, uint i)
 {
-    return 0;
+    if (g == NULL || g->board == NULL || i > DEFAULT_SIZE) {
+        fprintf(stderr, "Error: Invalid argument | game_get__expected_nb_tents_row()");
+        exit(EXIT_FAILURE);
+    }
+    return g->expected_nb_tents_row;
 }
 
 uint game_get_expected_nb_tents_col(cgame g, uint j)
 {
-    return 0;
+    if (g == NULL || g->board == NULL || j > DEFAULT_SIZE) {
+        fprintf(stderr, "Error: Invalid argument | game_get__expected_nb_tents_col()");
+        exit(EXIT_FAILURE);
+    }
+    return g->expected_nb_tents_col;
 }
 
 uint game_get_expected_nb_tents_all(cgame g)
 {
-    return 0;
+    if (g == NULL || g->board == NULL) {
+        fprintf(stderr, "Error: Invalid argument | game_get_square()");
+        exit(EXIT_FAILURE);
+    }
+    uint cpt = 0;
+    for (int i = 0; i < DEFAULT_SIZE; i++)
+        cpt = cpt + g->expected_nb_tents_row;
+
+    return cpt;
 }
 
 uint game_get_current_nb_tents_row(cgame g, uint i)
@@ -147,4 +163,7 @@ void game_fill_grass_col(game g, uint j)
 
 void game_restart(game g)
 {
+    if (g == NULL || g->board == NULL) {
+        fprintf(stderr, "Error: Invalid argument | game_get_restart()");
+    }
 }
