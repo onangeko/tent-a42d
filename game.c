@@ -185,4 +185,12 @@ void game_restart(game g)
     if (g == NULL || g->board == NULL) {
         fprintf(stderr, "Error: Invalid argument | game_get_restart()");
     }
+
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        for (int j = 0; j < DEFAULT_SIZE; j++) {
+            if (g->board[i][j] == TENT || GRASS) {
+                g->board[i][j] = EMPTY;
+            }
+        }
+    }
 }
