@@ -14,7 +14,10 @@ game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
         exit(EXIT_FAILURE);
     }
     struct game_s* game = (struct game_s*)malloc(sizeof(struct game_s));
-    game->board = (square**)malloc(sizeof(square) * DEFAULT_SIZE * DEFAULT_SIZE);
+    game->board = (square**)malloc(sizeof(square*) * DEFAULT_SIZE);
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        game->board[i] = (square*)malloc(sizeof(square) * DEFAULT_SIZE);
+    }
     game->expected_nb_tents_row = nb_tents_row;
     game->expected_nb_tents_col = nb_tents_col;
     for (int i = 0; i < DEFAULT_SIZE; i++) {
