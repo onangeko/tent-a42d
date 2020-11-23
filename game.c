@@ -87,48 +87,64 @@ void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 
 uint game_get_expected_nb_tents_row(cgame g, uint i)
 {
+    return 0;
+}
+
+uint game_get_expected_nb_tents_col(cgame g, uint j)
+{
+    return 0;
+}
+
+uint game_get_expected_nb_tents_all(cgame g)
+{
+    return 0;
+}
+
+uint game_get_current_nb_tents_row(cgame g, uint i)
+{
     if (g == NULL || g->board == NULL || i > DEFAULT_SIZE) {
         fprintf(stderr, "Error: Invalid argument | game_get__expected_nb_tents_row()");
         exit(EXIT_FAILURE);
     }
-    return g->expected_nb_tents_row;
+    uint cpt = 0;
+    for (int j = 0; j < DEFAULT_SIZE; j++) {
+        if (g->board[i][j] == TENT) {
+            cpt = cpt + 1;
+        }
+    }
+    return cpt;
 }
 
-uint game_get_expected_nb_tents_col(cgame g, uint j)
+uint game_get_current_nb_tents_col(cgame g, uint j)
 {
     if (g == NULL || g->board == NULL || j > DEFAULT_SIZE) {
         fprintf(stderr, "Error: Invalid argument | game_get__expected_nb_tents_col()");
         exit(EXIT_FAILURE);
     }
-    return g->expected_nb_tents_col;
+    uint cpt = 0;
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        if (g->board[i][j] == TENT) {
+            cpt = cpt + 1;
+        }
+    }
+    return cpt;
 }
 
-uint game_get_expected_nb_tents_all(cgame g)
+uint game_get_current_nb_tents_all(cgame g)
 {
     if (g == NULL || g->board == NULL) {
         fprintf(stderr, "Error: Invalid argument | game_get_square()");
         exit(EXIT_FAILURE);
     }
     uint cpt = 0;
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        cpt = cpt + g->expected_nb_tents_row;
-
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        for (int j = 0; j < DEFAULT_SIZE; j++) {
+            if (g->board[i][j] == TENT) {
+                cpt = cpt + 1;
+            }
+        }
+    }
     return cpt;
-}
-
-uint game_get_current_nb_tents_row(cgame g, uint i)
-{
-    return 0;
-}
-
-uint game_get_current_nb_tents_col(cgame g, uint j)
-{
-    return 0;
-}
-
-uint game_get_current_nb_tents_all(cgame g)
-{
-    return 0;
 }
 
 void game_play_move(game g, uint i, uint j, square s)
