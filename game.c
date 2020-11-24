@@ -135,7 +135,7 @@ uint game_get_current_nb_tents_col(cgame g, uint j)
 uint game_get_current_nb_tents_all(cgame g)
 {
     if (g == NULL || g->board == NULL) {
-        fprintf(stderr, "Error: Invalid argument | game_get_current_nb_tents_all()");
+        fprintf(stderr, "Error: Invalid argument | game_get_square()");
         exit(EXIT_FAILURE);
     }
     uint cpt = 0;
@@ -175,21 +175,45 @@ int check_tent_move(cgame g, uint i, uint j)
 {
     //Illegal move
     //* plant a tent on a tree
-    if (game_get_square(g, i, j) == TREE) {
+    if (game_get_square(g, i, j) == TREE)
         return ILLEGAL;
-    }
+
     //Losing moves
     //* plant tent adjacent to another orthogonally
-    if (is_adjacent_to(g, i, j, TENT)) {
+    if (is_adjacent_to(g, i, j, TENT))
         return LOSING;
-    }
+
     //* plant a tent not adjacent to a tree
     if (!is_adjacent_to(g, i, j, TREE))
         return LOSING;
     //* plant n+1 tents when n tents are expected
-    if (game_get_current_nb_tents_row(g, i) >= game_get_expected_nb_tents_row(g, i) || game_get_current_nb_tents_col(g, j) >= game_get_expected_nb_tents_col(g, j)) {
+    if (game_get_current_nb_tents_row(g, i) >= game_get_expected_nb_tents_row(g, i) || game_get_current_nb_tents_col(g, j) >= game_get_expected_nb_tents_col(g, j))
         return LOSING;
-    }
+
+    return REGULAR;
+}
+
+int check_grass_move(cgame g, uint i, uint j)
+{
+    //Illegal move
+    //* put grass on a tree
+    if (game_get_square(g, i, j) == TREE)
+        return ILLEGAL;
+    //Losing moves
+    //* put grass when number of empty squares is not enough to reach the expected number of tents
+    if (game_get_current_nb_tents_row(g, i) != game_get_expected_nb_tents_col(g, j))
+        return LOSING;
+
+    return REGULAR;
+}
+
+int check_empty_move(cgame g, uint i, uint j)
+{
+    //Illegal move
+    //* erase square on a tree
+    if (game_get_square(g, i, j) == TREE)
+        return ILLEGAL;
+
     return REGULAR;
 }
 
@@ -199,58 +223,21 @@ int game_check_move(cgame g, uint i, uint j, square s)
         fprintf(stderr, "Error: Invalid argument | game_check_move()");
     }
     //Tent move
-    if (s == TENT) {
+    if (s == TENT)
         return check_tent_move(g, i, j);
-    }
+
+    //Grass move
+    else if (s == GRASS)
+        return check_grass_move(g, i, j);
+    //Empty move
+    else if (s == EMPTY)
+        return check_empty_move(g, i, j);
     return REGULAR;
 }
 
 bool game_is_over(cgame g)
 {
-    // the game shall be over only if the 4 rules described in the readme are satisfied and if the tents are correctly placed
-
-    if (g == NULL || g->board == NULL) {
-        fprintf(stderr, "Error: Invalid argument | game_get_is_over()");
-    }
-
-    // RULE 1 ) No two tents are adjacent, even diagonally.
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        for (int j = 0; j < DEFAULT_SIZE; j++)
-            if (g->board[i][j] == TENT)
-                if (is_adjacent_to(g, i, j, TENT))
-                    return false;
-
-    // RULE 2 ) The number of tents in each row, and in each column, matches the expected numbers given around the sides of the grid.
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        if (game_get_current_nb_tents_row(g, i) != game_get_expected_nb_tents_row(g, i))
-            return false;
-
-    for (int j = 0; j < DEFAULT_SIZE; j++)
-        if (game_get_current_nb_tents_col(g, j) != game_get_expected_nb_tents_row(g, j))
-            return false;
-
-    // RULE 3 ) There are exactly as many tents as trees.
-    int cpt = 0;
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        for (int j = 0; j < DEFAULT_SIZE; j++)
-            if (g->board[i][j] == TREE)
-                cpt = cpt + 1;
-    if (cpt != game_get_current_nb_tents_all(g))
-        return false;
-
-    // RULE 4 ) Each tent must be orthogonally adjacent (horizontally or vertically, but not diagonally) to at least one tree and vice versa.
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        for (int j = 0; j < DEFAULT_SIZE; j++)
-            if (g->board[i][j] == TENT)
-                if (!is_adjacent_to(g, i, j, TREE))
-                    return false;
-                    
-    // EACH TENT IS CORRECTLY PLACED
-
-    if (g->board[0][0] != TENT || g->board[0][3] != TENT || g->board[0][6] != TENT || g->board[2][0] != TENT || g->board[2][3] != TENT || g->board[2][5] != TENT || g->board[2][0] != TENT || g->board[4][0] != TENT || g->board[4][2] != TENT || g->board[4][4] != TENT || g->board[4][6] != TENT || g->board[6][0] != TENT)
-        return false;
-
-    return true;
+    return false;
 }
 
 void game_fill_grass_row(game g, uint i)
