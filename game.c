@@ -214,8 +214,11 @@ bool game_is_over(cgame g)
     }
 
     // RULE 1 ) No two tents are adjacent, even diagonally.
-
-
+    for (int i = 0; i < DEFAULT_SIZE; i++)
+        for (int j = 0; j < DEFAULT_SIZE; j++)
+            if (g->board[i][j] == TENT)
+                if (is_adjacent_to(g, i, j, TENT))
+                    return false;
 
     // RULE 2 ) The number of tents in each row, and in each column, matches the expected numbers given around the sides of the grid.
     for (int i = 0; i < DEFAULT_SIZE; i++)
@@ -236,10 +239,16 @@ bool game_is_over(cgame g)
         return false;
 
     // RULE 4 ) Each tent must be orthogonally adjacent (horizontally or vertically, but not diagonally) to at least one tree and vice versa.
+    for (int i = 0; i < DEFAULT_SIZE; i++)
+        for (int j = 0; j < DEFAULT_SIZE; j++)
+            if (g->board[i][j] == TENT)
+                if (!is_adjacent_to(g, i, j, TREE))
+                    return false;
+                    
+    // EACH TENT IS CORRECTLY PLACED
 
-
-
-
+    if (g->board[0][0] != TENT || g->board[0][3] != TENT || g->board[0][6] != TENT || g->board[2][0] != TENT || g->board[2][3] != TENT || g->board[2][5] != TENT || g->board[2][0] != TENT || g->board[4][0] != TENT || g->board[4][2] != TENT || g->board[4][4] != TENT || g->board[4][6] != TENT || g->board[6][0] != TENT)
+        return false;
 
     return true;
 }
