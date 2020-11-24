@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define DEFAULT_SIZE_BOARD DEFAULT_SIZE - 1
+
 typedef struct game_s {
     square** board;
     uint* expected_nb_tents_col;
@@ -152,9 +154,55 @@ void game_play_move(game g, uint i, uint j, square s)
     game_set_square(g, i, j, s);
 }
 
+bool is_adjacent_to(cgame g, uint i, uint j, square s)
+{
+    if (i > 0)
+        if (game_get_square(g, i - 1, j) == s)
+            return true;
+    if (i < DEFAULT_SIZE - 1)
+        if (game_get_square(g, i + 1, j) == s)
+            return true;
+    if (j > 0)
+        if (game_get_square(g, i, j - 1) == s)
+            return true;
+    if (j < DEFAULT_SIZE - 1)
+        if (game_get_square(g, i, j + 1) == s)
+            return true;
+    return false;
+}
+
+int check_tent_move(cgame g, uint i, uint j)
+{
+    //Illegal move
+    //* plant a tent on a tree
+    if (game_get_square(g, i, j) == TREE) {
+        return ILLEGAL;
+    }
+    //Losing moves
+    //* plant tent adjacent to another orthogonally
+    if (is_adjacent_to(g, i, j, TENT)) {
+        return LOSING;
+    }
+    //* plant a tent not adjacent to a tree
+    if (!is_adjacent_to(g, i, j, TREE))
+        return LOSING;
+    //* plant n+1 tents when n tents are expected
+    if (game_get_current_nb_tents_row(g, i) >= game_get_expected_nb_tents_row(g, i) || game_get_current_nb_tents_col(g, j) >= game_get_expected_nb_tents_col(g, j)) {
+        return LOSING;
+    }
+    return REGULAR;
+}
+
 int game_check_move(cgame g, uint i, uint j, square s)
 {
-    return ILLEGAL;
+    if (g == NULL || g->board == NULL || i > DEFAULT_SIZE || j > DEFAULT_SIZE) {
+        fprintf(stderr, "Error: Invalid argument | game_check_move()");
+    }
+    //Tent move
+    if (s == TENT) {
+        return check_tent_move(g, i, j);
+    }
+    return REGULAR;
 }
 
 bool game_is_over(cgame g)
