@@ -151,7 +151,8 @@ uint game_get_current_nb_tents_all(cgame g)
 
 void game_play_move(game g, uint i, uint j, square s)
 {
-    game_set_square(g, i, j, s);
+    if(s != TREE && game_get_square(g,i,j) != TREE)
+        game_set_square(g, i, j, s);
 }
 
 bool is_adjacent_to(cgame g, uint i, uint j, square s)
