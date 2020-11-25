@@ -75,7 +75,6 @@ game_get_square(cgame g, uint i, uint j)
         fprintf(stderr, "Error: Invalid argument | game_get_square()");
         exit(EXIT_FAILURE);
     }
-
     return g->board[i][j];
 }
 
