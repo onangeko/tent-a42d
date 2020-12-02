@@ -47,12 +47,29 @@ game game_new_empty(void)
 
 game game_copy(cgame g)
 {
-    return NULL;
+    square* squares = malloc(DEFAULT_SIZE * DEFAULT_SIZE * sizeof(square));
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        for (int j = 0; j < DEFAULT_SIZE; j++) {
+            squares[i * DEFAULT_SIZE + j] = g->board[i][j];
+        }
+    }
+    return game_new(squares, g->expected_nb_tents_row, g->expected_nb_tents_col);
 }
 
 bool game_equal(cgame g1, cgame g2)
 {
-    return NULL;
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        if (game_get_current_nb_tents_col(g1, i) != game_get_current_nb_tents_col(g2, i)
+            || game_get_current_nb_tents_row(g1, i) != game_get_current_nb_tents_row(g2, i)) {
+            return false;
+        }
+        for (int j = 0; j < DEFAULT_SIZE; j++) {
+            if (g1->board[i][j] != g2->board[i][j]) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 void game_delete(game g)
