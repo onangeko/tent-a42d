@@ -305,13 +305,6 @@ bool game_is_over(cgame g)
             if (g->board[i][j] == TENT)
                 if (!is_adjacent_to(g, i, j, TREE))
                     return false;
-
-    // EACH TENT IS CORRECTLY PLACED
-
-    if (g->board[0][0] != TENT || g->board[0][3] != TENT || g->board[0][6] != TENT || g->board[2][0] != TENT || g->board[2][3] != TENT || g->board[2][5] != TENT || g->board[2][0] != TENT || g->board[4][0] != TENT || g->board[4][2] != TENT || g->board[4][4] != TENT || g->board[4][6] != TENT || g->board[6][0] != TENT)
-        return false;
-
-    return true;
 }
 
 void game_fill_grass_row(game g, uint i)
