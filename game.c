@@ -64,7 +64,7 @@ bool game_equal(cgame g1, cgame g2)
             return false;
         }
         for (int j = 0; j < DEFAULT_SIZE; j++) {
-            if (g1->board[i][j] != g2->board[i][j]) {
+            if (game_get_square(g1, i, j) != game_get_square(g1, i, j)) {
                 return false;
             }
         }
@@ -74,6 +74,21 @@ bool game_equal(cgame g1, cgame g2)
 
 void game_delete(game g)
 {
+    if (g != NULL) {
+        if (g->board != NULL) {
+            for (int i = 0; i < DEFAULT_SIZE; i++) {
+                free(g->board[i]);
+            }
+            free(g->board);
+        }
+        if (g->expected_nb_tents_col != NULL) {
+            free(g->expected_nb_tents_col);
+        }
+        if (g->expected_nb_tents_row != NULL) {
+            free(g->expected_nb_tents_row);
+        }
+        free(g);
+    }
 }
 
 void game_set_square(game g, uint i, uint j, square s)
@@ -312,13 +327,6 @@ bool game_is_over(cgame g)
             if (g->board[i][j] == TENT)
                 if (!is_adjacent_to(g, i, j, TREE))
                     return false;
-
-    // EACH TENT IS CORRECTLY PLACED
-
-    if (g->board[0][0] != TENT || g->board[0][3] != TENT || g->board[0][6] != TENT || g->board[2][0] != TENT || g->board[2][3] != TENT || g->board[2][5] != TENT || g->board[2][0] != TENT || g->board[4][0] != TENT || g->board[4][2] != TENT || g->board[4][4] != TENT || g->board[4][6] != TENT || g->board[6][0] != TENT)
-        return false;
-
-    return true;
 }
 
 void game_fill_grass_row(game g, uint i)
