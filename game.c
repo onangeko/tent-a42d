@@ -305,6 +305,8 @@ bool game_is_over(cgame g)
             if (g->board[i][j] == TENT)
                 if (!is_adjacent_to(g, i, j, TREE))
                     return false;
+    
+    return true;
 }
 
 void game_fill_grass_row(game g, uint i)
