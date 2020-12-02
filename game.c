@@ -64,7 +64,7 @@ bool game_equal(cgame g1, cgame g2)
             return false;
         }
         for (int j = 0; j < DEFAULT_SIZE; j++) {
-            if (g1->board[i][j] != g2->board[i][j]) {
+            if (game_get_square(g1, i, j) != game_get_square(g1, i, j)) {
                 return false;
             }
         }
@@ -74,6 +74,21 @@ bool game_equal(cgame g1, cgame g2)
 
 void game_delete(game g)
 {
+    if (g != NULL) {
+        if (g->board != NULL) {
+            for (int i = 0; i < DEFAULT_SIZE; i++) {
+                free(g->board[i]);
+            }
+            free(g->board);
+        }
+        if (g->expected_nb_tents_col != NULL) {
+            free(g->expected_nb_tents_col);
+        }
+        if (g->expected_nb_tents_row != NULL) {
+            free(g->expected_nb_tents_row);
+        }
+        free(g);
+    }
 }
 
 void game_set_square(game g, uint i, uint j, square s)
