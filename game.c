@@ -150,7 +150,7 @@ uint game_get_current_nb_tents_all(cgame g)
 
 void game_play_move(game g, uint i, uint j, square s)
 {
-    if(s != TREE && game_get_square(g,i,j) != TREE)
+    if (s != TREE && game_get_square(g, i, j) != TREE)
         game_set_square(g, i, j, s);
 }
 
@@ -274,7 +274,7 @@ bool game_is_over(cgame g)
                 if (!is_adjacent_to(g, i, j, TREE))
                     return false;
 
-        // EACH TENT IS CORRECTLY PLACED
+    // EACH TENT IS CORRECTLY PLACED
 
     if (g->board[0][0] != TENT || g->board[0][3] != TENT || g->board[0][6] != TENT || g->board[2][0] != TENT || g->board[2][3] != TENT || g->board[2][5] != TENT || g->board[2][0] != TENT || g->board[4][0] != TENT || g->board[4][2] != TENT || g->board[4][4] != TENT || g->board[4][6] != TENT || g->board[6][0] != TENT)
         return false;
