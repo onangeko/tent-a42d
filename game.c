@@ -97,25 +97,47 @@ game_get_square(cgame g, uint i, uint j)
 
 void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)
 {
+
 }
 
 void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 {
+
 }
 
 uint game_get_expected_nb_tents_row(cgame g, uint i)
 {
-    return 0;
+    if (g == NULL || i < DEFAULT_SIZE){
+        printf("Invalid arguments");
+        exit(0);
+    }
+    
+    unsigned int n = 0;
+    for (int c = 0 ; c < DEFAULT_SIZE ; c++){
+        if (game_get_square(g,i,c) == TENT)
+            n += 1;
+    }
+    return n;
 }
 
 uint game_get_expected_nb_tents_col(cgame g, uint j)
 {
-    return 0;
+    if (g == NULL || j < DEFAULT_SIZE){
+        printf("Invalid arguments");
+        exit(0);
+    }
+    
+    unsigned int n = 0;
+    for (int c = 0 ; c < DEFAULT_SIZE ; c++){
+        if (game_get_square(g,c,j) == TENT)
+            n += 1;
+    }
+    return n;
 }
 
 uint game_get_expected_nb_tents_all(cgame g)
 {
-    return 0;
+    return 12;
 }
 
 uint game_get_current_nb_tents_row(cgame g, uint i)
