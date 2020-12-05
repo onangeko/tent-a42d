@@ -112,12 +112,24 @@ game_get_square(cgame g, uint i, uint j)
 
 void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)
 {
+    if (g == NULL || i >= DEFAULT_SIZE)
+    {
+        printf("invalid arguments");
+        exit(0);
+    }
 
+    g->g->board[i][8] = nb_tents;
 }
 
 void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 {
+    if (g == NULL || j >= DEFAULT_SIZE)
+    {
+        printf("invalid arguments");
+        exit(0);
+    }
 
+    g->board[8][j] = nb_tents;
 }
 
 uint game_get_expected_nb_tents_row(cgame g, uint i)
@@ -128,7 +140,7 @@ uint game_get_expected_nb_tents_row(cgame g, uint i)
         exit(0);
     }
 
-    return g->expected_nb_tens_row[i];
+    return g->expected_nb_tents_row[i];
 }
 
 uint game_get_expected_nb_tents_col(cgame g, uint j)
@@ -139,7 +151,7 @@ uint game_get_expected_nb_tents_col(cgame g, uint j)
         exit(0);
     }
 
-    return g->expected_nb_tens_col[j];
+    return g->expected_nb_tents_col[j];
 }
 
 uint game_get_expected_nb_tents_all(cgame g)
@@ -153,7 +165,7 @@ uint game_get_expected_nb_tents_all(cgame g)
     unsigned int n = 0;
 
     for (int i = 0 ; i < DEFAULT_SIZE ; i++)
-    n = n + g->expected_nb_tens_row[i];
+    n = n + g->expected_nb_tents_row[i];
 
 
     return 0;
