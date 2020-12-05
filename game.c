@@ -112,8 +112,7 @@ game_get_square(cgame g, uint i, uint j)
 
 void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)
 {
-    if (g == NULL || i >= DEFAULT_SIZE)
-    {
+    if (g == NULL || i >= DEFAULT_SIZE) {
         printf("invalid arguments");
         exit(0);
     }
@@ -123,8 +122,7 @@ void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)
 
 void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 {
-    if (g == NULL || j >= DEFAULT_SIZE)
-    {
+    if (g == NULL || j >= DEFAULT_SIZE) {
         printf("invalid arguments");
         exit(0);
     }
@@ -134,8 +132,7 @@ void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 
 uint game_get_expected_nb_tents_row(cgame g, uint i)
 {
-    if (g == NULL || i >= DEFAULT_SIZE)
-    {
+    if (g == NULL || i >= DEFAULT_SIZE) {
         printf("invalid arguments");
         exit(0);
     }
@@ -145,8 +142,7 @@ uint game_get_expected_nb_tents_row(cgame g, uint i)
 
 uint game_get_expected_nb_tents_col(cgame g, uint j)
 {
-    if (g == NULL || j >= DEFAULT_SIZE)
-    {
+    if (g == NULL || j >= DEFAULT_SIZE) {
         printf("invalid arguments");
         exit(0);
     }
@@ -156,17 +152,15 @@ uint game_get_expected_nb_tents_col(cgame g, uint j)
 
 uint game_get_expected_nb_tents_all(cgame g)
 {
-    if (g == NULL)
-    {
+    if (g == NULL) {
         printf("invalid arguments");
         exit(0);
     }
 
     unsigned int n = 0;
 
-    for (int i = 0 ; i < DEFAULT_SIZE ; i++)
-    n = n + g->expected_nb_tents_row[i];
-
+    for (int i = 0; i < DEFAULT_SIZE; i++)
+        n = n + g->expected_nb_tents_row[i];
 
     return n;
 }
@@ -271,7 +265,7 @@ int check_grass_move(cgame g, uint i, uint j)
         return ILLEGAL;
     //Losing moves
     //* put grass when number of empty squares is not enough to reach the expected number of tents
-    if (game_get_current_nb_tents_row(g, i) != game_get_expected_nb_tents_col(g, j))
+    if (game_get_current_nb_tents_row(g, i) < game_get_expected_nb_tents_row(g, i) || game_get_current_nb_tents_col(g, j) < game_get_expected_nb_tents_col(g, j))
         return LOSING;
 
     return REGULAR;
@@ -343,7 +337,7 @@ bool game_is_over(cgame g)
             if (g->board[i][j] == TENT)
                 if (!is_adjacent_to(g, i, j, TREE))
                     return false;
-    
+
     return true;
 }
 
