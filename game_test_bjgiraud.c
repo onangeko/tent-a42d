@@ -56,8 +56,6 @@ void test_game_set_expected_nb_tents_col(game g)
 }
 
 ///////
-/*
-
     void test_game_default(game g)
 {
     for (int i = 0 ; i < 8 ; i++)
@@ -104,8 +102,7 @@ void test_game_set_expected_nb_tents_col(game g)
 
 
 
-*/
-
+/*
 void test_game_default(game g)
 {
     //Parameters corresponding to the solution of the default game
@@ -125,7 +122,7 @@ void test_game_default(game g)
     game g2 = game_new(squares, nb_tents_row, nb_tents_col);
     assert(game_equal(g, g2) == 0);
 }
-
+*/
 int main(int argc, char* argv[])
 {
 
