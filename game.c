@@ -168,7 +168,7 @@ uint game_get_expected_nb_tents_all(cgame g)
     n = n + g->expected_nb_tents_row[i];
 
 
-    return 0;
+    return n;
 }
 
 uint game_get_current_nb_tents_row(cgame g, uint i)
