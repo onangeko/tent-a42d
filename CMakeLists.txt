@@ -35,7 +35,7 @@ add_test(test_onangeko_game_restart ./game_test_onangeko game_restart)
 add_test(test_onangeko_game_get_current_nb_tents_all ./game_test_onangeko game_current_tents_all)
 add_test(test_onangeko_game_get_current_nb_tents_row ./game_test_onangeko game_current_tents_row)
 add_test(test_onangeko_game_get_current_nb_tents_col ./game_test_onangeko game_current_tents_col)
-add_test(test_onangeko_game_get_print ./game_test_onangeko game_print)
+add_test(test_onangeko_game_print ./game_test_onangeko game_print)
 
 
 
@@ -71,3 +71,8 @@ target_link_libraries(game_test_bjgiraud game)
 target_link_libraries(game_test_mlecoeuvre game)
 target_link_libraries(game_test_edatrier game)
 
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND clang-format-8 -i *.c
+        COMMENT "Formating all .c files.")
+
+    
