@@ -24,27 +24,22 @@ int test_game_is_over()
     // default game solution
     game g1 = game_new(squares, nb_tents_row, nb_tents_col);
 
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-    {
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
         // we check if the number of expected tents in each row is correct
-        if (game_get_expected_nb_tents_row(g1, i) != nb_tents_row[i]) 
-        {
+        if (game_get_expected_nb_tents_row(g1, i) != nb_tents_row[i]) {
             game_delete(g1);
             return EXIT_FAILURE;
-        }  
+        }
     }
-    for (int j = 0; j < DEFAULT_SIZE; j++)
-    {
+    for (int j = 0; j < DEFAULT_SIZE; j++) {
         // we check if the number of expected tents in each col is correct
-        if (game_get_expected_nb_tents_col(g1, j) != nb_tents_col[j])
-        {
+        if (game_get_expected_nb_tents_col(g1, j) != nb_tents_col[j]) {
             game_delete(g1);
             return EXIT_FAILURE;
-        }  
+        }
     }
-    
-    if ((game_get_current_nb_tents_all(g1)) == (game_get_expected_nb_tents_all(g1)) && (game_is_over(g1) == true))
-    {
+
+    if ((game_get_current_nb_tents_all(g1)) == (game_get_expected_nb_tents_all(g1)) && (game_is_over(g1) == true)) {
         game_delete(g1);
         return EXIT_SUCCESS;
     }
