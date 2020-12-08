@@ -367,7 +367,7 @@ void game_restart(game g)
 
     for (int i = 0; i < DEFAULT_SIZE; i++) {
         for (int j = 0; j < DEFAULT_SIZE; j++) {
-            if (g->board[i][j] == TENT || GRASS) {
+            if (g->board[i][j] != TREE) {
                 g->board[i][j] = EMPTY;
             }
         }
