@@ -48,14 +48,7 @@ bool test_game_copy(square* squares, uint* nb_tents_row, uint* nb_tents_col)
     Tests, for each square, if the value is equal between the 2 games and if the number of expected tents 
     is equal between the 2 games for each row and column
     */
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
-        if (game_get_expected_nb_tents_row(g1, i) != game_get_expected_nb_tents_row(g2, i))
-            return false;
-        for (int j = 0; j < DEFAULT_SIZE; j++)
-            if (game_get_square(g1, i, j) != game_get_square(g2, i, j) || game_get_expected_nb_tents_col(g1, j) != game_get_expected_nb_tents_col(g1, j))
-                return false;
-    }
-    return true && g1 != NULL && g2 != NULL;
+    return game_equal(g1, g2);
 }
 
 bool test_game_equal(square* squares, uint* nb_tents_row, uint* nb_tents_col)
@@ -65,18 +58,15 @@ bool test_game_equal(square* squares, uint* nb_tents_row, uint* nb_tents_col)
     game g2 = game_new(squares, nb_tents_row, nb_tents_col);
     game g3 = game_new(squares, nb_tents_row, nb_tents_col);
     //Changes the 3rd game in order to make it different from the 2 others
-    game_set_expected_nb_tents_col(g3, 0, game_get_current_nb_tents_col(g3, 0) + 1);
+    game_set_expected_nb_tents_col(g3, 0, nb_tents_col[0] + 1);
     return game_equal(g1, g2) && !game_equal(g1, g3);
 }
 
 bool test_game_delete(void)
 {
     //Creates an empty game, copies it then deletes the 1st one and checks if the 2 games are different asserting that the 1st one is indeed deleted
-    game g1 = game_new_empty();
+    game g1 = game_default();
     game g2 = game_copy(g1);
-    if (g1 == NULL || g2 == NULL) {
-        return false;
-    }
     game_delete(g1);
     return !game_equal(g1, g2);
 }

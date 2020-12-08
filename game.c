@@ -15,13 +15,17 @@ game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
     if (squares == NULL || nb_tents_row == NULL || nb_tents_col == NULL) {
         exit(EXIT_FAILURE);
     }
-    struct game_s* game = (struct game_s*)malloc(sizeof(struct game_s));
-    game->board = (square**)malloc(sizeof(square*) * DEFAULT_SIZE);
+    struct game_s* game = malloc(sizeof(struct game_s));
+    game->board = malloc(sizeof(square*) * DEFAULT_SIZE);
     for (int i = 0; i < DEFAULT_SIZE; i++) {
-        game->board[i] = (square*)malloc(sizeof(square) * DEFAULT_SIZE);
+        game->board[i] = malloc(sizeof(square) * DEFAULT_SIZE);
     }
-    game->expected_nb_tents_row = nb_tents_row;
-    game->expected_nb_tents_col = nb_tents_col;
+    game->expected_nb_tents_row = malloc(sizeof(uint) * DEFAULT_SIZE);
+    game->expected_nb_tents_col = malloc(sizeof(uint) * DEFAULT_SIZE);
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        game->expected_nb_tents_col[i] = nb_tents_col[i];
+        game->expected_nb_tents_row[i] = nb_tents_row[i];
+    }
     for (int i = 0; i < DEFAULT_SIZE; i++) {
         for (int j = 0; j < DEFAULT_SIZE; j++) {
             game->board[i][j] = squares[i * DEFAULT_SIZE + j];
@@ -58,13 +62,19 @@ game game_copy(cgame g)
 
 bool game_equal(cgame g1, cgame g2)
 {
+    if (g1 == NULL || g1->board == NULL || g1->expected_nb_tents_col == NULL || g1->expected_nb_tents_row == NULL
+        || g2 == NULL || g2->board == NULL || g2->expected_nb_tents_col == NULL || g2->expected_nb_tents_row == NULL) {
+        return false;
+    }
     for (int i = 0; i < DEFAULT_SIZE; i++) {
-        if (game_get_current_nb_tents_col(g1, i) != game_get_current_nb_tents_col(g2, i)
+        if (game_get_expected_nb_tents_col(g1, i) != game_get_expected_nb_tents_col(g2, i)
+            || game_get_expected_nb_tents_row(g1, i) != game_get_expected_nb_tents_row(g2, i)
+            || game_get_current_nb_tents_col(g1, i) != game_get_current_nb_tents_col(g2, i)
             || game_get_current_nb_tents_row(g1, i) != game_get_current_nb_tents_row(g2, i)) {
             return false;
         }
         for (int j = 0; j < DEFAULT_SIZE; j++) {
-            if (game_get_square(g1, i, j) != game_get_square(g1, i, j)) {
+            if (game_get_square(g1, i, j) != game_get_square(g2, i, j)) {
                 return false;
             }
         }
@@ -78,16 +88,21 @@ void game_delete(game g)
         if (g->board != NULL) {
             for (int i = 0; i < DEFAULT_SIZE; i++) {
                 free(g->board[i]);
+                g->board[i] = NULL;
             }
             free(g->board);
+            g->board = NULL;
         }
         if (g->expected_nb_tents_col != NULL) {
             free(g->expected_nb_tents_col);
+            g->expected_nb_tents_col = NULL;
         }
         if (g->expected_nb_tents_row != NULL) {
             free(g->expected_nb_tents_row);
+            g->expected_nb_tents_row = NULL;
         }
         free(g);
+        g = NULL;
     }
 }
 
