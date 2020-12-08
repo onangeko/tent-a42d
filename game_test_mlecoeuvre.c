@@ -6,7 +6,7 @@
 
 /* ********** TEST GET_SQUARE ********** */
 bool test_game_get_square(game g)
-{ 
+{
     //EMPTY square
     square s = game_get_square(g, 0, 0);
     if (s != EMPTY)

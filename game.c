@@ -46,7 +46,11 @@ game game_new_empty(void)
         nb_tents_row[i] = 0;
         nb_tents_col[i] = 0;
     }
-    return game_new(squares, nb_tents_row, nb_tents_col);
+    game empty = game_new(squares, nb_tents_row, nb_tents_col);
+    free(squares);
+    free(nb_tents_col);
+    free(nb_tents_row);
+    return empty;
 }
 
 game game_copy(cgame g)
@@ -57,13 +61,17 @@ game game_copy(cgame g)
             squares[i * DEFAULT_SIZE + j] = g->board[i][j];
         }
     }
-    return game_new(squares, g->expected_nb_tents_row, g->expected_nb_tents_col);
+    game copy = game_new(squares, g->expected_nb_tents_row, g->expected_nb_tents_col);
+    free(squares);
+    return copy;
 }
 
 bool game_equal(cgame g1, cgame g2)
 {
-    if (g1 == NULL || g1->board == NULL || g1->expected_nb_tents_col == NULL || g1->expected_nb_tents_row == NULL
-        || g2 == NULL || g2->board == NULL || g2->expected_nb_tents_col == NULL || g2->expected_nb_tents_row == NULL) {
+    if (g1 == NULL || g2 == NULL) {
+        return false;
+    }
+    if (g1->board == NULL || g1->expected_nb_tents_col == NULL || g1->expected_nb_tents_row == NULL || g2->board == NULL || g2->expected_nb_tents_col == NULL || g2->expected_nb_tents_row == NULL) {
         return false;
     }
     for (int i = 0; i < DEFAULT_SIZE; i++) {
@@ -87,8 +95,10 @@ void game_delete(game g)
     if (g != NULL) {
         if (g->board != NULL) {
             for (int i = 0; i < DEFAULT_SIZE; i++) {
-                free(g->board[i]);
-                g->board[i] = NULL;
+                if (g->board[i] != NULL) {
+                    free(g->board[i]);
+                    g->board[i] = NULL;
+                }
             }
             free(g->board);
             g->board = NULL;
