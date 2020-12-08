@@ -5,10 +5,8 @@
 #include <string.h>
 
 /* ********** TEST GET_SQUARE ********** */
-bool test_game_get_square()
-{
-    //default game
-    game g = game_default();
+bool test_game_get_square(game g)
+{ 
     //EMPTY square
     square s = game_get_square(g, 0, 0);
     if (s != EMPTY)
@@ -33,10 +31,8 @@ bool test_game_get_square()
 }
 
 /* ********** TEST SET_SQUARE ********** */
-bool test_game_set_square()
+bool test_game_set_square(game g)
 {
-    //default game
-    game g = game_default();
     //EMPTY square
     game_set_square(g, 0, 0, EMPTY);
     square s = game_get_square(g, 0, 0);
@@ -58,10 +54,8 @@ bool test_game_set_square()
 }
 
 /* ********** TEST FILL_GRASS_ROW ********** */
-bool test_game_fill_grass_row()
+bool test_game_fill_grass_row(game g)
 {
-    //default game
-    game g = game_default();
     // fill [0] row with grass
     game_fill_grass_row(g, 0);
     for (int i = 0; i < DEFAULT_SIZE; i++) {
@@ -74,10 +68,8 @@ bool test_game_fill_grass_row()
 }
 
 /* ********** TEST FILL_GRASS_COL ********** */
-bool test_game_fill_grass_col()
+bool test_game_fill_grass_col(game g)
 {
-    //default game
-    game g = game_default();
     // fill [0] col with grass
     game_fill_grass_col(g, 0);
     for (int i = 0; i < DEFAULT_SIZE; i++) {
@@ -90,10 +82,8 @@ bool test_game_fill_grass_col()
 }
 
 /* ********** TEST PLAY_MOVE ********** */
-bool test_game_play_move()
+bool test_game_play_move(game g)
 {
-    //default game
-    game g = game_default();
     //Set tent on square(0,0)
     game_play_move(g, 0, 0, TENT);
     square s = game_get_square(g, 0, 0);
@@ -113,10 +103,8 @@ bool test_game_play_move()
 }
 
 /* ********** TEST CHECK_MOVE ********** */
-bool test_game_check_move()
+bool test_game_check_move(game g)
 {
-    //default game
-    game g = game_default();
     //Illegal moves
     //* plant a tent on a tree
     if (game_check_move(g, 1, 0, TENT) != ILLEGAL)
@@ -158,24 +146,26 @@ bool test_game_check_move()
 
 int main(int argc, char* argv[])
 {
+    //default game
+    game g = game_default();
     bool ok = false;
     if (strcmp("game_get_square", argv[1]) == 0)
-        ok = test_game_get_square();
+        ok = test_game_get_square(g);
     else if (strcmp("game_set_square", argv[1]) == 0)
-        ok = test_game_set_square();
+        ok = test_game_set_square(g);
     else if (strcmp("game_fill_grass_row", argv[1]) == 0)
-        ok = test_game_fill_grass_row();
+        ok = test_game_fill_grass_row(g);
     else if (strcmp("game_fill_grass_col", argv[1]) == 0)
-        ok = test_game_fill_grass_col();
+        ok = test_game_fill_grass_col(g);
     else if (strcmp("game_play_move", argv[1]) == 0)
-        ok = test_game_play_move();
+        ok = test_game_play_move(g);
     else if (strcmp("game_check_move", argv[1]) == 0)
-        ok = test_game_check_move();
+        ok = test_game_check_move(g);
     else {
         fprintf(stderr, "Error: test \"%s\" not found!\n", argv[1]);
         exit(EXIT_FAILURE);
     }
-
+    game_delete(g);
     // print test result
     if (ok) {
         return EXIT_SUCCESS;
