@@ -396,7 +396,7 @@ int check_empty_move(cgame g, uint i, uint j)
 
 int game_check_move(cgame g, uint i, uint j, square s)
 {
-    if (g == NULL || g->board == NULL || i > DEFAULT_SIZE || j > DEFAULT_SIZE) {
+    if (g == NULL || g->board == NULL || i >= DEFAULT_SIZE || j >= DEFAULT_SIZE) {
         fprintf(stderr, "Error: Invalid argument | game_check_move()");
     }
     //Tent move
