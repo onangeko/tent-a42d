@@ -124,8 +124,35 @@ bool test_game_check_move(game g)
     if (game_check_move(g, 1, 1, TENT) != LOSING)
         return false;
     //* put grass when number of empty squares is not enough to reach the expected number of tents
-    if (game_check_move(g, 0, 0, GRASS) != LOSING)
+    game_play_move(g, 0, 1, GRASS);
+    game_play_move(g, 0, 2, GRASS);
+    game_play_move(g, 0, 3, GRASS);
+    if (game_check_move(g, 0, 6, GRASS) != LOSING)
         return false;
+    //* replace a tent by a grass and empty squares is not enough to reach the expected number of tents
+    game_play_move(g, 0, 0, TENT);
+    game_play_move(g, 0, 1, GRASS);
+    game_play_move(g, 0, 2, GRASS);
+    game_play_move(g, 0, 3, TENT);
+    game_play_move(g, 0, 6, TENT);
+    game_play_move(g, 0, 7, GRASS);
+    if (game_check_move(g, 0, 6, GRASS) != LOSING)
+        return false;
+    game_play_move(g, 0, 0, EMPTY);
+    game_play_move(g, 0, 1, EMPTY);
+    game_play_move(g, 0, 2, EMPTY);
+    game_play_move(g, 0, 3, EMPTY);
+    game_play_move(g, 0, 6, EMPTY);
+    game_play_move(g, 0, 7, EMPTY);
+    //* surround a tree with grass
+    game_play_move(g, 2, 3, GRASS);
+    game_play_move(g, 1, 4, GRASS);
+    game_play_move(g, 2, 5, GRASS);
+    if (game_check_move(g, 3, 4, GRASS) != LOSING)
+        return false;
+    game_play_move(g, 2, 3, EMPTY);
+    game_play_move(g, 1, 4, EMPTY);
+    game_play_move(g, 2, 5, EMPTY);
     //* plant a tent not adjacent to a tree
     if (game_check_move(g, 0, 1, TENT) != LOSING)
         return false;
@@ -141,6 +168,7 @@ bool test_game_check_move(game g)
     game_play_move(g, 0, 6, TENT);
     if (game_check_move(g, 0, 1, GRASS) != REGULAR)
         return false;
+
     return true;
 }
 

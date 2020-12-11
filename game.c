@@ -243,6 +243,56 @@ void game_play_move(game g, uint i, uint j, square s)
         game_set_square(g, i, j, s);
 }
 
+int nb_type_square_row(cgame g, uint i, square s)
+{
+    int nb = 0;
+    for (int j = 0; j < DEFAULT_SIZE; j++) {
+        if (game_get_square(g, i, j) == s) {
+            nb++;
+        }
+    }
+    return nb;
+}
+
+uint nb_type_square_col(cgame g, uint j, square s)
+{
+    uint nb = 0;
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        if (game_get_square(g, i, j) == s) {
+            nb++;
+        }
+    }
+    return nb;
+}
+
+uint nb_remain_tents_row(cgame g, uint i)
+{
+    return game_get_expected_nb_tents_row(g, i) - game_get_current_nb_tents_row(g, i);
+}
+
+uint nb_remain_tents_col(cgame g, uint j)
+{
+    return game_get_expected_nb_tents_col(g, j) - game_get_current_nb_tents_col(g, j);
+}
+
+bool isTreeSurroundedByGrass(cgame g, uint iT, uint jT, uint iG, uint jG)
+{
+    bool isSurrounded = true;
+    if (iT > 0 && iT - 1 != iG)
+        if (game_get_square(g, iT - 1, jT) != GRASS)
+            isSurrounded = false;
+    if (iT < DEFAULT_SIZE - 1 && iT + 1 != iG)
+        if (game_get_square(g, iT + 1, jT) != GRASS)
+            isSurrounded = false;
+    if (jT > 0 && jT - 1 != jG)
+        if (game_get_square(g, iT, jT - 1) != GRASS)
+            isSurrounded = false;
+    if (jT < DEFAULT_SIZE - 1 && jT + 1 != jG)
+        if (game_get_square(g, iT, jT + 1) != GRASS)
+            isSurrounded = false;
+    return isSurrounded;
+}
+
 bool is_adjacent_to(cgame g, uint i, uint j, square s)
 {
     if (i > 0)
@@ -282,6 +332,38 @@ int check_tent_move(cgame g, uint i, uint j)
     return REGULAR;
 }
 
+bool isGrassSurroundingTree(cgame g, uint i, uint j)
+{
+    bool isSurrounding = false;
+    if (is_adjacent_to(g, i, j, TREE)) {
+        if (i > 0)
+            if (game_get_square(g, i - 1, j) == TREE) {
+                isSurrounding = isTreeSurroundedByGrass(g, i - 1, j, i, j);
+                if (isSurrounding)
+                    return true;
+            }
+        if (i < DEFAULT_SIZE - 1)
+            if (game_get_square(g, i + 1, j) == TREE) {
+                isSurrounding = isTreeSurroundedByGrass(g, i + 1, j, i, j);
+                if (isSurrounding)
+                    return true;
+            }
+        if (j > 0)
+            if (game_get_square(g, i, j - 1) == TREE) {
+                isSurrounding = isTreeSurroundedByGrass(g, i, j - 1, i, j);
+                if (isSurrounding)
+                    return true;
+            }
+        if (j < DEFAULT_SIZE - 1)
+            if (game_get_square(g, i, j + 1) == TREE) {
+                isSurrounding = isTreeSurroundedByGrass(g, i, j + 1, i, j);
+                if (isSurrounding)
+                    return true;
+            }
+    }
+    return isSurrounding;
+}
+
 int check_grass_move(cgame g, uint i, uint j)
 {
     //Illegal move
@@ -290,7 +372,13 @@ int check_grass_move(cgame g, uint i, uint j)
         return ILLEGAL;
     //Losing moves
     //* put grass when number of empty squares is not enough to reach the expected number of tents
-    if (game_get_current_nb_tents_row(g, i) < game_get_expected_nb_tents_row(g, i) || game_get_current_nb_tents_col(g, j) < game_get_expected_nb_tents_col(g, j))
+    if (nb_type_square_row(g, i, EMPTY) - 1 < nb_remain_tents_row(g, i) || nb_type_square_col(g, j, EMPTY) - 1 < nb_remain_tents_col(g, j))
+        return LOSING;
+    //* replace a tent by a grass and empty squares is not enough to reach the expected number of tents
+    if ((nb_type_square_row(g, i, EMPTY) == 0 && game_get_square(g, i, j) == TENT && nb_remain_tents_row(g, i) == 0) || (nb_type_square_col(g, j, EMPTY) == 0 && game_get_square(g, i, j) == TENT && nb_remain_tents_col(g, j) == 0))
+        return LOSING;
+    //* surround a tree with grass
+    if (isGrassSurroundingTree(g, i, j))
         return LOSING;
 
     return REGULAR;
