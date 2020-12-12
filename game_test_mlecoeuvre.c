@@ -120,6 +120,10 @@ bool test_game_check_move(game g)
     game_play_move(g, 0, 6, TENT);
     if (game_check_move(g, 0, 7, TENT) != LOSING)
         return false;
+    //* plant tent adjacent to another diagonally
+    game_play_move(g, 2, 3, TENT);
+    if (game_check_move(g, 3, 4, TENT) != LOSING)
+        return false;
     //* plant n+1 tents when n tents are expected
     if (game_check_move(g, 1, 1, TENT) != LOSING)
         return false;
