@@ -310,7 +310,8 @@ bool is_adjacent_orthogonally_to(cgame g, uint i, uint j, square s)
     return false;
 }
 
-bool is_adjacent_diagonaly_to(cgame g, uint i, uint j, square s){
+bool is_adjacent_diagonaly_to(cgame g, uint i, uint j, square s)
+{
     if (i > 0 && j > 0)
         if (game_get_square(g, i - 1, j - 1) == s)
             return true;
@@ -335,7 +336,7 @@ int check_tent_move(cgame g, uint i, uint j)
 
     //Losing moves
     //* plant tent adjacent to another orthogonally and diagonally
-    if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g,i,j,TENT))
+    if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT))
         return LOSING;
     //* plant a tent not adjacent to a tree
     if (!is_adjacent_orthogonally_to(g, i, j, TREE))
