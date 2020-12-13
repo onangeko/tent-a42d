@@ -448,7 +448,7 @@ bool game_is_over(cgame g)
             return false;
 
     for (int j = 0; j < DEFAULT_SIZE; j++)
-        if (game_get_current_nb_tents_col(g, j) != game_get_expected_nb_tents_row(g, j))
+        if (game_get_current_nb_tents_col(g, j) != game_get_expected_nb_tents_col(g, j))
             return false;
 
     // RULE 3 ) There are exactly as many tents as trees.
