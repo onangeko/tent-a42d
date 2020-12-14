@@ -439,9 +439,9 @@ bool game_is_over(cgame g)
     for (int i = 0; i < DEFAULT_SIZE; i++)
         for (int j = 0; j < DEFAULT_SIZE; j++)
             if (g->board[i][j] == TENT)
-                if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g,i,j,TENT))
+                if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT))
                     return false;
-                    
+
     // RULE 2 ) The number of tents in each row, and in each column, matches the expected numbers given around the sides of the grid.
     for (int i = 0; i < DEFAULT_SIZE; i++)
         if (game_get_current_nb_tents_row(g, i) != game_get_expected_nb_tents_row(g, i))
