@@ -275,24 +275,6 @@ uint nb_remain_tents_col(cgame g, uint j)
     return game_get_expected_nb_tents_col(g, j) - game_get_current_nb_tents_col(g, j);
 }
 
-bool isTreeSurroundedByGrass(cgame g, uint iT, uint jT, uint iG, uint jG)
-{
-    bool isSurrounded = true;
-    if (iT > 0 && iT - 1 != iG)
-        if (game_get_square(g, iT - 1, jT) != GRASS)
-            isSurrounded = false;
-    if (iT < DEFAULT_SIZE - 1 && iT + 1 != iG)
-        if (game_get_square(g, iT + 1, jT) != GRASS)
-            isSurrounded = false;
-    if (jT > 0 && jT - 1 != jG)
-        if (game_get_square(g, iT, jT - 1) != GRASS)
-            isSurrounded = false;
-    if (jT < DEFAULT_SIZE - 1 && jT + 1 != jG)
-        if (game_get_square(g, iT, jT + 1) != GRASS)
-            isSurrounded = false;
-    return isSurrounded;
-}
-
 bool is_adjacent_orthogonally_to(cgame g, uint i, uint j, square s)
 {
     if (i > 0)
@@ -310,8 +292,7 @@ bool is_adjacent_orthogonally_to(cgame g, uint i, uint j, square s)
     return false;
 }
 
-bool is_adjacent_diagonaly_to(cgame g, uint i, uint j, square s)
-{
+bool is_adjacent_diagonaly_to(cgame g, uint i, uint j, square s){
     if (i > 0 && j > 0)
         if (game_get_square(g, i - 1, j - 1) == s)
             return true;
@@ -336,7 +317,7 @@ int check_tent_move(cgame g, uint i, uint j)
 
     //Losing moves
     //* plant tent adjacent to another orthogonally and diagonally
-    if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT))
+    if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g,i,j,TENT))
         return LOSING;
     //* plant a tent not adjacent to a tree
     if (!is_adjacent_orthogonally_to(g, i, j, TREE))
@@ -348,31 +329,49 @@ int check_tent_move(cgame g, uint i, uint j)
     return REGULAR;
 }
 
+bool isTreeSurrounded(cgame g, uint iT, uint jT, uint iG, uint jG)
+{
+    bool isSurrounded = true;
+    if (iT > 0 && iT - 1 != iG)
+        if (game_get_square(g, iT - 1, jT) != GRASS && game_get_square(g, iT - 1, jT) != TREE)
+            isSurrounded = false;
+    if (iT < DEFAULT_SIZE - 1 && iT + 1 != iG)
+        if (game_get_square(g, iT + 1, jT) != GRASS && game_get_square(g, iT + 1, jT) != TREE)
+            isSurrounded = false;
+    if (jT > 0 && jT - 1 != jG)
+        if (game_get_square(g, iT, jT - 1) != GRASS && game_get_square(g, iT, jT - 1) != TREE)
+            isSurrounded = false;
+    if (jT < DEFAULT_SIZE - 1 && jT + 1 != jG)
+        if (game_get_square(g, iT, jT + 1) != GRASS && game_get_square(g, iT, jT + 1) != TREE)
+            isSurrounded = false;
+    return isSurrounded;
+}
+
 bool isGrassSurroundingTree(cgame g, uint i, uint j)
 {
     bool isSurrounding = false;
     if (is_adjacent_orthogonally_to(g, i, j, TREE)) {
         if (i > 0)
             if (game_get_square(g, i - 1, j) == TREE) {
-                isSurrounding = isTreeSurroundedByGrass(g, i - 1, j, i, j);
+                isSurrounding = isTreeSurrounded(g, i - 1, j, i, j);
                 if (isSurrounding)
                     return true;
             }
         if (i < DEFAULT_SIZE - 1)
             if (game_get_square(g, i + 1, j) == TREE) {
-                isSurrounding = isTreeSurroundedByGrass(g, i + 1, j, i, j);
+                isSurrounding = isTreeSurrounded(g, i + 1, j, i, j);
                 if (isSurrounding)
                     return true;
             }
         if (j > 0)
             if (game_get_square(g, i, j - 1) == TREE) {
-                isSurrounding = isTreeSurroundedByGrass(g, i, j - 1, i, j);
+                isSurrounding = isTreeSurrounded(g, i, j - 1, i, j);
                 if (isSurrounding)
                     return true;
             }
         if (j < DEFAULT_SIZE - 1)
             if (game_get_square(g, i, j + 1) == TREE) {
-                isSurrounding = isTreeSurroundedByGrass(g, i, j + 1, i, j);
+                isSurrounding = isTreeSurrounded(g, i, j + 1, i, j);
                 if (isSurrounding)
                     return true;
             }
@@ -439,7 +438,7 @@ bool game_is_over(cgame g)
     for (int i = 0; i < DEFAULT_SIZE; i++)
         for (int j = 0; j < DEFAULT_SIZE; j++)
             if (g->board[i][j] == TENT)
-                if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT))
+                if (is_adjacent_orthogonally_to(g, i, j, TENT))
                     return false;
 
     // RULE 2 ) The number of tents in each row, and in each column, matches the expected numbers given around the sides of the grid.
@@ -448,7 +447,7 @@ bool game_is_over(cgame g)
             return false;
 
     for (int j = 0; j < DEFAULT_SIZE; j++)
-        if (game_get_current_nb_tents_col(g, j) != game_get_expected_nb_tents_col(g, j))
+        if (game_get_current_nb_tents_col(g, j) != game_get_expected_nb_tents_row(g, j))
             return false;
 
     // RULE 3 ) There are exactly as many tents as trees.
@@ -467,11 +466,6 @@ bool game_is_over(cgame g)
                 if (!is_adjacent_orthogonally_to(g, i, j, TREE))
                     return false;
 
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        for (int j = 0; j < DEFAULT_SIZE; j++)
-            if (g->board[i][j] == TREE)
-                if (!is_adjacent_orthogonally_to(g, i, j, TENT))
-                    return false;
     return true;
 }
 
