@@ -75,20 +75,19 @@ Olivier:
 ## game_ext.h implementation
 
 Bjorn:
-
+* game_nb_rows
+* game_nb_cols
 
 Emile:
 * game_new_ext
 * game_new_empty_ext
+* game_undo
+* game_redo
 
 Mathis:
-
+* game_undo
+* game_redo
 
 Olivier:
-
-game_nb_rows
-game_nb_cols
-game_is_wrapping
-game_is_diagadj
-game_undo
-game_redo
+* game_is_wrapping
+* game_is_diagadj
