@@ -279,6 +279,7 @@ void game_play_move(game g, uint i, uint j, square s)
         game next = g->nextState;
         next->previousState = NULL;
         game_delete(next);
+        g->nextState = NULL;
     }
     g->previousState = game_copy(g);
     g->previousState->nextState = g;
