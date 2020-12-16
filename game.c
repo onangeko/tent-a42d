@@ -6,13 +6,19 @@
 #define DEFAULT_SIZE_BOARD DEFAULT_SIZE - 1
 
 typedef struct game_s {
+    // board size
     uint nb_row;
     uint nb_cols;
+    // the board
     square** board;
     uint* expected_nb_tents_col;
     uint* expected_nb_tents_row;
+    // options
     bool wrapping;
     bool diagadj;
+    // undo / redo
+    game_s previousState;
+    game_s nextState;
 } game_s;
 
 game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)

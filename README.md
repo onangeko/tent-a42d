@@ -71,3 +71,24 @@ Olivier:
 * game_get_current_nb_tents_all
 * game_get_current_nb_tents_col
 * game_get_current_nb_tents_row
+
+## game_ext.h implementation
+
+Bjorn:
+
+
+Emile:
+* game_new_ext
+* game_new_empty_ext
+
+Mathis:
+
+
+Olivier:
+
+game_nb_rows
+game_nb_cols
+game_is_wrapping
+game_is_diagadj
+game_undo
+game_redo
