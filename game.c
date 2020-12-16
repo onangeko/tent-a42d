@@ -7,7 +7,7 @@
 
 typedef struct game_s {
     // board size
-    uint nb_row;
+    uint nb_rows;
     uint nb_cols;
     // the board
     square** board;
@@ -42,6 +42,17 @@ game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
             game->board[i][j] = squares[i * DEFAULT_SIZE + j];
         }
     }
+    return game;
+}
+
+game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_row, uint* nb_tents_col, bool wrapping,
+    bool diagadj)
+{
+    game game = game_new(squares, nb_tents_row, nb_tents_col);
+    game->wrapping = wrapping;
+    game->diagadj = diagadj;
+    game->nb_rows = nb_rows;
+    game->nb_cols = nb_cols;
     return game;
 }
 
@@ -404,7 +415,7 @@ int check_grass_move(cgame g, uint i, uint j)
     //* replace a tent by a grass and empty squares is not enough to reach the expected number of tents
     if ((nb_type_square_row(g, i, EMPTY) == 0 && game_get_square(g, i, j) == TENT && nb_remain_tents_row(g, i) == 0) || (nb_type_square_col(g, j, EMPTY) == 0 && game_get_square(g, i, j) == TENT && nb_remain_tents_col(g, j) == 0))
         return LOSING;
-        //nb_tents <= nb_expected_tents  <=  nb_tents +nb_empty
+    //nb_tents <= nb_expected_tents  <=  nb_tents +nb_empty
     //* surround a tree with grass
     if (isGrassSurroundingTree(g, i, j))
         return LOSING;
