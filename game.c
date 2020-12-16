@@ -451,11 +451,12 @@ int check_empty_move(cgame g, uint i, uint j)
 
 int game_check_move(cgame g, uint i, uint j, square s)
 {
-    if (g == NULL || g->board == NULL || i >= DEFAULT_SIZE || j >= DEFAULT_SIZE) {
+    if (g == NULL || g->board == NULL || i >= DEFAULT_SIZE || j >= DEFAULT_SIZE || s == TREE) {
         fprintf(stderr, "Error: Invalid argument | game_check_move()");
+        exit(EXIT_FAILURE);
     }
     //Tent move
-    if (s == TENT)
+    else if (s == TENT)
         return check_tent_move(g, i, j);
     //Grass move
     else if (s == GRASS)
