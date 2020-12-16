@@ -143,6 +143,12 @@ void game_delete(game g)
             free(g->expected_nb_tents_row);
             g->expected_nb_tents_row = NULL;
         }
+        if (g->previousState != NULL) {
+            game_delete(g->previousState);
+        }
+        if (g->nextState != NULL) {
+            game_delete(g->nextState);
+        }
         free(g);
         g = NULL;
     }
