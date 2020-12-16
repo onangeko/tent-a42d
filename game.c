@@ -281,6 +281,7 @@ void game_play_move(game g, uint i, uint j, square s)
         game_delete(next);
     }
     g->previousState = game_copy(g);
+    g->previousState->nextState = g;
     if (s != TREE && game_get_square(g, i, j) != TREE)
         game_set_square(g, i, j, s);
 }
@@ -573,6 +574,9 @@ bool game_is_diagadj(cgame g)
 }
 void game_undo(game g)
 {
+    if (g->previousState != NULL) {
+        g = g->previousState;
+    }
 }
 void game_redo(game g)
 {
