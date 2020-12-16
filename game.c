@@ -75,6 +75,16 @@ game game_new_empty(void)
     return empty;
 }
 
+game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
+{
+    game game = game_new_empty();
+    game->wrapping = wrapping;
+    game->diagadj = diagadj;
+    game->nb_rows = nb_rows;
+    game->nb_cols = nb_cols;
+    return game;
+}
+
 game game_copy(cgame g)
 {
     square* squares = malloc(DEFAULT_SIZE * DEFAULT_SIZE * sizeof(square));
