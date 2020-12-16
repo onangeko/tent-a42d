@@ -550,15 +550,6 @@ void game_restart(game g)
 /**
  * game_ext.h implementation
 */
-game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_row, uint* nb_tents_col, bool wrapping,
-    bool diagadj)
-{
-    return NULL;
-}
-game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
-{
-    return NULL;
-}
 uint game_nb_rows(cgame g)
 {
     return 0;
