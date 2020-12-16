@@ -17,8 +17,8 @@ typedef struct game_s {
     bool wrapping;
     bool diagadj;
     // undo / redo
-    game_s previousState;
-    game_s nextState;
+    game_s* previousState;
+    game_s* nextState;
 } game_s;
 
 game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
