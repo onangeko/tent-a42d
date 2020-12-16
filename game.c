@@ -6,9 +6,13 @@
 #define DEFAULT_SIZE_BOARD DEFAULT_SIZE - 1
 
 typedef struct game_s {
+    uint nb_row;
+    uint nb_cols;
     square** board;
     uint* expected_nb_tents_col;
     uint* expected_nb_tents_row;
+    bool wrapping;
+    bool diagadj;
 } game_s;
 
 game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
@@ -512,28 +516,34 @@ void game_restart(game g)
 /**
  * game_ext.h implementation
 */
-game game_new_ext(uint nb_rows, uint nb_cols, square *squares, uint *nb_tents_row, uint *nb_tents_col, bool wrapping,
-                  bool diagadj){
+game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_row, uint* nb_tents_col, bool wrapping,
+    bool diagadj)
+{
     return NULL;
 }
-game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj){
+game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
+{
     return NULL;
 }
-uint game_nb_rows(cgame g){
+uint game_nb_rows(cgame g)
+{
     return 0;
 }
-uint game_nb_cols(cgame g){
+uint game_nb_cols(cgame g)
+{
     return 0;
 }
-bool game_is_wrapping(cgame g){
+bool game_is_wrapping(cgame g)
+{
     return false;
 }
-bool game_is_diagadj(cgame g){
+bool game_is_diagadj(cgame g)
+{
     return false;
 }
-void game_undo(game g){
-
+void game_undo(game g)
+{
 }
-void game_redo(game g){
-
+void game_redo(game g)
+{
 }
