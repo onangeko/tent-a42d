@@ -93,10 +93,10 @@ game game_copy(cgame g)
     }
     game copy = game_new_ext(g->nb_rows, g->nb_cols, squares, g->expected_nb_tents_row, g->expected_nb_tents_col, g->wrapping, g->diagadj);
     if (g->previousState != NULL) {
-        copy->previousState = g->previousState;
+        copy->previousState = game_copy(g->previousState);
     }
     if (g->nextState != NULL) {
-        copy->nextState = g->nextState;
+        copy->nextState = game_copy(g->nextState);
     }
     free(squares);
     return copy;
@@ -589,8 +589,8 @@ void game_undo(game g)
 }
 void game_redo(game g)
 {
-    if(g != NULL){
-        if(g->nextState != NULL){
+    if (g != NULL) {
+        if (g->nextState != NULL) {
             g = g->nextState;
         }
     }
