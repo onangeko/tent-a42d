@@ -583,4 +583,9 @@ void game_undo(game g)
 }
 void game_redo(game g)
 {
+    if(g != NULL){
+        if(g->nextState != NULL){
+            g = g->nextState;
+        }
+    }
 }
