@@ -99,6 +99,7 @@ bool test_game_play_move(game g)
     s = game_get_square(g, 0, 0);
     if (s != EMPTY)
         return false;
+    game_undo();
     return true;
 }
 

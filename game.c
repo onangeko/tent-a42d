@@ -589,3 +589,17 @@ void game_redo(game g)
         }
     }
 }
+game game_previousState(game g){
+    if(g != NULL){
+        fprintf(stderr,"Invalid arg | game_previousState()");
+        exit(EXIT_FAILURE);
+    }
+    return g->previousState;
+}
+game game_nextState(game g){
+    if(g != NULL){
+        fprintf(stderr,"Invalid arg | game_nextState()");
+        exit(EXIT_FAILURE);
+    }
+    return g->nextState;
+}
