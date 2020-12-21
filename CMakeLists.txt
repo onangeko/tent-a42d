@@ -20,6 +20,7 @@ add_test(test_mlecoeuvre_game_fill_grass_row ./game_test_mlecoeuvre game_fill_gr
 add_test(test_mlecoeuvre_game_fill_grass_col ./game_test_mlecoeuvre game_fill_grass_col)
 add_test(test_mlecoeuvre_game_play_move ./game_test_mlecoeuvre game_play_move)
 add_test(test_mlecoeuvre_game_check_move ./game_test_mlecoeuvre game_check_move)
+add_test(test_mlecoeuvre_game_redo ./game_test_mlecoeuvre game_redo)
 
 add_executable(game_test_bjgiraud game_test_bjgiraud.c)
 add_test(test_bjgiraud_game_get_expected_nb_tents_row ./game_test_bjgiraud game_get_expected_nb_tents_row)

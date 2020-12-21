@@ -1,4 +1,5 @@
 #include "game_aux.h"
+#include "game_ext.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -99,7 +100,6 @@ bool test_game_play_move(game g)
     s = game_get_square(g, 0, 0);
     if (s != EMPTY)
         return false;
-    game_undo();
     return true;
 }
 
@@ -177,6 +177,16 @@ bool test_game_check_move(game g)
     return true;
 }
 
+bool test_game_redo(game g){
+    game_play_move(g,0,0,TENT);
+    game g2 = game_copy(g);
+    game_undo(g);
+    game_redo(g);
+    if(!game_equal(g,g2))
+        return false;
+    return true;
+}
+
 int main(int argc, char* argv[])
 {
     //default game
@@ -194,6 +204,8 @@ int main(int argc, char* argv[])
         ok = test_game_play_move(g);
     else if (strcmp("game_check_move", argv[1]) == 0)
         ok = test_game_check_move(g);
+    else if (strcmp("game_redo", argv[1]) == 0)
+        ok = test_game_redo(g);
     else {
         fprintf(stderr, "Error: test \"%s\" not found!\n", argv[1]);
         exit(EXIT_FAILURE);
