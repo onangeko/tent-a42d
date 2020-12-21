@@ -575,8 +575,10 @@ bool game_is_diagadj(cgame g)
 }
 void game_undo(game g)
 {
-    if (g->previousState != NULL) {
-        g = g->previousState;
+    if (g != NULL) {
+        if (g->previousState != NULL) {
+            g = g->previousState;
+        }
     }
 }
 void game_redo(game g)
