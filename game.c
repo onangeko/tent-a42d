@@ -93,10 +93,10 @@ game game_copy(cgame g)
     }
     game copy = game_new_ext(g->nb_rows, g->nb_cols, squares, g->expected_nb_tents_row, g->expected_nb_tents_col, g->wrapping, g->diagadj);
     if (g->previousState != NULL) {
-        copy->previousState = game_copy(g->previousState);
+        copy->previousState = g->previousState;
     }
     if (g->nextState != NULL) {
-        copy->nextState = game_copy(g->nextState);
+        copy->nextState = g->nextState;
     }
     free(squares);
     return copy;
