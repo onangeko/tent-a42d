@@ -126,8 +126,7 @@ bool game_equal(cgame g1, cgame g2)
     return true;
 }
 
-void game_delete(game g)
-{
+void game_delete_previousStates(game g){
     if (g != NULL) {
         if (g->board != NULL) {
             for (int i = 0; i < DEFAULT_SIZE; i++) {
@@ -149,12 +148,66 @@ void game_delete(game g)
         }
         if (g->previousState != NULL) {
             game_delete(g->previousState);
+            g->previousState = NULL;
+        }
+        free(g);
+    }
+}
+void game_delete_nextStates(game g){
+    if (g != NULL) {
+        if (g->board != NULL) {
+            for (int i = 0; i < DEFAULT_SIZE; i++) {
+                if (g->board[i] != NULL) {
+                    free(g->board[i]);
+                    g->board[i] = NULL;
+                }
+            }
+            free(g->board);
+            g->board = NULL;
+        }
+        if (g->expected_nb_tents_col != NULL) {
+            free(g->expected_nb_tents_col);
+            g->expected_nb_tents_col = NULL;
+        }
+        if (g->expected_nb_tents_row != NULL) {
+            free(g->expected_nb_tents_row);
+            g->expected_nb_tents_row = NULL;
         }
         if (g->nextState != NULL) {
             game_delete(g->nextState);
         }
         free(g);
-        g = NULL;
+    }
+}
+
+void game_delete(game g)
+{
+    if(g != NULL){
+    if(g->previousState != NULL)
+        game_delete_previousStates(g->previousState);
+    if(g->nextState != NULL)
+        game_delete_nextStates(g->nextState);
+    
+    if (g->board != NULL) {
+            for (int i = 0; i < DEFAULT_SIZE; i++) {
+                if (g->board[i] != NULL) {
+                    free(g->board[i]);
+                    g->board[i] = NULL;
+                }
+            }
+            free(g->board);
+            g->board = NULL;
+        }
+        if (g->expected_nb_tents_col != NULL) {
+            free(g->expected_nb_tents_col);
+            g->expected_nb_tents_col = NULL;
+        }
+        if (g->expected_nb_tents_row != NULL) {
+            free(g->expected_nb_tents_row);
+            g->expected_nb_tents_row = NULL;
+        }
+        free(g);
+        g = NULL;   
     }
 }
 
@@ -287,8 +340,11 @@ void game_play_move(game g, uint i, uint j, square s)
         game_delete(next);
         g->nextState = NULL;
     }
-    g->previousState = game_copy(g);
-    g->previousState->nextState = g;
+    game copy = game_copy(g);
+    if(g->previousState!=NULL)
+        g->previousState->nextState = copy;
+    g->previousState = copy;
+    copy->nextState = g;
     if (s != TREE && game_get_square(g, i, j) != TREE)
         game_set_square(g, i, j, s);
 }
