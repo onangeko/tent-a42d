@@ -126,7 +126,8 @@ bool game_equal(cgame g1, cgame g2)
     return true;
 }
 
-void game_delete_previousStates(game g){
+void game_delete_previousStates(game g)
+{
     if (g != NULL) {
         if (g->board != NULL) {
             for (int i = 0; i < DEFAULT_SIZE; i++) {
@@ -153,7 +154,8 @@ void game_delete_previousStates(game g){
         free(g);
     }
 }
-void game_delete_nextStates(game g){
+void game_delete_nextStates(game g)
+{
     if (g != NULL) {
         if (g->board != NULL) {
             for (int i = 0; i < DEFAULT_SIZE; i++) {
@@ -182,13 +184,13 @@ void game_delete_nextStates(game g){
 
 void game_delete(game g)
 {
-    if(g != NULL){
-    if(g->previousState != NULL)
-        game_delete_previousStates(g->previousState);
-    if(g->nextState != NULL)
-        game_delete_nextStates(g->nextState);
-    
-    if (g->board != NULL) {
+    if (g != NULL) {
+        if (g->previousState != NULL)
+            game_delete_previousStates(g->previousState);
+        if (g->nextState != NULL)
+            game_delete_nextStates(g->nextState);
+
+        if (g->board != NULL) {
             for (int i = 0; i < DEFAULT_SIZE; i++) {
                 if (g->board[i] != NULL) {
                     free(g->board[i]);
@@ -207,7 +209,7 @@ void game_delete(game g)
             g->expected_nb_tents_row = NULL;
         }
         free(g);
-        g = NULL;   
+        g = NULL;
     }
 }
 
@@ -341,7 +343,7 @@ void game_play_move(game g, uint i, uint j, square s)
         g->nextState = NULL;
     }
     game copy = game_copy(g);
-    if(g->previousState!=NULL)
+    if (g->previousState != NULL)
         g->previousState->nextState = copy;
     g->previousState = copy;
     copy->nextState = g;
@@ -519,10 +521,11 @@ int check_empty_move(cgame g, uint i, uint j)
 
 int game_check_move(cgame g, uint i, uint j, square s)
 {
-    if (g == NULL || g->board == NULL || i >= DEFAULT_SIZE || j >= DEFAULT_SIZE || s == TREE) {
+    if (g == NULL || g->board == NULL || i >= DEFAULT_SIZE || j >= DEFAULT_SIZE) {
         fprintf(stderr, "Error: Invalid argument | game_check_move()");
         exit(EXIT_FAILURE);
-    }
+    } else if (s == TREE)
+        return ILLEGAL;
     //Tent move
     else if (s == TENT)
         return check_tent_move(g, i, j);

@@ -177,12 +177,13 @@ bool test_game_check_move(game g)
     return true;
 }
 
-bool test_game_redo(game g){
-    game_play_move(g,0,0,TENT);
+bool test_game_redo(game g)
+{
+    game_play_move(g, 0, 0, TENT);
     game g2 = game_copy(g);
     game_undo(g);
     game_redo(g);
-    if(!game_equal(g,g2))
+    if (!game_equal(g, g2))
         return false;
     return true;
 }
@@ -210,7 +211,7 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Error: test \"%s\" not found!\n", argv[1]);
         exit(EXIT_FAILURE);
     }
-    game_delete(g);
+    //game_delete(g);
     // print test result
     if (ok) {
         return EXIT_SUCCESS;
