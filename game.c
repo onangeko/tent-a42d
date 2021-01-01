@@ -427,9 +427,10 @@ int check_tent_move(cgame g, uint i, uint j)
     //Losing moves
     //* plant n+1 tents when n tents are expected in the entire board
     if (game_get_current_nb_tents_all(g) >= game_get_expected_nb_tents_all(g))
-        return LOSING,
-               //* plant tent adjacent to another orthogonally and diagonally
-               if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT)) return LOSING;
+        return LOSING;
+    //* plant tent adjacent to another orthogonally and diagonally
+    if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT))
+        return LOSING;
     //* plant a tent not adjacent to a tree
     if (!is_adjacent_orthogonally_to(g, i, j, TREE))
         return LOSING;
