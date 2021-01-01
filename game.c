@@ -496,12 +496,9 @@ int check_grass_move(cgame g, uint i, uint j)
         return ILLEGAL;
     //Losing moves
     //* put grass when number of empty squares is not enough to reach the expected number of tents
-    if (nb_type_square_row(g, i, EMPTY) - 1 < nb_remain_tents_row(g, i) || nb_type_square_col(g, j, EMPTY) - 1 < nb_remain_tents_col(g, j))
+    if ( game_get_expected_nb_tents_row(g,i) >= (game_get_current_nb_tents_row(g,i)+nb_type_square_row(g,i,EMPTY)) 
+     || game_get_expected_nb_tents_col(g,j) >= (game_get_current_nb_tents_col(g,j)+nb_type_square_col(g,j,EMPTY)))
         return LOSING;
-    //* replace a tent by a grass and empty squares is not enough to reach the expected number of tents
-    if ((nb_type_square_row(g, i, EMPTY) == 0 && game_get_square(g, i, j) == TENT && nb_remain_tents_row(g, i) == 0) || (nb_type_square_col(g, j, EMPTY) == 0 && game_get_square(g, i, j) == TENT && nb_remain_tents_col(g, j) == 0))
-        return LOSING;
-    //nb_tents <= nb_expected_tents  <=  nb_tents +nb_empty
     //* surround a tree with grass
     if (isGrassSurroundingTree(g, i, j))
         return LOSING;
