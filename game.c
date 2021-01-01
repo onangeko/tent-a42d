@@ -425,9 +425,11 @@ int check_tent_move(cgame g, uint i, uint j)
         return ILLEGAL;
 
     //Losing moves
-    //* plant tent adjacent to another orthogonally and diagonally
-    if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT))
-        return LOSING;
+    //* plant n+1 tents when n tents are expected in the entire board
+    if (game_get_current_nb_tents_all(g) >= game_get_expected_nb_tents_all(g))
+        return LOSING,
+               //* plant tent adjacent to another orthogonally and diagonally
+               if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT)) return LOSING;
     //* plant a tent not adjacent to a tree
     if (!is_adjacent_orthogonally_to(g, i, j, TREE))
         return LOSING;
@@ -496,8 +498,8 @@ int check_grass_move(cgame g, uint i, uint j)
         return ILLEGAL;
     //Losing moves
     //* put grass when number of empty squares is not enough to reach the expected number of tents
-    if ( game_get_expected_nb_tents_row(g,i) >= (game_get_current_nb_tents_row(g,i)+nb_type_square_row(g,i,EMPTY)) 
-     || game_get_expected_nb_tents_col(g,j) >= (game_get_current_nb_tents_col(g,j)+nb_type_square_col(g,j,EMPTY)))
+    if (game_get_expected_nb_tents_row(g, i) >= (game_get_current_nb_tents_row(g, i) + nb_type_square_row(g, i, EMPTY))
+        || game_get_expected_nb_tents_col(g, j) >= (game_get_current_nb_tents_col(g, j) + nb_type_square_col(g, j, EMPTY)))
         return LOSING;
     //* surround a tree with grass
     if (isGrassSurroundingTree(g, i, j))
