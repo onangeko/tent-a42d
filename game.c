@@ -375,35 +375,115 @@ uint nb_type_square_col(cgame g, uint j, square s)
 
 bool is_adjacent_orthogonally_to(cgame g, uint i, uint j, square s)
 {
-    if (i > 0)
+    if (i > 0){
         if (game_get_square(g, i - 1, j) == s)
             return true;
-    if (i < DEFAULT_SIZE - 1)
+    }
+    else if(game_is_wrapping(g)){
+        if (game_get_square(g, i + DEFAULT_SIZE - 1, j) == s)
+            return true;
+    }
+    if (i < DEFAULT_SIZE - 1){
         if (game_get_square(g, i + 1, j) == s)
             return true;
-    if (j > 0)
+    }
+    else if(game_is_wrapping(g)){
+        if (game_get_square(g, i - DEFAULT_SIZE + 1, j) == s)
+            return true;
+    }
+    if (j > 0){
         if (game_get_square(g, i, j - 1) == s)
             return true;
-    if (j < DEFAULT_SIZE - 1)
+    }
+    else if(game_is_wrapping(g)){
+        if (game_get_square(g, i, j + DEFAULT_SIZE - 1) == s)
+            return true;
+    }
+    if (j < DEFAULT_SIZE - 1){
         if (game_get_square(g, i, j + 1) == s)
             return true;
+    }
+    else if(game_is_wrapping(g)){
+        if (game_get_square(g, i, j - DEFAULT_SIZE + 1) == s)
+            return true;
+    }
     return false;
 }
 
 bool is_adjacent_diagonaly_to(cgame g, uint i, uint j, square s)
 {
-    if (i > 0 && j > 0)
+    if (i > 0 && j > 0){
         if (game_get_square(g, i - 1, j - 1) == s)
             return true;
-    if (i < DEFAULT_SIZE - 1 && j < DEFAULT_SIZE - 1)
+    }
+    else if(game_is_wrapping(g)){
+        if(i == 0 && j == 0){
+            if (game_get_square(g, i + DEFAULT_SIZE - 1, j + DEFAULT_SIZE - 1) == s)
+            return true;
+        }
+        else if(i==0 && j != 0){
+            if (game_get_square(g, i + DEFAULT_SIZE - 1, j - 1) == s)
+            return true;
+        }
+        else if(i != 0 && j == 0){
+            if (game_get_square(g, i - 1, j + DEFAULT_SIZE - 1) == s)
+            return true;
+        }
+    }
+    if (i < DEFAULT_SIZE - 1 && j < DEFAULT_SIZE - 1){
         if (game_get_square(g, i + 1, j + 1) == s)
             return true;
-    if (j > 0 && i < DEFAULT_SIZE - 1)
+    }
+    else if(game_is_wrapping(g)){
+        if(i == DEFAULT_SIZE && j == DEFAULT_SIZE){
+            if (game_get_square(g, i - DEFAULT_SIZE + 1, j - DEFAULT_SIZE + 1) == s)
+            return true;
+        }
+        else if(i==DEFAULT_SIZE && j != DEFAULT_SIZE){
+            if (game_get_square(g, i - DEFAULT_SIZE + 1, j + 1) == s)
+            return true;
+        }
+        else if(i != DEFAULT_SIZE && j == DEFAULT_SIZE){
+            if (game_get_square(g, i + 1, j - DEFAULT_SIZE + 1) == s)
+            return true;
+        }
+    }
+    if (j > 0 && i < DEFAULT_SIZE - 1){
         if (game_get_square(g, i + 1, j - 1) == s)
             return true;
-    if (j < DEFAULT_SIZE - 1 && i > 0)
+    }
+    else if(game_is_wrapping(g)){
+        if(i == DEFAULT_SIZE && j == 0){
+            if (game_get_square(g, i - DEFAULT_SIZE + 1, j + DEFAULT_SIZE - 1) == s)
+            return true;
+        }
+        else if(i==DEFAULT_SIZE && j != 0){
+            if (game_get_square(g, i - DEFAULT_SIZE + 1, j - 1) == s)
+            return true;
+        }
+        else if(i != DEFAULT_SIZE && j == 0){
+            if (game_get_square(g, i + 1, j + DEFAULT_SIZE - 1) == s)
+            return true;
+        }
+    }
+    if (j < DEFAULT_SIZE - 1 && i > 0){
         if (game_get_square(g, i - 1, j + 1) == s)
             return true;
+    }
+    else if(game_is_wrapping(g)){
+        if(i == 0 && j == DEFAULT_SIZE){
+            if (game_get_square(g, i + DEFAULT_SIZE - 1, j - DEFAULT_SIZE + 1) == s)
+            return true;
+        }
+        else if(i==0 && j != DEFAULT_SIZE){
+            if (game_get_square(g, i + DEFAULT_SIZE - 1, j + 1) == s)
+            return true;
+        }
+        else if(i != 0 && j == DEFAULT_SIZE){
+            if (game_get_square(g, i - 1, j - DEFAULT_SIZE + 1) == s)
+            return true;
+        }
+    }
     return false;
 }
 
