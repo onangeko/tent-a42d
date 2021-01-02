@@ -127,6 +127,13 @@ int test_game_print()
     return EXIT_SUCCESS;
 }
 
+/* ********** TEST GAME_IS_WRAPPING ********** */
+
+/* bool test_game_is_wrapping()
+{
+
+} */
+
 int main(int argc, char* argv[])
 {
 
@@ -149,4 +156,10 @@ int main(int argc, char* argv[])
     if (strcmp("game_print", argv[1]) == 0) {
         return test_game_print();
     }
+    /*if (strcmp("game_is_wrapping" ,argv[1]) == 0) {
+        return test_game_is_wrapping();
+    }
+    if (strcmp("game_is_diagadj", argv[1]) == 0) {
+        return test_game_is_diagadj();
+    } */
 }
