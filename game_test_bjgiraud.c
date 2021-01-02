@@ -1,10 +1,12 @@
 #include "game_aux.h"
+#include "game_ext.h"
+#include "game.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void test_game_get_expected_nb_tents_row(game g)
+void test_game_get_expected_nb_tents_row(game g) // need to be mod
 {
     assert((game_get_expected_nb_tents_row(g, 0)) == 3);
     assert((game_get_expected_nb_tents_row(g, 1)) == 0);
@@ -18,14 +20,14 @@ void test_game_get_expected_nb_tents_row(game g)
 
 ///
 
-void test_game_get_expected_nb_tents_all(game g)
+void test_game_get_expected_nb_tents_all(game g) // need to be mod
 {
     assert(game_get_expected_nb_tents_all(g) == 12);
 }
 
 ///
 
-void test_game_get_expected_nb_tents_col(game g)
+void test_game_get_expected_nb_tents_col(game g) // need to be mod
 {
     assert((game_get_expected_nb_tents_col(g, 0)) == 4);
     assert((game_get_expected_nb_tents_col(g, 1)) == 0);
@@ -55,8 +57,8 @@ void test_game_set_expected_nb_tents_col(game g)
     assert(game_get_expected_nb_tents_col(g, 0) == 4);
 }
 
-///////
-void test_game_default(game g)
+///////AUX
+void test_game_default(game g) // need to be mod
 {
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++) {
@@ -100,6 +102,26 @@ void test_game_default(game g)
         }
 }
 
+//////EXT
+
+void test_game_nb_rows() // need to be mod
+{
+    game g = game_new_empty_ext(2, 2, false, false);
+
+    assert((game_nb_rows(g)) == 2);
+
+    game_delete(g);
+}
+
+void test_game_nb_cols() // need to be mod
+{
+    game g = game_new_empty_ext(2, 2, false, false);
+
+    assert((game_nb_cols(g)) == 2);
+
+    game_delete(g);
+}
+
 int main(int argc, char* argv[])
 {
 
@@ -125,6 +147,15 @@ int main(int argc, char* argv[])
     if (strcmp("game_default", argv[1]) == 0) {
         test_game_default(g1);
     }
+
+    if (strcmp("game_nb_rows", argv[1]) == 0) {
+        test_game_nb_rows();
+    }
+
+    if (strcmp("game_nb_cols", argv[1]) == 0) {
+        test_game_nb_cols();
+    }
+
     game_delete(g1);
     return EXIT_SUCCESS;
 }

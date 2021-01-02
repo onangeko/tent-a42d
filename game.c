@@ -289,26 +289,6 @@ uint game_get_expected_nb_tents_all(cgame g)
     return n;
 }
 
-uint game_nb_rows(cgame g)
-{
-    if (g == NULL){
-        printf("invalid arguments");
-        exit(0);
-    }
-
-    return g->nb_rows;
-}
-
-uint game_nb_cols(cgame g)
-{
-    if (g == NULL){
-        printf("invalid arguments");
-        exit(0);
-    }
-
-    return g->nb_cols;
-}
-
 /////--
 
 uint game_get_current_nb_tents_row(cgame g, uint i)
@@ -751,12 +731,26 @@ void game_restart(game g)
 */
 uint game_nb_rows(cgame g)
 {
-    return 0;
+    if (g == NULL){
+        printf("invalid arguments");
+        exit(0);
+    }
+
+    return g->nb_rows;
 }
+
 uint game_nb_cols(cgame g)
 {
-    return 0;
+    if (g == NULL){
+        printf("invalid arguments");
+        exit(0);
+    }
+
+    return g->nb_cols;
 }
+
+///
+
 bool game_is_wrapping(cgame g)
 {
     return true;
