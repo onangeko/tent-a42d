@@ -646,7 +646,17 @@ bool game_is_over(cgame g)
     // the game shall be over only if the 4 rules described in the readme are satisfied and if the tents are correctly placed
 
     if (g == NULL || g->board == NULL) {
-        fprintf(stderr, "Error: Invalid argument | game_get_is_over()");
+        fprintf(stderr, "Error: Invalid argument | game_is_over()");
+    }
+    if (game_is_diagadj(g) == true)
+    {
+        // RULE 1 ) No two tents are adjacent orthogonally.
+        for (int i = 0; i < DEFAULT_SIZE; i++)
+            for (int j = 0; j < DEFAULT_SIZE; j++)
+                if (g->board[i][j] == TENT)
+                    if (is_adjacent_orthogonally_to(g, i, j, TENT))
+                        return false;
+        goto jump;
     }
 
     // RULE 1 ) No two tents are adjacent, even diagonally.
@@ -657,6 +667,8 @@ bool game_is_over(cgame g)
                     return false;
 
     // RULE 2 ) The number of tents in each row, and in each column, matches the expected numbers given around the sides of the grid.
+    jump:
+
     for (int i = 0; i < DEFAULT_SIZE; i++)
         if (game_get_current_nb_tents_row(g, i) != game_get_expected_nb_tents_row(g, i))
             return false;
@@ -688,6 +700,8 @@ bool game_is_over(cgame g)
                     return false;
     return true;
 }
+
+
 
 void game_fill_grass_row(game g, uint i)
 {
@@ -735,12 +749,14 @@ uint game_nb_cols(cgame g)
 }
 bool game_is_wrapping(cgame g)
 {
-    return true;
+    return g->wrapping;
 }
+
 bool game_is_diagadj(cgame g)
 {
-    return true;
+    return g->diagadj;
 }
+
 void game_undo(game g)
 {
     if (g != NULL) {

@@ -37,6 +37,8 @@ add_test(test_onangeko_game_get_current_nb_tents_all ./game_test_onangeko game_c
 add_test(test_onangeko_game_get_current_nb_tents_row ./game_test_onangeko game_current_tents_row)
 add_test(test_onangeko_game_get_current_nb_tents_col ./game_test_onangeko game_current_tents_col)
 add_test(test_onangeko_game_print ./game_test_onangeko game_print)
+add_test(test_onangeko_game_is_wrapping ./game_test_onangeko game_is_wrapping)
+add_test(test_onangeko_game_is_diagadj ./game_test_onangeko game_is_diagadj)
 
 
 
