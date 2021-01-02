@@ -534,30 +534,62 @@ bool isGrassSurroundingTree(cgame g, uint i, uint j)
 {
     bool isSurrounding = false;
     if (is_adjacent_orthogonally_to(g, i, j, TREE)) {
-        if (i > 0)
+        if (i > 0){
             if (game_get_square(g, i - 1, j) == TREE) {
                 isSurrounding = isTreeSurrounded(g, i - 1, j, i, j);
                 if (isSurrounding)
                     return true;
             }
-        if (i < DEFAULT_SIZE - 1)
+        }
+        else if(game_is_wrapping){
+            if(game_get_square(g,i+DEFAULT_SIZE-1,j)==TREE){
+                isSurrounding = isTreeSurrounded(g, i + DEFAULT_SIZE - 1, j, i, j);
+                if (isSurrounding)
+                    return true;
+            }
+        }
+        if (i < DEFAULT_SIZE - 1){
             if (game_get_square(g, i + 1, j) == TREE) {
                 isSurrounding = isTreeSurrounded(g, i + 1, j, i, j);
                 if (isSurrounding)
                     return true;
             }
-        if (j > 0)
+        }
+        else if(game_is_wrapping){
+            if(game_get_square(g,i-DEFAULT_SIZE+1,j)==TREE){
+                isSurrounding = isTreeSurrounded(g, i - DEFAULT_SIZE + 1, j, i, j);
+                if (isSurrounding)
+                    return true;
+            }
+        }
+        if (j > 0){
             if (game_get_square(g, i, j - 1) == TREE) {
                 isSurrounding = isTreeSurrounded(g, i, j - 1, i, j);
                 if (isSurrounding)
                     return true;
             }
-        if (j < DEFAULT_SIZE - 1)
+        }
+        else if(game_is_wrapping){
+            if(game_get_square(g,i,j+DEFAULT_SIZE-1)==TREE){
+                isSurrounding = isTreeSurrounded(g, i, j + DEFAULT_SIZE -1, i, j);
+                if (isSurrounding)
+                    return true;
+            }
+        }
+        if (j < DEFAULT_SIZE - 1){
             if (game_get_square(g, i, j + 1) == TREE) {
                 isSurrounding = isTreeSurrounded(g, i, j + 1, i, j);
                 if (isSurrounding)
                     return true;
             }
+        }
+        else if(game_is_wrapping){
+            if(game_get_square(g,i,j-DEFAULT_SIZE + 1)==TREE){
+                isSurrounding = isTreeSurrounded(g, i , j-DEFAULT_SIZE+1, i, j);
+                if (isSurrounding)
+                    return true;
+            }
+        }
     }
     return isSurrounding;
 }
