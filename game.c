@@ -373,16 +373,6 @@ uint nb_type_square_col(cgame g, uint j, square s)
     return nb;
 }
 
-uint nb_remain_tents_row(cgame g, uint i)
-{
-    return game_get_expected_nb_tents_row(g, i) - game_get_current_nb_tents_row(g, i);
-}
-
-uint nb_remain_tents_col(cgame g, uint j)
-{
-    return game_get_expected_nb_tents_col(g, j) - game_get_current_nb_tents_col(g, j);
-}
-
 bool is_adjacent_orthogonally_to(cgame g, uint i, uint j, square s)
 {
     if (i > 0)
@@ -429,8 +419,9 @@ int check_tent_move(cgame g, uint i, uint j)
     if (game_get_current_nb_tents_all(g) >= game_get_expected_nb_tents_all(g))
         return LOSING;
     //* plant tent adjacent to another orthogonally and diagonally
-    if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT))
-        return LOSING;
+    if (is_adjacent_orthogonally_to(g, i, j, TENT))
+        if(!game_is_diagadj(g) && is_adjacent_diagonaly_to(g, i, j, TENT))
+            return LOSING;
     //* plant a tent not adjacent to a tree
     if (!is_adjacent_orthogonally_to(g, i, j, TREE))
         return LOSING;
@@ -632,11 +623,11 @@ uint game_nb_cols(cgame g)
 }
 bool game_is_wrapping(cgame g)
 {
-    return false;
+    return true;
 }
 bool game_is_diagadj(cgame g)
 {
-    return false;
+    return true;
 }
 void game_undo(game g)
 {
