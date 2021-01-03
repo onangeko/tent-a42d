@@ -723,12 +723,13 @@ void game_undo(game g)
         if (g->previousState != NULL) {
             square** currentBoard = g->board;
             game previous = g->previousState;
+            game next = g->nextState;
             g->board = previous->board;
             previous->board = currentBoard;
             g->nextState = g->previousState;
             g->previousState = previous->previousState;
             previous->previousState = previous->nextState;
-            previous->nextState = g->nextState;
+            previous->nextState = next;
         }
     }
 }
@@ -736,7 +737,15 @@ void game_redo(game g)
 {
     if (g != NULL) {
         if (g->nextState != NULL) {
-            g = g->nextState;
+            square** currentBoard = g->board;
+            game next = g->nextState;
+            game previous = g->previousState;
+            g->board = next->board;
+            next->board = currentBoard;
+            g->nextState = next->nextState;
+            g->previousState = next;
+            next->nextState = g;
+            next->previousState = previous;
         }
     }
 }

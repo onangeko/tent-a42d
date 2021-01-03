@@ -177,7 +177,10 @@ bool test_game_undo(void)
     game_play_move(g1, 0, 1, TENT);
     game_undo(g1);
     game_undo(g1);
-    return game_equal(g1, g2);
+    bool isEqual = game_equal(g1, g2);
+    game_delete(g1);
+    game_delete(g2);
+    return isEqual;
 }
 
 int main(int argc, char* argv[])

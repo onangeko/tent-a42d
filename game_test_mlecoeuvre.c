@@ -187,9 +187,7 @@ bool test_game_redo(game g)
     game g2 = game_copy(g);
     game_undo(g);
     game_redo(g);
-    if (!game_equal(g, g2))
-        return false;
-    return true;
+    return game_equal(g, g2);
 }
 
 int main(int argc, char* argv[])
