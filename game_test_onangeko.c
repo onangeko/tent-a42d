@@ -10,18 +10,16 @@
 int test_game_is_over()
 {
 
-
     // default game solution
-    game g1 = game_new_empty_ext(6,6,true,true);
+    game g1 = game_new_empty_ext(6, 6, true, true);
 
     if ((game_get_current_nb_tents_all(g1)) == (game_get_expected_nb_tents_all(g1)) && (game_is_over(g1) == true)) {
         game_delete(g1);
         return EXIT_SUCCESS;
-    }else{
+    } else {
         game_delete(g1);
         return EXIT_FAILURE;
     }
-    
 }
 
 /* ********** TEST GAME_RESTART ********** */
@@ -106,43 +104,39 @@ int test_game_print()
 
 /* ********** TEST GAME_IS_WRAPPING ********** */
 
- bool test_game_is_wrapping()
+bool test_game_is_wrapping()
 {
-    game g1 = game_new_empty_ext(6,6,true,true);
-    game g2 = game_new_empty_ext(6,6,false,true);
+    game g1 = game_new_empty_ext(6, 6, true, true);
+    game g2 = game_new_empty_ext(6, 6, false, true);
 
-    if (game_is_wrapping(g1) == true && game_is_wrapping(g2) == false )
-    {
+    if (game_is_wrapping(g1) == true && game_is_wrapping(g2) == false) {
         game_delete(g1);
         game_delete(g2);
         return EXIT_SUCCESS;
-    }else{
+    } else {
         game_delete(g1);
         game_delete(g2);
         return EXIT_FAILURE;
     }
-
-} 
-
+}
 
 /* ********** TEST GAME_IS_DIAGADJ ********** */
 
- bool test_game_is_diagadj()
+bool test_game_is_diagadj()
 {
-    game g1 = game_new_empty_ext(6,6,true,true);
-    game g2 = game_new_empty_ext(6,6,false,false);
+    game g1 = game_new_empty_ext(6, 6, true, true);
+    game g2 = game_new_empty_ext(6, 6, false, false);
 
-    if (game_is_diagadj(g1) == true && game_is_diagadj(g2) == false )
-    {
+    if (game_is_diagadj(g1) == true && game_is_diagadj(g2) == false) {
         game_delete(g1);
         game_delete(g2);
         return EXIT_SUCCESS;
-    }else{
+    } else {
         game_delete(g1);
         game_delete(g2);
         return EXIT_FAILURE;
     }
-} 
+}
 
 int main(int argc, char* argv[])
 {
@@ -166,10 +160,10 @@ int main(int argc, char* argv[])
     if (strcmp("game_print", argv[1]) == 0) {
         return test_game_print();
     }
-    if (strcmp("game_is_wrapping" ,argv[1]) == 0) {
+    if (strcmp("game_is_wrapping", argv[1]) == 0) {
         return test_game_is_wrapping();
     }
     if (strcmp("game_is_diagadj", argv[1]) == 0) {
         return test_game_is_diagadj();
-    }                                                                       
+    }
 }

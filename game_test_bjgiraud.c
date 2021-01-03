@@ -1,6 +1,6 @@
+#include "game.h"
 #include "game_aux.h"
 #include "game_ext.h"
-#include "game.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
