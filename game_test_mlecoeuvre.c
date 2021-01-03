@@ -164,7 +164,7 @@ bool test_game_check_move(game g)
     //Regular moves
     //* plant tent adjacent to another diagonally with diagadj
     game_play_move(g, 2, 3, TENT);
-    if (game_check_move(g, 3, 4, TENT) != REGULAR)
+    if (game_is_wrapping(g) && game_check_move(g, 3, 4, TENT) != REGULAR)
         return false;
     if (game_check_move(g, 0, 0, TENT) != REGULAR)
         return false;
@@ -194,6 +194,7 @@ int main(int argc, char* argv[])
 {
     //default game
     game g = game_default();
+
     bool ok = false;
     if (strcmp("game_get_square", argv[1]) == 0)
         ok = test_game_get_square(g);

@@ -325,28 +325,28 @@ bool is_adjacent_orthogonally_to(cgame g, uint i, uint j, square s)
         if (game_get_square(g, i - 1, j) == s)
             return true;
     } else if (game_is_wrapping(g)) {
-        if (game_get_square(g, i + DEFAULT_SIZE - 1, j) == s)
+        if (game_get_square(g, i + game_nb_rows(g) - 1, j) == s)
             return true;
     }
-    if (i < DEFAULT_SIZE - 1) {
+    if (i < game_nb_rows(0) - 1) {
         if (game_get_square(g, i + 1, j) == s)
             return true;
     } else if (game_is_wrapping(g)) {
-        if (game_get_square(g, i - DEFAULT_SIZE + 1, j) == s)
+        if (game_get_square(g, i - game_nb_rows(g) + 1, j) == s)
             return true;
     }
     if (j > 0) {
         if (game_get_square(g, i, j - 1) == s)
             return true;
     } else if (game_is_wrapping(g)) {
-        if (game_get_square(g, i, j + DEFAULT_SIZE - 1) == s)
+        if (game_get_square(g, i, j + game_nb_cols(g) - 1) == s)
             return true;
     }
-    if (j < DEFAULT_SIZE - 1) {
+    if (j < game_nb_cols(g) - 1) {
         if (game_get_square(g, i, j + 1) == s)
             return true;
     } else if (game_is_wrapping(g)) {
-        if (game_get_square(g, i, j - DEFAULT_SIZE + 1) == s)
+        if (game_get_square(g, i, j - game_nb_cols(g) + 1) == s)
             return true;
     }
     return false;
@@ -359,58 +359,58 @@ bool is_adjacent_diagonaly_to(cgame g, uint i, uint j, square s)
             return true;
     } else if (game_is_wrapping(g)) {
         if (i == 0 && j == 0) {
-            if (game_get_square(g, i + DEFAULT_SIZE - 1, j + DEFAULT_SIZE - 1) == s)
+            if (game_get_square(g, i + game_nb_rows(g) - 1, j + game_nb_cols(g) - 1) == s)
                 return true;
         } else if (i == 0 && j != 0) {
-            if (game_get_square(g, i + DEFAULT_SIZE - 1, j - 1) == s)
+            if (game_get_square(g, i + game_nb_rows(g) - 1, j - 1) == s)
                 return true;
         } else if (i != 0 && j == 0) {
-            if (game_get_square(g, i - 1, j + DEFAULT_SIZE - 1) == s)
+            if (game_get_square(g, i - 1, j + game_nb_cols(g) - 1) == s)
                 return true;
         }
     }
-    if (i < DEFAULT_SIZE - 1 && j < DEFAULT_SIZE - 1) {
+    if (i < game_nb_rows(g) - 1 && j < game_nb_cols(g) - 1) {
         if (game_get_square(g, i + 1, j + 1) == s)
             return true;
     } else if (game_is_wrapping(g)) {
-        if (i == DEFAULT_SIZE - 1 && j == DEFAULT_SIZE - 1) {
-            if (game_get_square(g, i - DEFAULT_SIZE + 1, j - DEFAULT_SIZE + 1) == s)
+        if (i == game_nb_rows(g) - 1 && j == game_nb_cols(g) - 1) {
+            if (game_get_square(g, i - game_nb_rows(g) + 1, j - game_nb_cols(g) + 1) == s)
                 return true;
-        } else if (i == DEFAULT_SIZE - 1 && j != DEFAULT_SIZE - 1) {
-            if (game_get_square(g, i - DEFAULT_SIZE + 1, j + 1) == s)
+        } else if (i == game_nb_rows(g) - 1 && j != game_nb_cols(g) - 1) {
+            if (game_get_square(g, i - game_nb_rows(g) + 1, j + 1) == s)
                 return true;
-        } else if (i != DEFAULT_SIZE - 1 && j == DEFAULT_SIZE - 1) {
-            if (game_get_square(g, i + 1, j - DEFAULT_SIZE + 1) == s)
+        } else if (i != game_nb_rows(g) - 1 && j == game_nb_cols(g) - 1) {
+            if (game_get_square(g, i + 1, j - game_nb_cols(g) + 1) == s)
                 return true;
         }
     }
-    if (j > 0 && i < DEFAULT_SIZE - 1) {
+    if (j > 0 && i < game_nb_rows(g) - 1) {
         if (game_get_square(g, i + 1, j - 1) == s)
             return true;
     } else if (game_is_wrapping(g)) {
-        if (i == DEFAULT_SIZE - 1 && j == 0) {
-            if (game_get_square(g, i - DEFAULT_SIZE + 1, j + DEFAULT_SIZE - 1) == s)
+        if (i == game_nb_rows(g) - 1 && j == 0) {
+            if (game_get_square(g, i - game_nb_rows(g) + 1, j + game_nb_cols(g) - 1) == s)
                 return true;
-        } else if (i == DEFAULT_SIZE - 1 && j != 0) {
-            if (game_get_square(g, i - DEFAULT_SIZE + 1, j - 1) == s)
+        } else if (i == game_nb_rows(g) - 1 && j != 0) {
+            if (game_get_square(g, i - game_nb_rows(g) + 1, j - 1) == s)
                 return true;
-        } else if (i != DEFAULT_SIZE - 1 && j == 0) {
-            if (game_get_square(g, i + 1, j + DEFAULT_SIZE - 1) == s)
+        } else if (i != game_nb_rows(g) - 1 && j == 0) {
+            if (game_get_square(g, i + 1, j + game_nb_cols(g) - 1) == s)
                 return true;
         }
     }
-    if (j < DEFAULT_SIZE - 1 && i > 0) {
+    if (j < game_nb_cols(g) - 1 && i > 0) {
         if (game_get_square(g, i - 1, j + 1) == s)
             return true;
     } else if (game_is_wrapping(g)) {
-        if (i == 0 && j == DEFAULT_SIZE - 1) {
-            if (game_get_square(g, i + DEFAULT_SIZE - 1, j - DEFAULT_SIZE + 1) == s)
+        if (i == 0 && j == game_nb_cols(g) - 1) {
+            if (game_get_square(g, i + game_nb_rows(g) - 1, j - game_nb_cols(g) + 1) == s)
                 return true;
-        } else if (i == 0 && j != DEFAULT_SIZE - 1) {
-            if (game_get_square(g, i + DEFAULT_SIZE - 1, j + 1) == s)
+        } else if (i == 0 && j != game_nb_cols(g) - 1) {
+            if (game_get_square(g, i + game_nb_rows(g) - 1, j + 1) == s)
                 return true;
-        } else if (i != 0 && j == DEFAULT_SIZE - 1) {
-            if (game_get_square(g, i - 1, j - DEFAULT_SIZE + 1) == s)
+        } else if (i != 0 && j == game_nb_cols(g) - 1) {
+            if (game_get_square(g, i - 1, j - game_nb_cols(g) + 1) == s)
                 return true;
         }
     }
@@ -429,9 +429,8 @@ int check_tent_move(cgame g, uint i, uint j)
     if (game_get_current_nb_tents_all(g) >= game_get_expected_nb_tents_all(g))
         return LOSING;
     //* plant tent adjacent to another orthogonally and diagonally
-    if (is_adjacent_orthogonally_to(g, i, j, TENT))
-        if (!game_is_diagadj(g) && is_adjacent_diagonaly_to(g, i, j, TENT))
-            return LOSING;
+    if (is_adjacent_orthogonally_to(g, i, j, TENT) || (!game_is_diagadj(g) && is_adjacent_diagonaly_to(g, i, j, TENT)))
+        return LOSING;
     //* plant a tent not adjacent to a tree
     if (!is_adjacent_orthogonally_to(g, i, j, TREE))
         return LOSING;
@@ -449,32 +448,32 @@ bool isTreeSurrounded(cgame g, uint iT, uint jT, uint iG, uint jG)
         if (game_get_square(g, iT - 1, jT) != GRASS && game_get_square(g, iT - 1, jT) != TREE)
             isSurrounded = false;
     } else if (game_is_wrapping(g)) {
-        if (iT == 0 && iT + DEFAULT_SIZE - 1 != iG)
-            if (game_get_square(g, iT + DEFAULT_SIZE - 1, jT) != GRASS && game_get_square(g, iT + DEFAULT_SIZE - 1, jT) != TREE)
+        if (iT == 0 && iT + game_nb_cols(g) - 1 != iG)
+            if (game_get_square(g, iT + game_nb_rows(g) - 1, jT) != GRASS && game_get_square(g, iT + game_nb_rows(g) - 1, jT) != TREE)
                 isSurrounded = false;
     }
-    if (iT < DEFAULT_SIZE - 1 && iT + 1 != iG) {
+    if (iT < game_nb_rows(g) - 1 && iT + 1 != iG) {
         if (game_get_square(g, iT + 1, jT) != GRASS && game_get_square(g, iT + 1, jT) != TREE)
             isSurrounded = false;
     } else if (game_is_wrapping(g)) {
-        if (iT == DEFAULT_SIZE - 1 && iT - DEFAULT_SIZE + 1 != iG)
-            if (game_get_square(g, iT - DEFAULT_SIZE + 1, jT) != GRASS && game_get_square(g, iT - DEFAULT_SIZE + 1, jT) != TREE)
+        if (iT == game_nb_rows(g) - 1 && iT - game_nb_rows(g) + 1 != iG)
+            if (game_get_square(g, iT - game_nb_rows(g) + 1, jT) != GRASS && game_get_square(g, iT - game_nb_rows(g) + 1, jT) != TREE)
                 isSurrounded = false;
     }
     if (jT > 0 && jT - 1 != jG) {
         if (game_get_square(g, iT, jT - 1) != GRASS && game_get_square(g, iT, jT - 1) != TREE)
             isSurrounded = false;
     } else if (game_is_wrapping(g)) {
-        if (jT == 0 && jT + DEFAULT_SIZE - 1 != jG)
-            if (game_get_square(g, iT, jT + DEFAULT_SIZE - 1) != GRASS && game_get_square(g, iT, jT + DEFAULT_SIZE - 1) != TREE)
+        if (jT == 0 && jT + game_nb_cols(g) - 1 != jG)
+            if (game_get_square(g, iT, jT + game_nb_cols(g) - 1) != GRASS && game_get_square(g, iT, jT + game_nb_cols(g) - 1) != TREE)
                 isSurrounded = false;
     }
     if (jT < DEFAULT_SIZE - 1 && jT + 1 != jG) {
         if (game_get_square(g, iT, jT + 1) != GRASS && game_get_square(g, iT, jT + 1) != TREE)
             isSurrounded = false;
     } else if (game_is_wrapping(g)) {
-        if (jT == DEFAULT_SIZE - 1 && jT - DEFAULT_SIZE + 1 != jG)
-            if (game_get_square(g, iT, jT - DEFAULT_SIZE + 1) != GRASS && game_get_square(g, iT, jT - DEFAULT_SIZE + 1) != TREE)
+        if (jT == game_nb_cols(g) - 1 && jT - game_nb_cols(g) + 1 != jG)
+            if (game_get_square(g, iT, jT - game_nb_cols(g) + 1) != GRASS && game_get_square(g, iT, jT - game_nb_cols(g) + 1) != TREE)
                 isSurrounded = false;
     }
     return isSurrounded;
@@ -491,21 +490,21 @@ bool isGrassSurroundingTree(cgame g, uint i, uint j)
                     return true;
             }
         } else if (game_is_wrapping(g)) {
-            if (game_get_square(g, i + DEFAULT_SIZE - 1, j) == TREE) {
-                isSurrounding = isTreeSurrounded(g, i + DEFAULT_SIZE - 1, j, i, j);
+            if (game_get_square(g, i + game_nb_rows(g) - 1, j) == TREE) {
+                isSurrounding = isTreeSurrounded(g, i + game_nb_rows(g) - 1, j, i, j);
                 if (isSurrounding)
                     return true;
             }
         }
-        if (i < DEFAULT_SIZE - 1) {
+        if (i < game_nb_rows(g) - 1) {
             if (game_get_square(g, i + 1, j) == TREE) {
                 isSurrounding = isTreeSurrounded(g, i + 1, j, i, j);
                 if (isSurrounding)
                     return true;
             }
         } else if (game_is_wrapping(g)) {
-            if (game_get_square(g, i - DEFAULT_SIZE + 1, j) == TREE) {
-                isSurrounding = isTreeSurrounded(g, i - DEFAULT_SIZE + 1, j, i, j);
+            if (game_get_square(g, i - game_nb_rows(g) + 1, j) == TREE) {
+                isSurrounding = isTreeSurrounded(g, i - game_nb_rows(g) + 1, j, i, j);
                 if (isSurrounding)
                     return true;
             }
@@ -517,21 +516,21 @@ bool isGrassSurroundingTree(cgame g, uint i, uint j)
                     return true;
             }
         } else if (game_is_wrapping(g)) {
-            if (game_get_square(g, i, j + DEFAULT_SIZE - 1) == TREE) {
-                isSurrounding = isTreeSurrounded(g, i, j + DEFAULT_SIZE - 1, i, j);
+            if (game_get_square(g, i, j + game_nb_cols(g) - 1) == TREE) {
+                isSurrounding = isTreeSurrounded(g, i, j + game_nb_cols(g) - 1, i, j);
                 if (isSurrounding)
                     return true;
             }
         }
-        if (j < DEFAULT_SIZE - 1) {
+        if (j < game_nb_cols(g) - 1) {
             if (game_get_square(g, i, j + 1) == TREE) {
                 isSurrounding = isTreeSurrounded(g, i, j + 1, i, j);
                 if (isSurrounding)
                     return true;
             }
         } else if (game_is_wrapping(g)) {
-            if (game_get_square(g, i, j - DEFAULT_SIZE + 1) == TREE) {
-                isSurrounding = isTreeSurrounded(g, i, j - DEFAULT_SIZE + 1, i, j);
+            if (game_get_square(g, i, j - game_nb_cols(g) + 1) == TREE) {
+                isSurrounding = isTreeSurrounded(g, i, j - game_nb_cols(g) + 1, i, j);
                 if (isSurrounding)
                     return true;
             }
@@ -597,8 +596,8 @@ bool game_is_over(cgame g)
     }
     if (game_is_diagadj(g) == true) {
         // RULE 1 ) No two tents are adjacent orthogonally.
-        for (int i = 0; i < DEFAULT_SIZE; i++)
-            for (int j = 0; j < DEFAULT_SIZE; j++)
+        for (int i = 0; i < game_nb_rows(g); i++)
+            for (int j = 0; j < game_nb_cols(g); j++)
                 if (g->board[i][j] == TENT)
                     if (is_adjacent_orthogonally_to(g, i, j, TENT))
                         return false;
@@ -606,8 +605,8 @@ bool game_is_over(cgame g)
     }
 
     // RULE 1 ) No two tents are adjacent, even diagonally.
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        for (int j = 0; j < DEFAULT_SIZE; j++)
+    for (int i = 0; i < game_nb_rows(g); i++)
+        for (int j = 0; j < game_nb_cols(g); j++)
             if (g->board[i][j] == TENT)
                 if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT))
                     return false;
@@ -615,32 +614,32 @@ bool game_is_over(cgame g)
 // RULE 2 ) The number of tents in each row, and in each column, matches the expected numbers given around the sides of the grid.
 jump:
 
-    for (int i = 0; i < DEFAULT_SIZE; i++)
+    for (int i = 0; i < game_nb_rows(g); i++)
         if (game_get_current_nb_tents_row(g, i) != game_get_expected_nb_tents_row(g, i))
             return false;
 
-    for (int j = 0; j < DEFAULT_SIZE; j++)
+    for (int j = 0; j < game_nb_cols(g); j++)
         if (game_get_current_nb_tents_col(g, j) != game_get_expected_nb_tents_col(g, j))
             return false;
 
     // RULE 3 ) There are exactly as many tents as trees.
     int cpt = 0;
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        for (int j = 0; j < DEFAULT_SIZE; j++)
+    for (int i = 0; i < game_nb_rows(g); i++)
+        for (int j = 0; j < game_nb_cols(g); j++)
             if (g->board[i][j] == TREE)
                 cpt = cpt + 1;
     if (cpt != game_get_current_nb_tents_all(g))
         return false;
 
     // RULE 4 ) Each tent must be orthogonally adjacent (horizontally or vertically, but not diagonally) to at least one tree and vice versa.
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        for (int j = 0; j < DEFAULT_SIZE; j++)
+    for (int i = 0; i < game_nb_rows(g); i++)
+        for (int j = 0; j < game_nb_cols(g); j++)
             if (g->board[i][j] == TENT)
                 if (!is_adjacent_orthogonally_to(g, i, j, TREE))
                     return false;
 
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        for (int j = 0; j < DEFAULT_SIZE; j++)
+    for (int i = 0; i < game_nb_rows(g); i++)
+        for (int j = 0; j < game_nb_cols(g); j++)
             if (g->board[i][j] == TREE)
                 if (!is_adjacent_orthogonally_to(g, i, j, TENT))
                     return false;
@@ -649,7 +648,7 @@ jump:
 
 void game_fill_grass_row(game g, uint i)
 {
-    for (int j = 0; j < DEFAULT_SIZE; j++) {
+    for (int j = 0; j < game_nb_cols(g); j++) {
         if (g->board[i][j] == EMPTY) {
             g->board[i][j] = GRASS;
         }
@@ -658,7 +657,7 @@ void game_fill_grass_row(game g, uint i)
 
 void game_fill_grass_col(game g, uint j)
 {
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
+    for (int i = 0; i < game_nb_rows(g); i++) {
         if (g->board[i][j] == EMPTY) {
             g->board[i][j] = GRASS;
         }
@@ -672,8 +671,8 @@ void game_restart(game g)
         exit(EXIT_FAILURE);
     }
 
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
-        for (int j = 0; j < DEFAULT_SIZE; j++) {
+    for (int i = 0; i < game_nb_rows(g); i++) {
+        for (int j = 0; j < game_nb_cols(g); j++) {
             if (g->board[i][j] != TREE) {
                 g->board[i][j] = EMPTY;
             }
