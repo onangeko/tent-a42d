@@ -37,10 +37,10 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_ro
     }
     game->expected_nb_tents_row = malloc(sizeof(uint) * nb_rows);
     game->expected_nb_tents_col = malloc(sizeof(uint) * nb_cols);
-    for (int i = 0; i < nb_rows; i++) {
-        game->expected_nb_tents_col[i] = nb_tents_col[i];
+    for (int i = 0; i < nb_rows; i++)
         game->expected_nb_tents_row[i] = nb_tents_row[i];
-    }
+    for (int j = 0; j < nb_cols; j++)
+        game->expected_nb_tents_col[j] = nb_tents_col[j];
     for (int i = 0; i < nb_rows; i++) {
         for (int j = 0; j < nb_cols; j++) {
             game->board[i][j] = squares[i * nb_rows + j];
