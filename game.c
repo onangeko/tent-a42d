@@ -21,32 +21,31 @@ typedef struct game_s {
 
 game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
 {
-    if (squares == NULL || nb_tents_row == NULL || nb_tents_col == NULL) {
-        exit(EXIT_FAILURE);
-    }
-    struct game_s* game = malloc(sizeof(struct game_s));
-    game->board = malloc(sizeof(square*) * DEFAULT_SIZE);
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
-        game->board[i] = malloc(sizeof(square) * DEFAULT_SIZE);
-    }
-    game->expected_nb_tents_row = malloc(sizeof(uint) * DEFAULT_SIZE);
-    game->expected_nb_tents_col = malloc(sizeof(uint) * DEFAULT_SIZE);
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
-        game->expected_nb_tents_col[i] = nb_tents_col[i];
-        game->expected_nb_tents_row[i] = nb_tents_row[i];
-    }
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
-        for (int j = 0; j < DEFAULT_SIZE; j++) {
-            game->board[i][j] = squares[i * DEFAULT_SIZE + j];
-        }
-    }
-    return game;
+    return game_new_ext(DEFAULT_SIZE, DEFAULT_SIZE, squares, nb_tents_row, nb_tents_col, false, false);
 }
 
 game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_row, uint* nb_tents_col, bool wrapping,
     bool diagadj)
 {
-    game game = game_new(squares, nb_tents_row, nb_tents_col);
+    if (squares == NULL || nb_tents_row == NULL || nb_tents_col == NULL) {
+        exit(EXIT_FAILURE);
+    }
+    struct game_s* game = malloc(sizeof(struct game_s));
+    game->board = malloc(sizeof(square*) * nb_rows);
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        game->board[i] = malloc(sizeof(square) * nb_cols);
+    }
+    game->expected_nb_tents_row = malloc(sizeof(uint) * nb_rows);
+    game->expected_nb_tents_col = malloc(sizeof(uint) * nb_cols);
+    for (int i = 0; i < nb_rows; i++) {
+        game->expected_nb_tents_col[i] = nb_tents_col[i];
+        game->expected_nb_tents_row[i] = nb_tents_row[i];
+    }
+    for (int i = 0; i < nb_rows; i++) {
+        for (int j = 0; j < nb_cols; j++) {
+            game->board[i][j] = squares[i * nb_rows + j];
+        }
+    }
     game->wrapping = wrapping;
     game->diagadj = diagadj;
     game->nb_rows = nb_rows;
