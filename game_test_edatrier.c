@@ -45,13 +45,13 @@ bool test_game_new_ext(square* squares, uint* nb_tents_row, uint* nb_tents_col, 
         return false;
     if (game_is_diagadj(g) != diagadj)
         return false;
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
+    for (int i = 0; i < nb_rows; i++) {
         if (game_get_expected_nb_tents_row(g, i) != nb_tents_row[i]) {
             game_delete(g);
             return false;
         }
-        for (int j = 0; j < DEFAULT_SIZE; j++)
-            if (game_get_square(g, i, j) != squares[(i * 8) + j] || game_get_expected_nb_tents_col(g, j) != nb_tents_col[j]) {
+        for (int j = 0; j < nb_cols; j++)
+            if (game_get_square(g, i, j) != squares[(i * nb_rows) + j] || game_get_expected_nb_tents_col(g, j) != nb_tents_col[j]) {
                 game_delete(g);
                 return false;
             }
@@ -91,16 +91,18 @@ bool test_game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool dia
     if (game_is_diagadj(g) != diagadj)
         return false;
     //Tests, for each square, if the value is EMPTY and if the number of expected tents is 0 for each row and column
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
+    for (int i = 0; i < nb_rows; i++) {
         if (game_get_expected_nb_tents_row(g, i) != 0) {
             game_delete(g);
             return false;
         }
-        for (int j = 0; j < DEFAULT_SIZE; j++)
+        for (int j = 0; j < nb_cols; j++) {
+            printf("%s", game_get_square(g, i, j) == EMPTY ? "empty" : "not empty");
             if (game_get_square(g, i, j) != EMPTY || game_get_expected_nb_tents_col(g, j) != 0) {
                 game_delete(g);
                 return false;
             }
+        }
     }
     game_delete(g);
     return true;
@@ -203,7 +205,7 @@ int main(int argc, char* argv[])
     if (strcmp("game_new", argv[1]) == 0)
         ok = test_game_new(squares, nb_tents_row, nb_tents_col);
     else if (strcmp("game_new_ext", argv[1]) == 0)
-        ok = test_game_new_ext(squares, nb_tents_row, nb_tents_col, DEFAULT_SIZE, DEFAULT_SIZE, true, false);
+        ok = test_game_new_ext(squares, nb_tents_row, nb_tents_col, 8, 8, true, false);
     else if (strcmp("game_new_empty", argv[1]) == 0)
         ok = test_game_new_empty();
     else if (strcmp("game_new_empty_ext", argv[1]) == 0)

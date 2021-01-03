@@ -71,19 +71,15 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
     for (int j = 0; j < nb_cols; j++) {
         nb_tents_col[j] = 0;
     }
-    game empty = game_new_ext(nb_rows, nb_cols, squares, nb_tents_row, nb_tents_col, wrapping, diagadj);
-    free(squares);
-    free(nb_tents_col);
-    free(nb_tents_row);
-    return empty;
+    return game_new_ext(nb_rows, nb_cols, squares, nb_tents_row, nb_tents_col, wrapping, diagadj);
 }
 
 game game_copy(cgame g)
 {
-    square* squares = malloc(DEFAULT_SIZE * DEFAULT_SIZE * sizeof(square));
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
-        for (int j = 0; j < DEFAULT_SIZE; j++) {
-            squares[i * DEFAULT_SIZE + j] = g->board[i][j];
+    square* squares = malloc(g->nb_rows * g->nb_cols * sizeof(square));
+    for (int i = 0; i < g->nb_rows; i++) {
+        for (int j = 0; j < g->nb_cols; j++) {
+            squares[i * g->nb_rows + j] = g->board[i][j];
         }
     }
     game copy = game_new_ext(g->nb_rows, g->nb_cols, squares, g->expected_nb_tents_row, g->expected_nb_tents_col, g->wrapping, g->diagadj);
@@ -105,14 +101,14 @@ bool game_equal(cgame g1, cgame g2)
     if (g1->board == NULL || g1->expected_nb_tents_col == NULL || g1->expected_nb_tents_row == NULL || g2->board == NULL || g2->expected_nb_tents_col == NULL || g2->expected_nb_tents_row == NULL) {
         return false;
     }
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
+    for (int i = 0; i < g1->nb_rows; i++) {
         if (game_get_expected_nb_tents_col(g1, i) != game_get_expected_nb_tents_col(g2, i)
             || game_get_expected_nb_tents_row(g1, i) != game_get_expected_nb_tents_row(g2, i)
             || game_get_current_nb_tents_col(g1, i) != game_get_current_nb_tents_col(g2, i)
             || game_get_current_nb_tents_row(g1, i) != game_get_current_nb_tents_row(g2, i)) {
             return false;
         }
-        for (int j = 0; j < DEFAULT_SIZE; j++) {
+        for (int j = 0; j < g1->nb_cols; j++) {
             if (game_get_square(g1, i, j) != game_get_square(g2, i, j)) {
                 return false;
             }
@@ -159,7 +155,7 @@ void game_delete(game g)
 
 void game_set_square(game g, uint i, uint j, square s)
 {
-    if (g == NULL || g->board == NULL || i > DEFAULT_SIZE || j > DEFAULT_SIZE) {
+    if (g == NULL || g->board == NULL || i > g->nb_rows || j > g->nb_cols) {
         fprintf(stderr, "Error: Invalid argument | game_get_square()");
         exit(EXIT_FAILURE);
     }
@@ -168,7 +164,7 @@ void game_set_square(game g, uint i, uint j, square s)
 
 square game_get_square(cgame g, uint i, uint j)
 {
-    if (g == NULL || g->board == NULL || i > DEFAULT_SIZE || j > DEFAULT_SIZE) {
+    if (g == NULL || g->board == NULL || i > g->nb_rows || j > g->nb_cols) {
         fprintf(stderr, "Error: Invalid argument | game_get_square()");
         exit(EXIT_FAILURE);
     }
@@ -179,7 +175,7 @@ square game_get_square(cgame g, uint i, uint j)
 
 void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)
 {
-    if (g == NULL || i >= DEFAULT_SIZE) {
+    if (g == NULL || i >= g->nb_rows) {
         printf("invalid arguments");
         exit(0);
     }
@@ -189,7 +185,7 @@ void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)
 
 void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 {
-    if (g == NULL || j >= DEFAULT_SIZE) {
+    if (g == NULL || j >= g->nb_cols) {
         printf("invalid arguments");
         exit(0);
     }
@@ -199,7 +195,7 @@ void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 
 uint game_get_expected_nb_tents_row(cgame g, uint i)
 {
-    if (g == NULL || i >= DEFAULT_SIZE) {
+    if (g == NULL || i >= g->nb_rows) {
         printf("invalid arguments");
         exit(0);
     }
@@ -209,7 +205,7 @@ uint game_get_expected_nb_tents_row(cgame g, uint i)
 
 uint game_get_expected_nb_tents_col(cgame g, uint j)
 {
-    if (g == NULL || j >= DEFAULT_SIZE) {
+    if (g == NULL || j >= g->nb_cols) {
         printf("invalid arguments");
         exit(0);
     }
@@ -226,7 +222,7 @@ uint game_get_expected_nb_tents_all(cgame g)
 
     unsigned int n = 0;
 
-    for (int i = 0; i < DEFAULT_SIZE; i++)
+    for (int i = 0; i < g->nb_rows; i++)
         n = n + g->expected_nb_tents_row[i];
 
     return n;
@@ -236,12 +232,12 @@ uint game_get_expected_nb_tents_all(cgame g)
 
 uint game_get_current_nb_tents_row(cgame g, uint i)
 {
-    if (g == NULL || g->board == NULL || i > DEFAULT_SIZE) {
+    if (g == NULL || g->board == NULL || i > g->nb_rows) {
         fprintf(stderr, "Error: Invalid argument | game_get__expected_nb_tents_row()");
         exit(EXIT_FAILURE);
     }
     uint cpt = 0;
-    for (int j = 0; j < DEFAULT_SIZE; j++) {
+    for (int j = 0; j < g->nb_cols; j++) {
         if (g->board[i][j] == TENT) {
             cpt = cpt + 1;
         }
@@ -251,12 +247,12 @@ uint game_get_current_nb_tents_row(cgame g, uint i)
 
 uint game_get_current_nb_tents_col(cgame g, uint j)
 {
-    if (g == NULL || g->board == NULL || j > DEFAULT_SIZE) {
+    if (g == NULL || g->board == NULL || j > g->nb_cols) {
         fprintf(stderr, "Error: Invalid argument | game_get__expected_nb_tents_col()");
         exit(EXIT_FAILURE);
     }
     uint cpt = 0;
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
+    for (int i = 0; i < g->nb_rows; i++) {
         if (g->board[i][j] == TENT) {
             cpt = cpt + 1;
         }
@@ -271,8 +267,8 @@ uint game_get_current_nb_tents_all(cgame g)
         exit(EXIT_FAILURE);
     }
     uint cpt = 0;
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
-        for (int j = 0; j < DEFAULT_SIZE; j++) {
+    for (int i = 0; i < g->nb_rows; i++) {
+        for (int j = 0; j < g->nb_cols; j++) {
             if (g->board[i][j] == TENT) {
                 cpt = cpt + 1;
             }
@@ -300,7 +296,7 @@ void game_play_move(game g, uint i, uint j, square s)
 int nb_type_square_row(cgame g, uint i, square s)
 {
     int nb = 0;
-    for (int j = 0; j < DEFAULT_SIZE; j++) {
+    for (int j = 0; j < g->nb_cols; j++) {
         if (game_get_square(g, i, j) == s) {
             nb++;
         }
@@ -311,7 +307,7 @@ int nb_type_square_row(cgame g, uint i, square s)
 uint nb_type_square_col(cgame g, uint j, square s)
 {
     uint nb = 0;
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
+    for (int i = 0; i < g->nb_rows; i++) {
         if (game_get_square(g, i, j) == s) {
             nb++;
         }
@@ -468,7 +464,7 @@ bool isTreeSurrounded(cgame g, uint iT, uint jT, uint iG, uint jG)
             if (game_get_square(g, iT, jT + game_nb_cols(g) - 1) != GRASS && game_get_square(g, iT, jT + game_nb_cols(g) - 1) != TREE)
                 isSurrounded = false;
     }
-    if (jT < DEFAULT_SIZE - 1 && jT + 1 != jG) {
+    if (jT < g->nb_cols - 1 && jT + 1 != jG) {
         if (game_get_square(g, iT, jT + 1) != GRASS && game_get_square(g, iT, jT + 1) != TREE)
             isSurrounded = false;
     } else if (game_is_wrapping(g)) {
@@ -569,7 +565,7 @@ int check_empty_move(cgame g, uint i, uint j)
 
 int game_check_move(cgame g, uint i, uint j, square s)
 {
-    if (g == NULL || g->board == NULL || i >= DEFAULT_SIZE || j >= DEFAULT_SIZE) {
+    if (g == NULL || g->board == NULL || i >= g->nb_rows || j >= g->nb_cols) {
         fprintf(stderr, "Error: Invalid argument | game_check_move()");
         exit(EXIT_FAILURE);
     } else if (s == TREE)
