@@ -83,26 +83,6 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
     return game;
 }
 
-bool game_get_wrapping(game g)
-{
-    return g->wrapping;
-}
-
-bool game_get_diagadj(game g)
-{
-    return g->diagadj;
-}
-
-uint game_get_nb_rows(game g)
-{
-    return g->nb_rows;
-}
-
-uint game_get_nb_cols(game g)
-{
-    return g->nb_cols;
-}
-
 game game_copy(cgame g)
 {
     square* squares = malloc(DEFAULT_SIZE * DEFAULT_SIZE * sizeof(square));

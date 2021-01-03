@@ -1,41 +1,10 @@
-#include "game.c"
 #include "game_aux.h"
+#include "game_ext.h"
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-bool test_game_new_ext(square* squares, uint* nb_tents_row, uint* nb_tents_col, uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
-{
-    //Creates the game using the arguments as parameters
-    game g = game_new_ext(nb_rows, nb_cols, squares, nb_tents_row, nb_tents_col, wrapping, diagadj);
-    /*
-    Tests, for each square, if the value is the same as the parameters we put in 
-    and if the number of expected tents expected is correct for each row and column
-    */
-    if (game_get_nb_rows(g) != nb_rows)
-        return false;
-    if (game_get_nb_cols(g) != nb_cols)
-        return false;
-    if (game_get_wrapping(g) != wrapping)
-        return false;
-    if (game_get_diagadj(g) != diagadj)
-        return false;
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
-        if (game_get_expected_nb_tents_row(g, i) != nb_tents_row[i]) {
-            game_delete(g);
-            return false;
-        }
-        for (int j = 0; j < DEFAULT_SIZE; j++)
-            if (game_get_square(g, i, j) != squares[(i * 8) + j] || game_get_expected_nb_tents_col(g, j) != nb_tents_col[j]) {
-                game_delete(g);
-                return false;
-            }
-    }
-    game_delete(g);
-    return true;
-}
 
 bool test_game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
 {
@@ -60,9 +29,67 @@ bool test_game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
     return true;
 }
 
+bool test_game_new_ext(square* squares, uint* nb_tents_row, uint* nb_tents_col, uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
+{
+    //Creates the game using the arguments as parameters
+    game g = game_new_ext(nb_rows, nb_cols, squares, nb_tents_row, nb_tents_col, wrapping, diagadj);
+    /*
+    Tests, for each square, if the value is the same as the parameters we put in 
+    and if the number of expected tents expected is correct for each row and column
+    */
+    if (game_nb_rows(g) != nb_rows)
+        return false;
+    if (game_nb_cols(g) != nb_cols)
+        return false;
+    if (game_is_wrapping(g) != wrapping)
+        return false;
+    if (game_is_diagadj(g) != diagadj)
+        return false;
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        if (game_get_expected_nb_tents_row(g, i) != nb_tents_row[i]) {
+            game_delete(g);
+            return false;
+        }
+        for (int j = 0; j < DEFAULT_SIZE; j++)
+            if (game_get_square(g, i, j) != squares[(i * 8) + j] || game_get_expected_nb_tents_col(g, j) != nb_tents_col[j]) {
+                game_delete(g);
+                return false;
+            }
+    }
+    game_delete(g);
+    return true;
+}
+
 bool test_game_new_empty(void)
 {
     game g = game_new_empty();
+    //Tests, for each square, if the value is EMPTY and if the number of expected tents is 0 for each row and column
+    for (int i = 0; i < DEFAULT_SIZE; i++) {
+        if (game_get_expected_nb_tents_row(g, i) != 0) {
+            game_delete(g);
+            return false;
+        }
+        for (int j = 0; j < DEFAULT_SIZE; j++)
+            if (game_get_square(g, i, j) != EMPTY || game_get_expected_nb_tents_col(g, j) != 0) {
+                game_delete(g);
+                return false;
+            }
+    }
+    game_delete(g);
+    return true;
+}
+
+bool test_game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
+{
+    game g = game_new_empty_ext(nb_rows, nb_cols, wrapping, diagadj);
+    if (game_nb_rows(g) != nb_rows)
+        return false;
+    if (game_nb_cols(g) != nb_cols)
+        return false;
+    if (game_is_wrapping(g) != wrapping)
+        return false;
+    if (game_is_diagadj(g) != diagadj)
+        return false;
     //Tests, for each square, if the value is EMPTY and if the number of expected tents is 0 for each row and column
     for (int i = 0; i < DEFAULT_SIZE; i++) {
         if (game_get_expected_nb_tents_row(g, i) != 0) {
@@ -165,6 +192,8 @@ int main(int argc, char* argv[])
         ok = test_game_new_ext(squares, nb_tents_row, nb_tents_col, DEFAULT_SIZE, DEFAULT_SIZE, true, false);
     else if (strcmp("game_new_empty", argv[1]) == 0)
         ok = test_game_new_empty();
+    else if (strcmp("game_new_empty_ext", argv[1]) == 0)
+        ok = test_game_new_empty_ext(0, 0, false, false);
     else if (strcmp("game_copy", argv[1]) == 0)
         ok = test_game_copy(squares, nb_tents_row, nb_tents_col);
     else if (strcmp("game_equal", argv[1]) == 0)
