@@ -126,70 +126,19 @@ bool game_equal(cgame g1, cgame g2)
     return true;
 }
 
-void game_delete_previousStates(game g)
-{
-    if (g != NULL) {
-        if (g->board != NULL) {
-            for (int i = 0; i < DEFAULT_SIZE; i++) {
-                if (g->board[i] != NULL) {
-                    free(g->board[i]);
-                    g->board[i] = NULL;
-                }
-            }
-            free(g->board);
-            g->board = NULL;
-        }
-        if (g->expected_nb_tents_col != NULL) {
-            free(g->expected_nb_tents_col);
-            g->expected_nb_tents_col = NULL;
-        }
-        if (g->expected_nb_tents_row != NULL) {
-            free(g->expected_nb_tents_row);
-            g->expected_nb_tents_row = NULL;
-        }
-        if (g->previousState != NULL) {
-            game_delete(g->previousState);
-            g->previousState = NULL;
-        }
-        free(g);
-    }
-}
-void game_delete_nextStates(game g)
-{
-    if (g != NULL) {
-        if (g->board != NULL) {
-            for (int i = 0; i < DEFAULT_SIZE; i++) {
-                if (g->board[i] != NULL) {
-                    free(g->board[i]);
-                    g->board[i] = NULL;
-                }
-            }
-            free(g->board);
-            g->board = NULL;
-        }
-        if (g->expected_nb_tents_col != NULL) {
-            free(g->expected_nb_tents_col);
-            g->expected_nb_tents_col = NULL;
-        }
-        if (g->expected_nb_tents_row != NULL) {
-            free(g->expected_nb_tents_row);
-            g->expected_nb_tents_row = NULL;
-        }
-        if (g->nextState != NULL) {
-            game_delete(g->nextState);
-        }
-        free(g);
-    }
-}
-
 void game_delete(game g)
 {
     if (g != NULL) {
-        if (g->previousState != NULL)
-            game_delete_previousStates(g->previousState);
-        if (g->nextState != NULL)
-            game_delete_nextStates(g->nextState);
-
+        if (g->previousState != NULL) {
+            //Prevents infinite loop
+            g->previousState->nextState = NULL;
+            game_delete(g->previousState);
+        }
+        if (g->nextState != NULL) {
+            //Prevents infinite loop
+            g->nextState->previousState = NULL;
+            game_delete(g->nextState);
+        }
         if (g->board != NULL) {
             for (int i = 0; i < DEFAULT_SIZE; i++) {
                 if (g->board[i] != NULL) {
@@ -652,8 +601,7 @@ bool game_is_over(cgame g)
     if (g == NULL || g->board == NULL) {
         fprintf(stderr, "Error: Invalid argument | game_is_over()");
     }
-    if (game_is_diagadj(g) == true)
-    {
+    if (game_is_diagadj(g) == true) {
         // RULE 1 ) No two tents are adjacent orthogonally.
         for (int i = 0; i < DEFAULT_SIZE; i++)
             for (int j = 0; j < DEFAULT_SIZE; j++)
@@ -670,8 +618,8 @@ bool game_is_over(cgame g)
                 if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT))
                     return false;
 
-    // RULE 2 ) The number of tents in each row, and in each column, matches the expected numbers given around the sides of the grid.
-    jump:
+// RULE 2 ) The number of tents in each row, and in each column, matches the expected numbers given around the sides of the grid.
+jump:
 
     for (int i = 0; i < DEFAULT_SIZE; i++)
         if (game_get_current_nb_tents_row(g, i) != game_get_expected_nb_tents_row(g, i))
@@ -704,8 +652,6 @@ bool game_is_over(cgame g)
                     return false;
     return true;
 }
-
-
 
 void game_fill_grass_row(game g, uint i)
 {
@@ -745,7 +691,7 @@ void game_restart(game g)
 */
 uint game_nb_rows(cgame g)
 {
-    if (g == NULL){
+    if (g == NULL) {
         printf("invalid arguments");
         exit(0);
     }
@@ -755,7 +701,7 @@ uint game_nb_rows(cgame g)
 
 uint game_nb_cols(cgame g)
 {
-    if (g == NULL){
+    if (g == NULL) {
         printf("invalid arguments");
         exit(0);
     }

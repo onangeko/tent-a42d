@@ -215,7 +215,7 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Error: test \"%s\" not found!\n", argv[1]);
         exit(EXIT_FAILURE);
     }
-    //game_delete(g);
+    game_delete(g);
     // print test result
     if (ok) {
         return EXIT_SUCCESS;
