@@ -93,12 +93,12 @@ bool game_get_diagadj(game g)
     return g->diagadj;
 }
 
-game_get_nb_rows(game g)
+uint game_get_nb_rows(game g)
 {
     return g->nb_rows;
 }
 
-game_get_nb_cols(game g)
+uint game_get_nb_cols(game g)
 {
     return g->nb_cols;
 }

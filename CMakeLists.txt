@@ -6,6 +6,7 @@ enable_testing()
 
 add_executable(game_test_edatrier game_test_edatrier.c)
 add_test(test_edatrier_game_new ./game_test_edatrier game_new)
+add_test(test_edatrier_game_new_ext ./game_test_edatrier game_new_ext)
 add_test(test_edatrier_game_new_empty ./game_test_edatrier game_new_empty)
 add_test(test_edatrier_game_copy ./game_test_edatrier game_copy)
 add_test(test_edatrier_game_equal ./game_test_edatrier game_equal)
