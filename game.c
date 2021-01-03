@@ -98,6 +98,11 @@ game_get_nb_rows(game g)
     return g->nb_rows;
 }
 
+game_get_nb_cols(game g)
+{
+    return g->nb_cols;
+}
+
 game game_copy(cgame g)
 {
     square* squares = malloc(DEFAULT_SIZE * DEFAULT_SIZE * sizeof(square));
