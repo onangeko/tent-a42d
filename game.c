@@ -171,8 +171,7 @@ void game_set_square(game g, uint i, uint j, square s)
     g->board[i][j] = s;
 }
 
-square
-game_get_square(cgame g, uint i, uint j)
+square game_get_square(cgame g, uint i, uint j)
 {
     if (g == NULL || g->board == NULL || i > DEFAULT_SIZE || j > DEFAULT_SIZE) {
         fprintf(stderr, "Error: Invalid argument | game_get_square()");
@@ -290,9 +289,8 @@ uint game_get_current_nb_tents_all(cgame g)
 void game_play_move(game g, uint i, uint j, square s)
 {
     if (g->nextState != NULL) {
-        game next = g->nextState;
-        next->previousState = NULL;
-        game_delete(next);
+        g->nextState->previousState = NULL;
+        game_delete(g->nextState);
         g->nextState = NULL;
     }
     game copy = game_copy(g);
@@ -695,7 +693,6 @@ uint game_nb_rows(cgame g)
         printf("invalid arguments");
         exit(0);
     }
-
     return g->nb_rows;
 }
 
@@ -705,7 +702,6 @@ uint game_nb_cols(cgame g)
         printf("invalid arguments");
         exit(0);
     }
-
     return g->nb_cols;
 }
 
@@ -725,7 +721,14 @@ void game_undo(game g)
 {
     if (g != NULL) {
         if (g->previousState != NULL) {
-            g = g->previousState;
+            square** currentBoard = g->board;
+            game previous = g->previousState;
+            g->board = previous->board;
+            previous->board = currentBoard;
+            g->nextState = g->previousState;
+            g->previousState = previous->previousState;
+            previous->previousState = previous->nextState;
+            previous->nextState = g->nextState;
         }
     }
 }

@@ -8,8 +8,8 @@
 
 #ifndef __GAME_EXT_H__
 #define __GAME_EXT_H__
-#include <stdbool.h>
 #include "game.h"
+#include <stdbool.h>
 
 /**
  * @name Extended Functions
@@ -28,8 +28,8 @@
  * @param diagadj diagadj option
  * @return the created game
  **/
-game game_new_ext(uint nb_rows, uint nb_cols, square *squares, uint *nb_tents_row, uint *nb_tents_col, bool wrapping,
-                  bool diagadj);
+game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_row, uint* nb_tents_col, bool wrapping,
+    bool diagadj);
 
 /**
  * @brief Creates a new empty game with extended options.
@@ -99,4 +99,4 @@ void game_redo(game g);
  * @}
  */
 
-#endif  // __GAME_EXT_H__
+#endif // __GAME_EXT_H__

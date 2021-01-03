@@ -13,7 +13,7 @@ add_test(test_edatrier_game_copy ./game_test_edatrier game_copy)
 add_test(test_edatrier_game_equal ./game_test_edatrier game_equal)
 add_test(test_edatrier_game_delete ./game_test_edatrier game_delete)
 add_test(test_edatrier_game_default_solution ./game_test_edatrier game_default_solution)
-
+add_test(test_edatrier_game_undo ./game_test_edatrier game_undo)
 
 add_executable(game_test_mlecoeuvre game_test_mlecoeuvre.c)
 add_test(test_mlecoeuvre_game_get_square ./game_test_mlecoeuvre game_get_square)

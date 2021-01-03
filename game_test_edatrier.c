@@ -169,6 +169,17 @@ bool test_game_default_solution(void)
     return assert;
 }
 
+bool test_game_undo(void)
+{
+    game g1 = game_default();
+    game g2 = game_copy(g1);
+    game_play_move(g1, 0, 0, TENT);
+    game_play_move(g1, 0, 1, TENT);
+    game_undo(g1);
+    game_undo(g1);
+    return game_equal(g1, g2);
+}
+
 int main(int argc, char* argv[])
 {
     //Parameters used to create the games used in the tests
@@ -202,6 +213,8 @@ int main(int argc, char* argv[])
         ok = test_game_delete();
     else if (strcmp("game_default_solution", argv[1]) == 0)
         ok = test_game_default_solution();
+    else if (strcmp("game_undo", argv[1]) == 0)
+        ok = test_game_undo();
     else {
         fprintf(stderr, "Error: test \"%s\" not found!\n", argv[1]);
         exit(EXIT_FAILURE);
