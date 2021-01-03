@@ -88,6 +88,11 @@ bool game_get_wrapping(game g)
     return g->wrapping;
 }
 
+bool game_get_diagadj(game g)
+{
+    return g->diagadj;
+}
+
 game game_copy(cgame g)
 {
     square* squares = malloc(DEFAULT_SIZE * DEFAULT_SIZE * sizeof(square));
