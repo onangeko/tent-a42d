@@ -598,6 +598,7 @@ bool game_is_over(cgame g)
 
     if (g == NULL || g->board == NULL) {
         fprintf(stderr, "Error: Invalid argument | game_is_over()");
+        exit(EXIT_FAILURE);
     }
     if (game_is_diagadj(g) == true) {
         // RULE 1 ) No two tents are adjacent orthogonally.
@@ -672,7 +673,8 @@ void game_fill_grass_col(game g, uint j)
 void game_restart(game g)
 {
     if (g == NULL || g->board == NULL) {
-        fprintf(stderr, "Error: Invalid argument | game_get_restart()");
+        fprintf(stderr, "Error: Invalid argument | game_restart()");
+        exit(EXIT_FAILURE);
     }
 
     for (int i = 0; i < DEFAULT_SIZE; i++) {
@@ -709,11 +711,19 @@ uint game_nb_cols(cgame g)
 
 bool game_is_wrapping(cgame g)
 {
+    if (g == NULL || g->board == NULL) {
+        fprintf(stderr, "Error: Invalid argument | game_is_wrapping_()");
+        exit(EXIT_FAILURE);
+    }
     return g->wrapping;
 }
 
 bool game_is_diagadj(cgame g)
 {
+    if (g == NULL || g->board == NULL) {
+        fprintf(stderr, "Error: Invalid argument | game_is_diagadj()");
+        exit(EXIT_FAILURE);
+    }
     return g->diagadj;
 }
 

@@ -1,5 +1,6 @@
 #include "game.h"
 #include "game_aux.h"
+#include "game_ext.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,43 +9,19 @@
 /* ********** TEST GAME_IS_OVER ********** */
 int test_game_is_over()
 {
-    square squares[64] = {
-        TENT, GRASS, GRASS, TENT, TREE, TREE, TENT, GRASS,
-        TREE, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, TREE,
-        TENT, GRASS, GRASS, TENT, TREE, TENT, GRASS, TENT,
-        TREE, GRASS, GRASS, GRASS, GRASS, TREE, GRASS, GRASS,
-        TENT, TREE, TENT, GRASS, TENT, GRASS, TENT, GRASS,
-        TREE, GRASS, GRASS, GRASS, TREE, GRASS, TREE, GRASS,
-        TENT, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS,
-        TREE, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS
-    };
-    uint nb_tents_row[8] = { 3, 0, 4, 0, 4, 0, 1, 0 };
-    uint nb_tents_col[8] = { 4, 0, 1, 2, 1, 1, 2, 1 };
+
 
     // default game solution
-    game g1 = game_new(squares, nb_tents_row, nb_tents_col);
-
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
-        // we check if the number of expected tents in each row is correct
-        if (game_get_expected_nb_tents_row(g1, i) != nb_tents_row[i]) {
-            game_delete(g1);
-            return EXIT_FAILURE;
-        }
-    }
-    for (int j = 0; j < DEFAULT_SIZE; j++) {
-        // we check if the number of expected tents in each col is correct
-        if (game_get_expected_nb_tents_col(g1, j) != nb_tents_col[j]) {
-            game_delete(g1);
-            return EXIT_FAILURE;
-        }
-    }
+    game g1 = game_new_empty_ext(6,6,true,true);
 
     if ((game_get_current_nb_tents_all(g1)) == (game_get_expected_nb_tents_all(g1)) && (game_is_over(g1) == true)) {
         game_delete(g1);
         return EXIT_SUCCESS;
+    }else{
+        game_delete(g1);
+        return EXIT_FAILURE;
     }
-    game_delete(g1);
-    return EXIT_SUCCESS;
+    
 }
 
 /* ********** TEST GAME_RESTART ********** */
@@ -129,10 +106,43 @@ int test_game_print()
 
 /* ********** TEST GAME_IS_WRAPPING ********** */
 
-/* bool test_game_is_wrapping()
+ bool test_game_is_wrapping()
 {
+    game g1 = game_new_empty_ext(6,6,true,true);
+    game g2 = game_new_empty_ext(6,6,false,true);
 
-} */
+    if (game_is_wrapping(g1) == true && game_is_wrapping(g2) == false )
+    {
+        game_delete(g1);
+        game_delete(g2);
+        return EXIT_SUCCESS;
+    }else{
+        game_delete(g1);
+        game_delete(g2);
+        return EXIT_FAILURE;
+    }
+
+} 
+
+
+/* ********** TEST GAME_IS_DIAGADJ ********** */
+
+ bool test_game_is_diagadj()
+{
+    game g1 = game_new_empty_ext(6,6,true,true);
+    game g2 = game_new_empty_ext(6,6,false,false);
+
+    if (game_is_diagadj(g1) == true && game_is_diagadj(g2) == false )
+    {
+        game_delete(g1);
+        game_delete(g2);
+        return EXIT_SUCCESS;
+    }else{
+        game_delete(g1);
+        game_delete(g2);
+        return EXIT_FAILURE;
+    }
+} 
 
 int main(int argc, char* argv[])
 {
@@ -156,10 +166,10 @@ int main(int argc, char* argv[])
     if (strcmp("game_print", argv[1]) == 0) {
         return test_game_print();
     }
-    /*if (strcmp("game_is_wrapping" ,argv[1]) == 0) {
+    if (strcmp("game_is_wrapping" ,argv[1]) == 0) {
         return test_game_is_wrapping();
     }
     if (strcmp("game_is_diagadj", argv[1]) == 0) {
         return test_game_is_diagadj();
-    } */
+    }                                                                       
 }
