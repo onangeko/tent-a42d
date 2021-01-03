@@ -600,8 +600,8 @@ bool game_is_over(cgame g)
     }
     if (game_is_diagadj(g) == true) {
         // RULE 1 ) No two tents are adjacent orthogonally.
-        for (int i = 0; i < DEFAULT_SIZE; i++)
-            for (int j = 0; j < DEFAULT_SIZE; j++)
+        for (int i = 0; i < game_nb_rows(g); i++)
+            for (int j = 0; j < game_nb_cols(g); j++)
                 if (g->board[i][j] == TENT)
                     if (is_adjacent_orthogonally_to(g, i, j, TENT))
                         return false;
@@ -609,8 +609,8 @@ bool game_is_over(cgame g)
     }
 
     // RULE 1 ) No two tents are adjacent, even diagonally.
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        for (int j = 0; j < DEFAULT_SIZE; j++)
+    for (int i = 0; i < game_nb_rows(g); i++)
+        for (int j = 0; j < game_nb_cols(g); j++)
             if (g->board[i][j] == TENT)
                 if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT))
                     return false;
@@ -618,32 +618,32 @@ bool game_is_over(cgame g)
 // RULE 2 ) The number of tents in each row, and in each column, matches the expected numbers given around the sides of the grid.
 jump:
 
-    for (int i = 0; i < DEFAULT_SIZE; i++)
+    for (int i = 0; i < game_nb_rows(g); i++)
         if (game_get_current_nb_tents_row(g, i) != game_get_expected_nb_tents_row(g, i))
             return false;
 
-    for (int j = 0; j < DEFAULT_SIZE; j++)
+    for (int j = 0; j < game_nb_cols(g); j++)
         if (game_get_current_nb_tents_col(g, j) != game_get_expected_nb_tents_col(g, j))
             return false;
 
     // RULE 3 ) There are exactly as many tents as trees.
     int cpt = 0;
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        for (int j = 0; j < DEFAULT_SIZE; j++)
+    for (int i = 0; i < game_nb_rows(g); i++)
+        for (int j = 0; j < game_nb_cols(g); j++)
             if (g->board[i][j] == TREE)
                 cpt = cpt + 1;
     if (cpt != game_get_current_nb_tents_all(g))
         return false;
 
     // RULE 4 ) Each tent must be orthogonally adjacent (horizontally or vertically, but not diagonally) to at least one tree and vice versa.
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        for (int j = 0; j < DEFAULT_SIZE; j++)
+    for (int i = 0; i < game_nb_rows(g); i++)
+        for (int j = 0; j < game_nb_cols(g); j++)
             if (g->board[i][j] == TENT)
                 if (!is_adjacent_orthogonally_to(g, i, j, TREE))
                     return false;
 
-    for (int i = 0; i < DEFAULT_SIZE; i++)
-        for (int j = 0; j < DEFAULT_SIZE; j++)
+    for (int i = 0; i < game_nb_rows(g); i++)
+        for (int j = 0; j < game_nb_cols(g); j++)
             if (g->board[i][j] == TREE)
                 if (!is_adjacent_orthogonally_to(g, i, j, TENT))
                     return false;
@@ -652,7 +652,7 @@ jump:
 
 void game_fill_grass_row(game g, uint i)
 {
-    for (int j = 0; j < DEFAULT_SIZE; j++) {
+    for (int j = 0; j < game_nb_cols(g); j++) {
         if (g->board[i][j] == EMPTY) {
             g->board[i][j] = GRASS;
         }
@@ -661,7 +661,7 @@ void game_fill_grass_row(game g, uint i)
 
 void game_fill_grass_col(game g, uint j)
 {
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
+    for (int i = 0; i < game_nb_rows(g); i++) {
         if (g->board[i][j] == EMPTY) {
             g->board[i][j] = GRASS;
         }
@@ -675,8 +675,8 @@ void game_restart(game g)
         exit(EXIT_FAILURE);
     }
 
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
-        for (int j = 0; j < DEFAULT_SIZE; j++) {
+    for (int i = 0; i < game_nb_rows(g); i++) {
+        for (int j = 0; j < game_nb_cols(g); j++) {
             if (g->board[i][j] != TREE) {
                 g->board[i][j] = EMPTY;
             }
