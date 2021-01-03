@@ -207,7 +207,7 @@ int main(int argc, char* argv[])
     else if (strcmp("game_new_empty", argv[1]) == 0)
         ok = test_game_new_empty();
     else if (strcmp("game_new_empty_ext", argv[1]) == 0)
-        ok = test_game_new_empty_ext(0, 0, false, false);
+        ok = test_game_new_empty_ext(8, 5, false, false);
     else if (strcmp("game_copy", argv[1]) == 0)
         ok = test_game_copy(squares, nb_tents_row, nb_tents_col);
     else if (strcmp("game_equal", argv[1]) == 0)

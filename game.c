@@ -32,7 +32,7 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_ro
     }
     struct game_s* game = malloc(sizeof(struct game_s));
     game->board = malloc(sizeof(square*) * nb_rows);
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
+    for (int i = 0; i < nb_rows; i++) {
         game->board[i] = malloc(sizeof(square) * nb_cols);
     }
     game->expected_nb_tents_row = malloc(sizeof(uint) * nb_rows);
@@ -55,31 +55,27 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_ro
 
 game game_new_empty(void)
 {
-    square* squares = (square*)malloc(sizeof(square) * DEFAULT_SIZE * DEFAULT_SIZE);
-    for (int i = 0; i < DEFAULT_SIZE * DEFAULT_SIZE; i++) {
-        squares[i] = EMPTY;
-    }
-    uint* nb_tents_row = (uint*)malloc(sizeof(uint) * DEFAULT_SIZE);
-    uint* nb_tents_col = (uint*)malloc(sizeof(uint) * DEFAULT_SIZE);
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
-        nb_tents_row[i] = 0;
-        nb_tents_col[i] = 0;
-    }
-    game empty = game_new(squares, nb_tents_row, nb_tents_col);
-    free(squares);
-    free(nb_tents_col);
-    free(nb_tents_row);
-    return empty;
+    return game_new_empty_ext(DEFAULT_SIZE, DEFAULT_SIZE, false, false);
 }
 
 game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
 {
-    game game = game_new_empty();
-    game->wrapping = wrapping;
-    game->diagadj = diagadj;
-    game->nb_rows = nb_rows;
-    game->nb_cols = nb_cols;
-    return game;
+    square* squares = (square*)malloc(sizeof(square) * nb_rows * nb_cols);
+    for (int i = 0; i < nb_rows * nb_cols; i++) {
+        squares[i] = EMPTY;
+    }
+    uint* nb_tents_row = (uint*)malloc(sizeof(uint) * nb_rows);
+    uint* nb_tents_col = (uint*)malloc(sizeof(uint) * nb_cols);
+    for (int i = 0; i < nb_rows; i++)
+        nb_tents_row[i] = 0;
+    for (int j = 0; j < nb_cols; j++) {
+        nb_tents_col[j] = 0;
+    }
+    game empty = game_new_ext(nb_rows, nb_cols, squares, nb_tents_row, nb_tents_col, wrapping, diagadj);
+    free(squares);
+    free(nb_tents_col);
+    free(nb_tents_row);
+    return empty;
 }
 
 game game_copy(cgame g)
@@ -139,7 +135,7 @@ void game_delete(game g)
             game_delete(g->nextState);
         }
         if (g->board != NULL) {
-            for (int i = 0; i < DEFAULT_SIZE; i++) {
+            for (int i = 0; i < g->nb_rows; i++) {
                 if (g->board[i] != NULL) {
                     free(g->board[i]);
                     g->board[i] = NULL;
