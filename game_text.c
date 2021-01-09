@@ -131,7 +131,7 @@ int answerProcessing(game g, char inst, int row, int column)
             if (game_check_move(g, row, column, TENT) == REGULAR) {
                 printf("> Plant a tent on %d %d\n", row, column);
                 game_play_move(g, row, column, TENT);
-                if (game_equal(g, game_default_solution()) || game_equal(g, game_default_solution_without_grass())) {
+                if (game_is_over(g)) {
                     printCongratulation();
                 }
                 return 1;
@@ -150,7 +150,7 @@ int answerProcessing(game g, char inst, int row, int column)
             if (game_check_move(g, row, column, GRASS) == REGULAR) {
                 printf("> Plant a grass bloc on %d %d\n", row, column);
                 game_play_move(g, row, column, GRASS);
-                if (game_equal(g, game_default_solution()) || game_equal(g, game_default_solution_without_grass())) {
+                if (game_is_over(g)) {
                     printCongratulation();
                 }
                 return 1;
