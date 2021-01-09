@@ -1,4 +1,5 @@
 #include "game_aux.h"
+#include "game_ext.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -118,6 +119,12 @@ int answerProcessing(game g, char inst, int row, int column)
             printShame();
             game_delete(g);
             exit(EXIT_SUCCESS);
+        case 'z':
+            game_undo(g);
+            return 1;
+        case 'y':
+            game_redo(g);
+            return 1;
         default:
             break;
         }
@@ -201,6 +208,8 @@ int main(void)
             int answer = answerProcessing(g, instruction, row, column);
             // Process the other arguments
             if (!answer && scanf(" %d %d", &row, &column) == 2) {
+                row = 0;
+                column = 0;
                 answerProcessing(g, instruction, row, column);
             }
         }

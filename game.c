@@ -156,7 +156,7 @@ void game_delete(game g)
 void game_set_square(game g, uint i, uint j, square s)
 {
     if (g == NULL || g->board == NULL || i > g->nb_rows || j > g->nb_cols) {
-        fprintf(stderr, "Error: Invalid argument | game_get_square()");
+        fprintf(stderr, "Error: Invalid argument | game_set_square()");
         exit(EXIT_FAILURE);
     }
     g->board[i][j] = s;
@@ -176,7 +176,7 @@ square game_get_square(cgame g, uint i, uint j)
 void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)
 {
     if (g == NULL || i >= g->nb_rows) {
-        printf("invalid arguments");
+        printf("invalid arguments | game_set_expected_nb_tents_row()");
         exit(0);
     }
 
@@ -186,7 +186,7 @@ void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)
 void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 {
     if (g == NULL || j >= g->nb_cols) {
-        printf("invalid arguments");
+        printf("invalid arguments | game_set_expected_nb_tents_col()");
         exit(0);
     }
 
@@ -196,7 +196,7 @@ void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 uint game_get_expected_nb_tents_row(cgame g, uint i)
 {
     if (g == NULL || i >= g->nb_rows) {
-        printf("invalid arguments");
+        printf("invalid arguments | game_get_expected_nb_tents_row()");
         exit(0);
     }
 
@@ -206,7 +206,7 @@ uint game_get_expected_nb_tents_row(cgame g, uint i)
 uint game_get_expected_nb_tents_col(cgame g, uint j)
 {
     if (g == NULL || j >= g->nb_cols) {
-        printf("invalid arguments");
+        printf("invalid arguments | game_get_expected_nb_tents_col()");
         exit(0);
     }
 
@@ -216,7 +216,7 @@ uint game_get_expected_nb_tents_col(cgame g, uint j)
 uint game_get_expected_nb_tents_all(cgame g)
 {
     if (g == NULL) {
-        printf("invalid arguments");
+        printf("invalid arguments | game_get_expected_nb_tents_all()");
         exit(0);
     }
 
@@ -233,7 +233,7 @@ uint game_get_expected_nb_tents_all(cgame g)
 uint game_get_current_nb_tents_row(cgame g, uint i)
 {
     if (g == NULL || g->board == NULL || i > g->nb_rows) {
-        fprintf(stderr, "Error: Invalid argument | game_get__expected_nb_tents_row()");
+        fprintf(stderr, "Error: Invalid argument | game_get_current_nb_tents_row()");
         exit(EXIT_FAILURE);
     }
     uint cpt = 0;
@@ -248,7 +248,7 @@ uint game_get_current_nb_tents_row(cgame g, uint i)
 uint game_get_current_nb_tents_col(cgame g, uint j)
 {
     if (g == NULL || g->board == NULL || j > g->nb_cols) {
-        fprintf(stderr, "Error: Invalid argument | game_get__expected_nb_tents_col()");
+        fprintf(stderr, "Error: Invalid argument | game_get_current_nb_tents_col()");
         exit(EXIT_FAILURE);
     }
     uint cpt = 0;
@@ -324,7 +324,7 @@ bool is_adjacent_orthogonally_to(cgame g, uint i, uint j, square s)
         if (game_get_square(g, i + game_nb_rows(g) - 1, j) == s)
             return true;
     }
-    if (i < game_nb_rows(0) - 1) {
+    if (i < game_nb_rows(g) - 1) {
         if (game_get_square(g, i + 1, j) == s)
             return true;
     } else if (game_is_wrapping(g)) {
@@ -682,7 +682,7 @@ void game_restart(game g)
 uint game_nb_rows(cgame g)
 {
     if (g == NULL) {
-        printf("invalid arguments");
+        printf("invalid arguments | game_nb_rows()");
         exit(0);
     }
     return g->nb_rows;
@@ -691,7 +691,7 @@ uint game_nb_rows(cgame g)
 uint game_nb_cols(cgame g)
 {
     if (g == NULL) {
-        printf("invalid arguments");
+        printf("invalid arguments | game_nb_cols()");
         exit(0);
     }
     return g->nb_cols;
