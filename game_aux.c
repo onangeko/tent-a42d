@@ -1,4 +1,5 @@
 #include "game_aux.h"
+#include "game_ext.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -30,9 +31,9 @@ void game_print(cgame g)
 {
     printf("   01234567\n");
     printf("   --------\n");
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
+    for (int i = 0; i < game_nb_rows(g); i++) {
         printf("%d |", i);
-        for (int j = 0; j < DEFAULT_SIZE; j++) {
+        for (int j = 0; j < game_nb_cols(g); j++) {
             square s = game_get_square(g, i, j);
             printf("%c", sqrToChar(s));
         }
@@ -40,7 +41,7 @@ void game_print(cgame g)
     }
     printf("   --------\n");
     printf("   ");
-    for (int i = 0; i < DEFAULT_SIZE; i++) {
+    for (int i = 0; i < game_nb_rows(g); i++) {
         printf("%d", game_get_expected_nb_tents_col(g, i));
     }
     printf("\n\n");
