@@ -43,7 +43,7 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_ro
         game->expected_nb_tents_col[j] = nb_tents_col[j];
     for (int i = 0; i < nb_rows; i++) {
         for (int j = 0; j < nb_cols; j++) {
-            game->board[i][j] = squares[i * nb_rows + j];
+            game->board[i][j] = squares[i * nb_cols + j];
         }
     }
     game->wrapping = wrapping;
@@ -64,6 +64,7 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
     for (int i = 0; i < nb_rows * nb_cols; i++) {
         squares[i] = EMPTY;
     }
+
     uint* nb_tents_row = (uint*)malloc(sizeof(uint) * nb_rows);
     uint* nb_tents_col = (uint*)malloc(sizeof(uint) * nb_cols);
     for (int i = 0; i < nb_rows; i++)

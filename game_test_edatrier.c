@@ -51,7 +51,7 @@ bool test_game_new_ext(square* squares, uint* nb_tents_row, uint* nb_tents_col, 
             return false;
         }
         for (int j = 0; j < nb_cols; j++)
-            if (game_get_square(g, i, j) != squares[(i * nb_rows) + j] || game_get_expected_nb_tents_col(g, j) != nb_tents_col[j]) {
+            if (game_get_square(g, i, j) != squares[(i * nb_cols) + j] || game_get_expected_nb_tents_col(g, j) != nb_tents_col[j]) {
                 game_delete(g);
                 return false;
             }
@@ -97,7 +97,6 @@ bool test_game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool dia
             return false;
         }
         for (int j = 0; j < nb_cols; j++) {
-            printf("%s", game_get_square(g, i, j) == EMPTY ? "empty" : "not empty");
             if (game_get_square(g, i, j) != EMPTY || game_get_expected_nb_tents_col(g, j) != 0) {
                 game_delete(g);
                 return false;
@@ -205,7 +204,7 @@ int main(int argc, char* argv[])
     if (strcmp("game_new", argv[1]) == 0)
         ok = test_game_new(squares, nb_tents_row, nb_tents_col);
     else if (strcmp("game_new_ext", argv[1]) == 0)
-        ok = test_game_new_ext(squares, nb_tents_row, nb_tents_col, 8, 8, true, false);
+        ok = test_game_new_ext(squares, nb_tents_row, nb_tents_col, 8, 5, true, false);
     else if (strcmp("game_new_empty", argv[1]) == 0)
         ok = test_game_new_empty();
     else if (strcmp("game_new_empty_ext", argv[1]) == 0)
