@@ -102,6 +102,12 @@ bool game_equal(cgame g1, cgame g2)
     if (g1->board == NULL || g1->expected_nb_tents_col == NULL || g1->expected_nb_tents_row == NULL || g2->board == NULL || g2->expected_nb_tents_col == NULL || g2->expected_nb_tents_row == NULL) {
         return false;
     }
+
+    if (g1->diagadj != g2->diagadj || g1->wrapping != g2->wrapping){
+        return false;
+    }
+
+
     for (int i = 0; i < g1->nb_rows; i++) {
         if (game_get_expected_nb_tents_col(g1, i) != game_get_expected_nb_tents_col(g2, i)
             || game_get_expected_nb_tents_row(g1, i) != game_get_expected_nb_tents_row(g2, i)
