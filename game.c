@@ -107,6 +107,11 @@ bool game_equal(cgame g1, cgame g2)
         return false;
     }
 
+    if (g1->nb_cols != g2->nb_cols || g1->nb_rows!= g2->nb_rows){
+        return false;
+    }
+
+
 
     for (int i = 0; i < g1->nb_rows; i++) {
         if (game_get_expected_nb_tents_col(g1, i) != game_get_expected_nb_tents_col(g2, i)
