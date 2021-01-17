@@ -103,15 +103,13 @@ bool game_equal(cgame g1, cgame g2)
         return false;
     }
 
-    if (g1->diagadj != g2->diagadj || g1->wrapping != g2->wrapping){
+    if (g1->diagadj != g2->diagadj || g1->wrapping != g2->wrapping) {
         return false;
     }
 
-    if (g1->nb_cols != g2->nb_cols || g1->nb_rows!= g2->nb_rows){
+    if (g1->nb_cols != g2->nb_cols || g1->nb_rows != g2->nb_rows) {
         return false;
     }
-
-
 
     for (int i = 0; i < g1->nb_rows; i++) {
         if (game_get_expected_nb_tents_col(g1, i) != game_get_expected_nb_tents_col(g2, i)
@@ -493,53 +491,45 @@ bool isGrassSurroundingTree(cgame g, uint i, uint j)
     if (is_adjacent_orthogonally_to(g, i, j, TREE)) {
         if (i > 0) {
             if (game_get_square(g, i - 1, j) == TREE) {
-                isSurrounding = isTreeSurrounded(g, i - 1, j, i, j);
-                if (isSurrounding)
+                if (isTreeSurrounded(g, i - 1, j, i, j))
                     return true;
             }
         } else if (game_is_wrapping(g)) {
             if (game_get_square(g, i + game_nb_rows(g) - 1, j) == TREE) {
-                isSurrounding = isTreeSurrounded(g, i + game_nb_rows(g) - 1, j, i, j);
-                if (isSurrounding)
+                if (isTreeSurrounded(g, i + game_nb_rows(g) - 1, j, i, j))
                     return true;
             }
         }
         if (i < game_nb_rows(g) - 1) {
             if (game_get_square(g, i + 1, j) == TREE) {
-                isSurrounding = isTreeSurrounded(g, i + 1, j, i, j);
-                if (isSurrounding)
+                if (isTreeSurrounded(g, i + 1, j, i, j))
                     return true;
             }
         } else if (game_is_wrapping(g)) {
             if (game_get_square(g, i - game_nb_rows(g) + 1, j) == TREE) {
-                isSurrounding = isTreeSurrounded(g, i - game_nb_rows(g) + 1, j, i, j);
-                if (isSurrounding)
+                if (isTreeSurrounded(g, i - game_nb_rows(g) + 1, j, i, j))
                     return true;
             }
         }
         if (j > 0) {
             if (game_get_square(g, i, j - 1) == TREE) {
-                isSurrounding = isTreeSurrounded(g, i, j - 1, i, j);
-                if (isSurrounding)
+                if (isTreeSurrounded(g, i, j - 1, i, j))
                     return true;
             }
         } else if (game_is_wrapping(g)) {
             if (game_get_square(g, i, j + game_nb_cols(g) - 1) == TREE) {
-                isSurrounding = isTreeSurrounded(g, i, j + game_nb_cols(g) - 1, i, j);
-                if (isSurrounding)
+                if (isTreeSurrounded(g, i, j + game_nb_cols(g) - 1, i, j))
                     return true;
             }
         }
         if (j < game_nb_cols(g) - 1) {
             if (game_get_square(g, i, j + 1) == TREE) {
-                isSurrounding = isTreeSurrounded(g, i, j + 1, i, j);
-                if (isSurrounding)
+                if (isTreeSurrounded(g, i, j + 1, i, j))
                     return true;
             }
         } else if (game_is_wrapping(g)) {
             if (game_get_square(g, i, j - game_nb_cols(g) + 1) == TREE) {
-                isSurrounding = isTreeSurrounded(g, i, j - game_nb_cols(g) + 1, i, j);
-                if (isSurrounding)
+                if (isTreeSurrounded(g, i, j - game_nb_cols(g) + 1, i, j))
                     return true;
             }
         }
