@@ -208,8 +208,6 @@ int main(void)
             int answer = answerProcessing(g, instruction, row, column);
             // Process the other arguments
             if (!answer && scanf(" %d %d", &row, &column) == 2) {
-                row = 0;
-                column = 0;
                 answerProcessing(g, instruction, row, column);
             }
         }

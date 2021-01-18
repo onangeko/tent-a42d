@@ -43,7 +43,7 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_ro
         game->expected_nb_tents_col[j] = nb_tents_col[j];
     for (int i = 0; i < nb_rows; i++) {
         for (int j = 0; j < nb_cols; j++) {
-            game->board[i][j] = squares[i * nb_cols + j];
+            game->board[i][j] = squares[i * nb_rows + j];
         }
     }
     game->wrapping = wrapping;
