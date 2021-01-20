@@ -19,11 +19,31 @@ typedef struct game_s {
     game nextState;
 } game_s;
 
+/**
+ * @brief 
+ * 
+ * @param squares 
+ * @param nb_tents_row 
+ * @param nb_tents_col 
+ * @return game 
+ */
 game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
 {
     return game_new_ext(DEFAULT_SIZE, DEFAULT_SIZE, squares, nb_tents_row, nb_tents_col, false, false);
 }
 
+/**
+ * @brief 
+ * 
+ * @param nb_rows 
+ * @param nb_cols 
+ * @param squares 
+ * @param nb_tents_row 
+ * @param nb_tents_col 
+ * @param wrapping 
+ * @param diagadj 
+ * @return game 
+ */
 game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_row, uint* nb_tents_col, bool wrapping,
     bool diagadj)
 {
@@ -53,11 +73,25 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_ro
     return game;
 }
 
+/**
+ * @brief 
+ * 
+ * @return game 
+ */
 game game_new_empty(void)
 {
     return game_new_empty_ext(DEFAULT_SIZE, DEFAULT_SIZE, false, false);
 }
 
+/**
+ * @brief 
+ * 
+ * @param nb_rows 
+ * @param nb_cols 
+ * @param wrapping 
+ * @param diagadj 
+ * @return game 
+ */
 game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
 {
     square* squares = (square*)malloc(sizeof(square) * nb_rows * nb_cols);
@@ -75,6 +109,12 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
     return game_new_ext(nb_rows, nb_cols, squares, nb_tents_row, nb_tents_col, wrapping, diagadj);
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @return game 
+ */
 game game_copy(cgame g)
 {
     square* squares = malloc(g->nb_rows * g->nb_cols * sizeof(square));
@@ -94,6 +134,14 @@ game game_copy(cgame g)
     return copy;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g1 
+ * @param g2 
+ * @return true 
+ * @return false 
+ */
 bool game_equal(cgame g1, cgame g2)
 {
     if (g1 == NULL || g2 == NULL) {
@@ -127,6 +175,11 @@ bool game_equal(cgame g1, cgame g2)
     return true;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ */
 void game_delete(game g)
 {
     if (g != NULL) {
@@ -163,6 +216,14 @@ void game_delete(game g)
     }
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @param j 
+ * @param s 
+ */
 void game_set_square(game g, uint i, uint j, square s)
 {
     if (g == NULL || g->board == NULL || i > g->nb_rows || j > g->nb_cols) {
@@ -172,6 +233,14 @@ void game_set_square(game g, uint i, uint j, square s)
     g->board[i][j] = s;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @param j 
+ * @return square 
+ */
 square game_get_square(cgame g, uint i, uint j)
 {
     if (g == NULL || g->board == NULL || i > g->nb_rows || j > g->nb_cols) {
@@ -183,6 +252,13 @@ square game_get_square(cgame g, uint i, uint j)
 
 /////--BJORN
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @param nb_tents 
+ */
 void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)
 {
     if (g == NULL || i >= g->nb_rows) {
@@ -193,6 +269,13 @@ void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)
     g->expected_nb_tents_row[i] = nb_tents;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param j 
+ * @param nb_tents 
+ */
 void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 {
     if (g == NULL || j >= g->nb_cols) {
@@ -203,6 +286,13 @@ void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
     g->expected_nb_tents_col[j] = nb_tents;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @return uint 
+ */
 uint game_get_expected_nb_tents_row(cgame g, uint i)
 {
     if (g == NULL || i >= g->nb_rows) {
@@ -213,6 +303,13 @@ uint game_get_expected_nb_tents_row(cgame g, uint i)
     return g->expected_nb_tents_row[i];
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param j 
+ * @return uint 
+ */
 uint game_get_expected_nb_tents_col(cgame g, uint j)
 {
     if (g == NULL || j >= g->nb_cols) {
@@ -223,6 +320,12 @@ uint game_get_expected_nb_tents_col(cgame g, uint j)
     return g->expected_nb_tents_col[j];
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @return uint 
+ */
 uint game_get_expected_nb_tents_all(cgame g)
 {
     if (g == NULL) {
@@ -240,6 +343,13 @@ uint game_get_expected_nb_tents_all(cgame g)
 
 /////--
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @return uint 
+ */
 uint game_get_current_nb_tents_row(cgame g, uint i)
 {
     if (g == NULL || g->board == NULL || i > g->nb_rows) {
@@ -255,6 +365,13 @@ uint game_get_current_nb_tents_row(cgame g, uint i)
     return cpt;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param j 
+ * @return uint 
+ */
 uint game_get_current_nb_tents_col(cgame g, uint j)
 {
     if (g == NULL || g->board == NULL || j > g->nb_cols) {
@@ -270,6 +387,12 @@ uint game_get_current_nb_tents_col(cgame g, uint j)
     return cpt;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @return uint 
+ */
 uint game_get_current_nb_tents_all(cgame g)
 {
     if (g == NULL || g->board == NULL) {
@@ -287,6 +410,14 @@ uint game_get_current_nb_tents_all(cgame g)
     return cpt;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @param j 
+ * @param s 
+ */
 void game_play_move(game g, uint i, uint j, square s)
 {
     if (g->nextState != NULL) {
@@ -303,6 +434,14 @@ void game_play_move(game g, uint i, uint j, square s)
         game_set_square(g, i, j, s);
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @param s 
+ * @return int 
+ */
 int nb_type_square_row(cgame g, uint i, square s)
 {
     int nb = 0;
@@ -314,6 +453,14 @@ int nb_type_square_row(cgame g, uint i, square s)
     return nb;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param j 
+ * @param s 
+ * @return uint 
+ */
 uint nb_type_square_col(cgame g, uint j, square s)
 {
     uint nb = 0;
@@ -325,6 +472,16 @@ uint nb_type_square_col(cgame g, uint j, square s)
     return nb;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @param j 
+ * @param s 
+ * @return true 
+ * @return false 
+ */
 bool is_adjacent_orthogonally_to(cgame g, uint i, uint j, square s)
 {
     if (i > 0) {
@@ -358,6 +515,16 @@ bool is_adjacent_orthogonally_to(cgame g, uint i, uint j, square s)
     return false;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @param j 
+ * @param s 
+ * @return true 
+ * @return false 
+ */
 bool is_adjacent_diagonaly_to(cgame g, uint i, uint j, square s)
 {
     if (i > 0 && j > 0) {
@@ -423,6 +590,14 @@ bool is_adjacent_diagonaly_to(cgame g, uint i, uint j, square s)
     return false;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @param j 
+ * @return int 
+ */
 int check_tent_move(cgame g, uint i, uint j)
 {
     //Illegal move
@@ -447,6 +622,17 @@ int check_tent_move(cgame g, uint i, uint j)
     return REGULAR;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param iT 
+ * @param jT 
+ * @param iG 
+ * @param jG 
+ * @return true 
+ * @return false 
+ */
 bool isTreeSurrounded(cgame g, uint iT, uint jT, uint iG, uint jG)
 {
     bool isSurrounded = true;
@@ -485,6 +671,15 @@ bool isTreeSurrounded(cgame g, uint iT, uint jT, uint iG, uint jG)
     return isSurrounded;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @param j 
+ * @return true 
+ * @return false 
+ */
 bool isGrassSurroundingTree(cgame g, uint i, uint j)
 {
     bool isSurrounding = false;
@@ -537,6 +732,14 @@ bool isGrassSurroundingTree(cgame g, uint i, uint j)
     return isSurrounding;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @param j 
+ * @return int 
+ */
 int check_grass_move(cgame g, uint i, uint j)
 {
     //Illegal move
@@ -555,6 +758,14 @@ int check_grass_move(cgame g, uint i, uint j)
     return REGULAR;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @param j 
+ * @return int 
+ */
 int check_empty_move(cgame g, uint i, uint j)
 {
     //Illegal move
@@ -565,6 +776,15 @@ int check_empty_move(cgame g, uint i, uint j)
     return REGULAR;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ * @param j 
+ * @param s 
+ * @return int 
+ */
 int game_check_move(cgame g, uint i, uint j, square s)
 {
     if (g == NULL || g->board == NULL || i >= g->nb_rows || j >= g->nb_cols) {
@@ -584,6 +804,13 @@ int game_check_move(cgame g, uint i, uint j, square s)
     return REGULAR;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @return true 
+ * @return false 
+ */
 bool game_is_over(cgame g)
 {
     // the game shall be over only if the 4 rules described in the readme are satisfied and if the tents are correctly placed
@@ -644,6 +871,12 @@ jump:
     return true;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param i 
+ */
 void game_fill_grass_row(game g, uint i)
 {
     for (int j = 0; j < game_nb_cols(g); j++) {
@@ -653,6 +886,12 @@ void game_fill_grass_row(game g, uint i)
     }
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @param j 
+ */
 void game_fill_grass_col(game g, uint j)
 {
     for (int i = 0; i < game_nb_rows(g); i++) {
@@ -662,6 +901,11 @@ void game_fill_grass_col(game g, uint j)
     }
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ */
 void game_restart(game g)
 {
     if (g == NULL || g->board == NULL) {
@@ -683,6 +927,13 @@ void game_restart(game g)
 /**
  * game_ext.h implementation
 */
+
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @return uint 
+ */
 uint game_nb_rows(cgame g)
 {
     if (g == NULL) {
@@ -692,6 +943,12 @@ uint game_nb_rows(cgame g)
     return g->nb_rows;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @return uint 
+ */
 uint game_nb_cols(cgame g)
 {
     if (g == NULL) {
@@ -703,6 +960,13 @@ uint game_nb_cols(cgame g)
 
 ///
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @return true 
+ * @return false 
+ */
 bool game_is_wrapping(cgame g)
 {
     if (g == NULL || g->board == NULL) {
@@ -712,6 +976,13 @@ bool game_is_wrapping(cgame g)
     return g->wrapping;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ * @return true 
+ * @return false 
+ */
 bool game_is_diagadj(cgame g)
 {
     if (g == NULL || g->board == NULL) {
@@ -721,6 +992,11 @@ bool game_is_diagadj(cgame g)
     return g->diagadj;
 }
 
+/**
+ * @brief 
+ * 
+ * @param g 
+ */
 void game_undo(game g)
 {
     if (g != NULL) {
@@ -737,6 +1013,12 @@ void game_undo(game g)
         }
     }
 }
+
+/**
+ * @brief 
+ * 
+ * @param g 
+ */
 void game_redo(game g)
 {
     if (g != NULL) {
