@@ -22,10 +22,10 @@ typedef struct game_s {
 /**
  * @brief 
  * 
- * @param squares 
- * @param nb_tents_row 
- * @param nb_tents_col 
- * @return game 
+ * @param squares array of squares describing the board
+ * @param nb_tents_row array of uints describing the number of expected tents per row
+ * @param nb_tents_col array of uints describing the number of expected tents per column
+ * @return the created game
  */
 game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
 {
@@ -35,14 +35,14 @@ game game_new(square* squares, uint* nb_tents_row, uint* nb_tents_col)
 /**
  * @brief 
  * 
- * @param nb_rows 
- * @param nb_cols 
- * @param squares 
- * @param nb_tents_row 
- * @param nb_tents_col 
- * @param wrapping 
- * @param diagadj 
- * @return game 
+ * @param nb_rows number of rows in the board
+ * @param nb_cols number of columns in the board
+ * @param squares array of squares describing the board
+ * @param nb_tents_row array of uints describing the number of expected tents per row
+ * @param nb_tents_col array of uints describing the number of expected tents per column
+ * @param wrapping if true, the first row (resp. column) is adjacent to the last row (resp. column)
+ * @param diagadj if true, allows tents to be placed adjacent diagonally
+ * @return the created game 
  */
 game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_row, uint* nb_tents_col, bool wrapping,
     bool diagadj)
@@ -78,7 +78,7 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_ro
 /**
  * @brief 
  * 
- * @return game 
+ * @return the empty game with using the default size and with wrapping and diagadj set to false
  */
 game game_new_empty(void)
 {
@@ -88,11 +88,11 @@ game game_new_empty(void)
 /**
  * @brief 
  * 
- * @param nb_rows 
- * @param nb_cols 
- * @param wrapping 
- * @param diagadj 
- * @return game 
+ * @param nb_rows number of rows in the board
+ * @param nb_cols number of columns in the board
+ * @param wrapping if true, the first row (resp. column) is adjacent to the last row (resp. column)
+ * @param diagadj if true, allows tents to be placed adjacent diagonally
+ * @return the empty game
  */
 game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
 {
@@ -118,8 +118,8 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
 /**
  * @brief 
  * 
- * @param g 
- * @return game 
+ * @param g the game to copy
+ * @return the copy of the game 
  */
 game game_copy(cgame g)
 {
@@ -143,10 +143,10 @@ game game_copy(cgame g)
 /**
  * @brief 
  * 
- * @param g1 
- * @param g2 
- * @return true 
- * @return false 
+ * @param g1 1st game
+ * @param g2 2nd game
+ * @return true if the 2 games are equal
+ * @return false if they are not
  */
 bool game_equal(cgame g1, cgame g2)
 {
@@ -184,7 +184,7 @@ bool game_equal(cgame g1, cgame g2)
 /**
  * @brief 
  * 
- * @param g 
+ * @param g the game to delete
  */
 void game_delete(game g)
 {
@@ -225,10 +225,10 @@ void game_delete(game g)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @param j 
- * @param s 
+ * @param g the game
+ * @param i row number
+ * @param j column number
+ * @param s the square to place at (i,j)
  */
 void game_set_square(game g, uint i, uint j, square s)
 {
@@ -242,9 +242,9 @@ void game_set_square(game g, uint i, uint j, square s)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @param j 
+ * @param g the game 
+ * @param i row number
+ * @param j column number
  * @return square 
  */
 square game_get_square(cgame g, uint i, uint j)
@@ -261,9 +261,9 @@ square game_get_square(cgame g, uint i, uint j)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @param nb_tents 
+ * @param g the game
+ * @param i row number
+ * @param nb_tents the number of expected tents to put at row i
  */
 void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)
 {
@@ -278,9 +278,9 @@ void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents)
 /**
  * @brief 
  * 
- * @param g 
- * @param j 
- * @param nb_tents 
+ * @param g the game
+ * @param j column number
+ * @param nb_tents the number of expected tents to put at column j
  */
 void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 {
@@ -295,9 +295,9 @@ void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @return uint 
+ * @param g the game
+ * @param i row number
+ * @return the number of expected tents at row i
  */
 uint game_get_expected_nb_tents_row(cgame g, uint i)
 {
@@ -312,9 +312,9 @@ uint game_get_expected_nb_tents_row(cgame g, uint i)
 /**
  * @brief 
  * 
- * @param g 
- * @param j 
- * @return uint 
+ * @param g the game
+ * @param j column number
+ * @return the number of expected tents at column j 
  */
 uint game_get_expected_nb_tents_col(cgame g, uint j)
 {
@@ -329,8 +329,8 @@ uint game_get_expected_nb_tents_col(cgame g, uint j)
 /**
  * @brief 
  * 
- * @param g 
- * @return uint 
+ * @param g the game
+ * @return the total of expected tents 
  */
 uint game_get_expected_nb_tents_all(cgame g)
 {
@@ -352,9 +352,9 @@ uint game_get_expected_nb_tents_all(cgame g)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @return uint 
+ * @param g the game
+ * @param i row number
+ * @return the number of current tents at row i 
  */
 uint game_get_current_nb_tents_row(cgame g, uint i)
 {
@@ -374,9 +374,9 @@ uint game_get_current_nb_tents_row(cgame g, uint i)
 /**
  * @brief 
  * 
- * @param g 
- * @param j 
- * @return uint 
+ * @param g the game
+ * @param j column number
+ * @return the number of current tents at column j  
  */
 uint game_get_current_nb_tents_col(cgame g, uint j)
 {
@@ -396,8 +396,8 @@ uint game_get_current_nb_tents_col(cgame g, uint j)
 /**
  * @brief 
  * 
- * @param g 
- * @return uint 
+ * @param g the game
+ * @return the total of current tents  
  */
 uint game_get_current_nb_tents_all(cgame g)
 {
@@ -419,10 +419,10 @@ uint game_get_current_nb_tents_all(cgame g)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @param j 
- * @param s 
+ * @param g the game
+ * @param i row number
+ * @param j column number
+ * @param s the square to place at (i,j) 
  */
 void game_play_move(game g, uint i, uint j, square s)
 {
@@ -443,10 +443,10 @@ void game_play_move(game g, uint i, uint j, square s)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @param s 
- * @return int 
+ * @param g the game
+ * @param i row number
+ * @param s the type of square to count
+ * @return the number of squares of type s on the row i 
  */
 int nb_type_square_row(cgame g, uint i, square s)
 {
@@ -462,10 +462,10 @@ int nb_type_square_row(cgame g, uint i, square s)
 /**
  * @brief 
  * 
- * @param g 
- * @param j 
- * @param s 
- * @return uint 
+ * @param g the game
+ * @param j column number
+ * @param s the type of square to count
+ * @return the number of squares of type s on the row i 
  */
 uint nb_type_square_col(cgame g, uint j, square s)
 {
@@ -481,12 +481,12 @@ uint nb_type_square_col(cgame g, uint j, square s)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @param j 
- * @param s 
- * @return true 
- * @return false 
+ * @param g the game
+ * @param i row number
+ * @param j column number
+ * @param s the type of square
+ * @return true if the square has at least one square of type s adjacent orthogonally to (i,j)
+ * @return false if the square has no square of type s adjacent orthogonally to (i,j)
  */
 bool is_adjacent_orthogonally_to(cgame g, uint i, uint j, square s)
 {
@@ -524,14 +524,14 @@ bool is_adjacent_orthogonally_to(cgame g, uint i, uint j, square s)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @param j 
- * @param s 
- * @return true 
- * @return false 
+ * @param g the game
+ * @param i row number
+ * @param j column number
+ * @param s the type of square
+ * @return true if the square has at least one square of type s adjacent diagonally to (i,j)
+ * @return false if the square has no square of type s adjacent diagonally to (i,j)
  */
-bool is_adjacent_diagonaly_to(cgame g, uint i, uint j, square s)
+bool is_adjacent_diagonally_to(cgame g, uint i, uint j, square s)
 {
     if (i > 0 && j > 0) {
         if (game_get_square(g, i - 1, j - 1) == s)
@@ -599,10 +599,10 @@ bool is_adjacent_diagonaly_to(cgame g, uint i, uint j, square s)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @param j 
- * @return int 
+ * @param g the game
+ * @param i row number
+ * @param j column number
+ * @return if the move (placing a tent on (i,j)) is ILLEGAL, LOSING or REGULAR 
  */
 int check_tent_move(cgame g, uint i, uint j)
 {
@@ -616,7 +616,7 @@ int check_tent_move(cgame g, uint i, uint j)
     if (game_get_current_nb_tents_all(g) >= game_get_expected_nb_tents_all(g))
         return LOSING;
     //* plant tent adjacent to another orthogonally and diagonally
-    if (is_adjacent_orthogonally_to(g, i, j, TENT) || (!game_is_diagadj(g) && is_adjacent_diagonaly_to(g, i, j, TENT)))
+    if (is_adjacent_orthogonally_to(g, i, j, TENT) || (!game_is_diagadj(g) && is_adjacent_diagonally_to(g, i, j, TENT)))
         return LOSING;
     //* plant a tent not adjacent to a tree
     if (!is_adjacent_orthogonally_to(g, i, j, TREE))
@@ -631,13 +631,13 @@ int check_tent_move(cgame g, uint i, uint j)
 /**
  * @brief 
  * 
- * @param g 
- * @param iT 
- * @param jT 
- * @param iG 
- * @param jG 
- * @return true 
- * @return false 
+ * @param g the game
+ * @param iT row number of the tree
+ * @param jT column number of the tree
+ * @param iG row number of the grass that is going to be placed
+ * @param jG column number of the grass that is going to be placed
+ * @return true if the tree is surrounded by grass
+ * @return false if it isn't
  */
 bool isTreeSurrounded(cgame g, uint iT, uint jT, uint iG, uint jG)
 {
@@ -680,11 +680,11 @@ bool isTreeSurrounded(cgame g, uint iT, uint jT, uint iG, uint jG)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @param j 
- * @return true 
- * @return false 
+ * @param g the game
+ * @param i row number
+ * @param j column number
+ * @return true if placing grass at (i,j) surrounds one or more trees
+ * @return false if it doesn't
  */
 bool isGrassSurroundingTree(cgame g, uint i, uint j)
 {
@@ -741,10 +741,10 @@ bool isGrassSurroundingTree(cgame g, uint i, uint j)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @param j 
- * @return int 
+ * @param g the game
+ * @param i row number
+ * @param j column number
+ * @return if the move (placing grass on (i,j)) is ILLEGAL, LOSING or REGULAR 
  */
 int check_grass_move(cgame g, uint i, uint j)
 {
@@ -767,10 +767,10 @@ int check_grass_move(cgame g, uint i, uint j)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @param j 
- * @return int 
+ * @param g the game
+ * @param i row number
+ * @param j column number
+ * @return if the move (placing an empty square on (i,j)) is ILLEGAL or REGULAR  
  */
 int check_empty_move(cgame g, uint i, uint j)
 {
@@ -785,11 +785,11 @@ int check_empty_move(cgame g, uint i, uint j)
 /**
  * @brief 
  * 
- * @param g 
- * @param i 
- * @param j 
- * @param s 
- * @return int 
+ * @param g the game
+ * @param i row number
+ * @param j column number
+ * @param s the type of square to place on (i,j)
+ * @return if the move (placing a square of type s on (i,j)) is ILLEGAL, LOSING or REGULAR   
  */
 int game_check_move(cgame g, uint i, uint j, square s)
 {
@@ -813,9 +813,9 @@ int game_check_move(cgame g, uint i, uint j, square s)
 /**
  * @brief 
  * 
- * @param g 
- * @return true 
- * @return false 
+ * @param g the game
+ * @return true if the game is over
+ * @return false if it isn't
  */
 bool game_is_over(cgame g)
 {
@@ -839,7 +839,7 @@ bool game_is_over(cgame g)
     for (int i = 0; i < game_nb_rows(g); i++)
         for (int j = 0; j < game_nb_cols(g); j++)
             if (g->board[i][j] == TENT)
-                if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonaly_to(g, i, j, TENT))
+                if (is_adjacent_orthogonally_to(g, i, j, TENT) || is_adjacent_diagonally_to(g, i, j, TENT))
                     return false;
 
 // RULE 2 ) The number of tents in each row, and in each column, matches the expected numbers given around the sides of the grid.
@@ -878,10 +878,10 @@ jump:
 }
 
 /**
- * @brief 
+ * @brief fills all the empty squares on a row with grass
  * 
- * @param g 
- * @param i 
+ * @param g the game
+ * @param i row number
  */
 void game_fill_grass_row(game g, uint i)
 {
@@ -893,10 +893,10 @@ void game_fill_grass_row(game g, uint i)
 }
 
 /**
- * @brief 
+ * @brief fills all the empty squares on a column with grass
  * 
- * @param g 
- * @param j 
+ * @param g the game
+ * @param j column number
  */
 void game_fill_grass_col(game g, uint j)
 {
@@ -908,9 +908,9 @@ void game_fill_grass_col(game g, uint j)
 }
 
 /**
- * @brief 
+ * @brief restarts a game
  * 
- * @param g 
+ * @param g the game
  */
 void game_restart(game g)
 {
@@ -945,8 +945,8 @@ void game_restart(game g)
 /**
  * @brief 
  * 
- * @param g 
- * @return uint 
+ * @param g the game
+ * @return the number of rows of the game 
  */
 uint game_nb_rows(cgame g)
 {
@@ -960,8 +960,8 @@ uint game_nb_rows(cgame g)
 /**
  * @brief 
  * 
- * @param g 
- * @return uint 
+ * @param g the game
+ * @return the number of columns of the game 
  */
 uint game_nb_cols(cgame g)
 {
@@ -977,9 +977,9 @@ uint game_nb_cols(cgame g)
 /**
  * @brief 
  * 
- * @param g 
- * @return true 
- * @return false 
+ * @param g the game
+ * @return true if wrapping is true
+ * @return false if wrapping is false
  */
 bool game_is_wrapping(cgame g)
 {
@@ -993,9 +993,9 @@ bool game_is_wrapping(cgame g)
 /**
  * @brief 
  * 
- * @param g 
- * @return true 
- * @return false 
+ * @param g the game
+ * @return true if diagadj is true
+ * @return false if diagadj is false
  */
 bool game_is_diagadj(cgame g)
 {
@@ -1007,9 +1007,9 @@ bool game_is_diagadj(cgame g)
 }
 
 /**
- * @brief 
+ * @brief undoes the last move played
  * 
- * @param g 
+ * @param g the game
  */
 void game_undo(game g)
 {
@@ -1029,9 +1029,9 @@ void game_undo(game g)
 }
 
 /**
- * @brief 
+ * @brief redoes the last move that was undoed
  * 
- * @param g 
+ * @param g the game
  */
 void game_redo(game g)
 {
