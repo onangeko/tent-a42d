@@ -201,12 +201,9 @@ bool test_game_check_move(game g, game g_new)
 bool test_game_redo(game g)
 {
     game_play_move(g, 0, 0, TENT);
-    game g2 = g;
     game_undo(g);
     game_redo(g);
-    bool is_game_equal = game_equal(g, g2);
-    game_delete(g2);
-    return is_game_equal;
+    return game_get_square(g,0,0) == TENT;
 }
 
 game game_default_new()
