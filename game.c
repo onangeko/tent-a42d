@@ -50,7 +50,7 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_ro
     if (squares == NULL || nb_tents_row == NULL || nb_tents_col == NULL) {
         exit(EXIT_FAILURE);
     }
-    game game_new =(game) malloc(sizeof(game_s));
+    game game_new = (game)malloc(sizeof(game_s));
     game_new->board = malloc(sizeof(square*) * nb_rows);
     for (int i = 0; i < nb_rows; i++) {
         game_new->board[i] = malloc(sizeof(square) * nb_cols);
@@ -926,14 +926,14 @@ void game_restart(game g)
             }
         }
     }
-    if(g->previousState != NULL){
-    g->previousState->nextState = NULL;
-    game_delete(g->previousState);
+    if (g->previousState != NULL) {
+        g->previousState->nextState = NULL;
+        game_delete(g->previousState);
     }
     g->previousState = NULL;
-    if(g->nextState != NULL){
-    g->nextState->previousState = NULL;
-    game_delete(g->nextState);
+    if (g->nextState != NULL) {
+        g->nextState->previousState = NULL;
+        game_delete(g->nextState);
     }
     g->nextState = NULL;
 }

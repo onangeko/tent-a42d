@@ -203,7 +203,7 @@ bool test_game_redo(game g)
     game_play_move(g, 0, 0, TENT);
     game_undo(g);
     game_redo(g);
-    return game_get_square(g,0,0) == TENT;
+    return game_get_square(g, 0, 0) == TENT;
 }
 
 game game_default_new()
