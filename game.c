@@ -676,6 +676,8 @@ void game_restart(game g)
             }
         }
     }
+    g->previousState = NULL;
+    g->nextState = NULL;
 }
 
 /**
