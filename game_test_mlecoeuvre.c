@@ -204,7 +204,9 @@ bool test_game_redo(game g)
     game g2 = game_copy(g);
     game_undo(g);
     game_redo(g);
-    return game_equal(g, g2);
+    bool is_game_equal = game_equal(g, g2);
+    game_delete(g2);
+    return is_game_equal;
 }
 
 game game_default_new()

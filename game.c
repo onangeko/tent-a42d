@@ -50,27 +50,29 @@ game game_new_ext(uint nb_rows, uint nb_cols, square* squares, uint* nb_tents_ro
     if (squares == NULL || nb_tents_row == NULL || nb_tents_col == NULL) {
         exit(EXIT_FAILURE);
     }
-    struct game_s* game = malloc(sizeof(struct game_s));
-    game->board = malloc(sizeof(square*) * nb_rows);
+    game game_new =(game) malloc(sizeof(game_s));
+    game_new->board = malloc(sizeof(square*) * nb_rows);
     for (int i = 0; i < nb_rows; i++) {
-        game->board[i] = malloc(sizeof(square) * nb_cols);
+        game_new->board[i] = malloc(sizeof(square) * nb_cols);
     }
-    game->expected_nb_tents_row = malloc(sizeof(uint) * nb_rows);
-    game->expected_nb_tents_col = malloc(sizeof(uint) * nb_cols);
+    game_new->expected_nb_tents_row = malloc(sizeof(uint) * nb_rows);
+    game_new->expected_nb_tents_col = malloc(sizeof(uint) * nb_cols);
     for (int i = 0; i < nb_rows; i++)
-        game->expected_nb_tents_row[i] = nb_tents_row[i];
+        game_new->expected_nb_tents_row[i] = nb_tents_row[i];
     for (int j = 0; j < nb_cols; j++)
-        game->expected_nb_tents_col[j] = nb_tents_col[j];
+        game_new->expected_nb_tents_col[j] = nb_tents_col[j];
     for (int i = 0; i < nb_rows; i++) {
         for (int j = 0; j < nb_cols; j++) {
-            game->board[i][j] = squares[i * nb_cols + j];
+            game_new->board[i][j] = squares[i * nb_cols + j];
         }
     }
-    game->wrapping = wrapping;
-    game->diagadj = diagadj;
-    game->nb_rows = nb_rows;
-    game->nb_cols = nb_cols;
-    return game;
+    game_new->wrapping = wrapping;
+    game_new->diagadj = diagadj;
+    game_new->nb_rows = nb_rows;
+    game_new->nb_cols = nb_cols;
+    game_new->previousState = NULL;
+    game_new->nextState = NULL;
+    return game_new;
 }
 
 /**
@@ -106,7 +108,11 @@ game game_new_empty_ext(uint nb_rows, uint nb_cols, bool wrapping, bool diagadj)
     for (int j = 0; j < nb_cols; j++) {
         nb_tents_col[j] = 0;
     }
-    return game_new_ext(nb_rows, nb_cols, squares, nb_tents_row, nb_tents_col, wrapping, diagadj);
+    game g = game_new_ext(nb_rows, nb_cols, squares, nb_tents_row, nb_tents_col, wrapping, diagadj);
+    free(nb_tents_row);
+    free(nb_tents_col);
+    free(squares);
+    return g;
 }
 
 /**
@@ -920,7 +926,15 @@ void game_restart(game g)
             }
         }
     }
+    if(g->previousState != NULL){
+    g->previousState->nextState = NULL;
+    game_delete(g->previousState);
+    }
     g->previousState = NULL;
+    if(g->nextState != NULL){
+    g->nextState->previousState = NULL;
+    game_delete(g->nextState);
+    }
     g->nextState = NULL;
 }
 
