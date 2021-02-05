@@ -33,6 +33,7 @@ add_test(test_bjgiraud_game_set_expected_nb_tents_col ./game_test_bjgiraud game_
 add_test(test_bjgiraud_game_default ./game_test_bjgiraud game_default)
 add_test(test_bjgiraud_game_nb_rows ./game_test_bjgiraud game_nb_rows)
 add_test(test_bjgiraud_game_nb_cols ./game_test_bjgiraud game_nb_cols)
+add_test(test_bjgiraud_game_save_and_load ./game_test_bjgiraud game_save_and_load)
 
 add_executable(game_test_onangeko game_test_onangeko.c)
 add_test(test_onangeko_game_is_over ./game_test_onangeko game_is_over)
