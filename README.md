@@ -91,3 +91,14 @@ Mathis:
 Olivier:
 * game_is_wrapping
 * game_is_diagadj
+
+## Saving system
+# Format
+
+    <nb_rows> <nb_cols> <is_swap> <is_diagadj>\n
+    <nb_tents_row[0]> <nb_tents_row[1]> ... <nb_tents_row[nb_rows-1]> \n
+    <nb_tents_col[0]> <nb_tents_col[1]> ... <nb_tents_col[nb_cols-1]> \n
+    <squares[0][0]><squares[0][1]>...<squares[0][nb_cols-1]>\n
+    <squares[1][0]><squares[1][1]>...<squares[1][nb_cols-1]>\n
+
+    The first line describes in that order the number of grid rows <nb_rows>, the number of grid columns <nb_cols>, is the topology wrapping or not <is_wrapping> (0 for false and 1 for true) and do diagonals count for ajdacency <is_diagadj> (0 for false and 1 for true). Then, the second line indicates for each line, the number of expected tents (the values are separated by spaces and there is a space at the end of the line). The third line, indicates for each column the number of expected tents (the values are separated by spaces and there is a space at the end of the line). Finally the following lines store the content of each square of the grid with one character (' ' for EMPTY, 'x' for TREE, '*' for TENT, '-' for GRASS). In particular, <squares[i][j]> describes the content of the square in the i-th row and j-th column.
