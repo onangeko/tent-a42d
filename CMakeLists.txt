@@ -60,7 +60,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${game_text_SOURCE_DIR}/cmake)
 
 #Create library
 
-add_library(game game.c game_aux.c)
+add_library(game game.c game_aux.c game_tools.c)
 
 #Set flags for compiling
 
