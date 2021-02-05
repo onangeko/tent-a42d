@@ -286,6 +286,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
     game_save(g, "test.txt");
+    game_save(game_default_solution(), "test_solution.txt");
     game_delete(g);
     game_delete(g_new);
     // print test result
