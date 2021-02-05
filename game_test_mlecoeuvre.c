@@ -1,5 +1,6 @@
 #include "game_aux.h"
 #include "game_ext.h"
+#include "game_tools.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -284,6 +285,7 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Error: test \"%s\" not found!\n", argv[1]);
         exit(EXIT_FAILURE);
     }
+    game_save(g, "test.txt");
     game_delete(g);
     game_delete(g_new);
     // print test result
