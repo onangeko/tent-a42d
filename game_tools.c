@@ -67,8 +67,11 @@ game game_load(char* filename)
         }
     }
 
+    game game = game_new_ext(nb_rows, nb_cols, squares, nb_tents_row, nb_tents_col, wrapping == 1, diagadj == 1);
     fclose(fp);
-    return game_new_ext(nb_rows, nb_cols, squares, nb_tents_row, nb_tents_col, wrapping == 1, diagadj == 1);
+    free(str);
+    free(squares);
+    return game;
 }
 
 void game_save(cgame g, char* filename)

@@ -1,6 +1,7 @@
 #include "game.h"
 #include "game_aux.h"
 #include "game_ext.h"
+#include "game_tools.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -124,16 +125,16 @@ void test_game_nb_cols() // need to be mod
 
 /////////TOOLS
 
-void test_game_save_and_load() {
+void test_game_save_and_load()
+{
 
     game g = game_new_empty_ext(2, 2, false, false);
     game g2 = g;
 
-    game_save(g2,"s");
+    game_save(g2, "s");
     game_load("s");
 
-    assert((game_equal(g,g2)) == 0);
-
+    assert(game_equal(g, g2));
 }
 
 int main(int argc, char* argv[])
