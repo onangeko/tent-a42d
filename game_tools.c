@@ -44,6 +44,7 @@ game game_load(char* filename)
     for (int i = 0; i < nb_rows; i++) {
         sscanf(str, "%u ", &nb_tents_col[i]);
     }
+    //The board
     square* squares = malloc(sizeof(square) * nb_rows * nb_cols);
     for (uint i = 0; i < nb_rows; i++) {
         fgets(str, MAXCHAR, fp);
