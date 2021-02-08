@@ -122,6 +122,20 @@ void test_game_nb_cols() // need to be mod
     game_delete(g);
 }
 
+/////////TOOLS
+
+void test_game_save_and_load() {
+
+    game g = game_new_empty_ext(2, 2, false, false);
+    game g2 = g;
+
+    game_save(g2,"s");
+    game_load("s");
+
+    assert((game_equal(g,g2)) == 0);
+
+}
+
 int main(int argc, char* argv[])
 {
 
@@ -154,6 +168,10 @@ int main(int argc, char* argv[])
 
     if (strcmp("game_nb_cols", argv[1]) == 0) {
         test_game_nb_cols();
+    }
+
+    if (strcmp("game_save_and_load", argv[1]) == 0) {
+        test_game_save_and_load();
     }
 
     game_delete(g1);
