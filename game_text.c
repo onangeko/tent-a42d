@@ -1,5 +1,6 @@
 #include "game_aux.h"
 #include "game_ext.h"
+#include "game_tools.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -191,9 +192,23 @@ int answerProcessing(game g, char inst, int row, int column)
     return -1;
 }
 
-int main(void)
+int main(int argc, char* argv[])
 {
-    game g = game_default();
+    game g ;
+    if (argc == 1 )
+    {
+    g = game_default();
+    }
+    else if (argc == 2)
+    {
+        g = game_load(argv[1]);
+
+    }
+    else
+    {
+    fprintf(stderr,"Error: Invalid argument | Wrong file format");
+    exit(EXIT_FAILURE);
+    } 
     while (!game_is_over(g)) {
         //Default values
         char instruction = '\n';
@@ -216,4 +231,6 @@ int main(void)
     // free the game
     game_delete(g);
     return EXIT_SUCCESS;
-}
+}  
+
+
