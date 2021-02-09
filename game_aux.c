@@ -34,8 +34,9 @@ void game_print(cgame g)
         printf("%d", j);
     printf("\n");
     printf("   ");
-    for (uint j = 0; j < game_nb_cols(g); j++) printf("-");
-        printf("\n");
+    for (uint j = 0; j < game_nb_cols(g); j++)
+        printf("-");
+    printf("\n");
     for (int i = 0; i < game_nb_rows(g); i++) {
         printf("%d |", i);
         for (int j = 0; j < game_nb_cols(g); j++) {
@@ -45,13 +46,14 @@ void game_print(cgame g)
         printf("| %d\n", game_get_expected_nb_tents_row(g, i));
     }
     printf("   ");
-    for (uint j = 0; j < game_nb_cols(g); j++) printf("-");
+    for (uint j = 0; j < game_nb_cols(g); j++)
+        printf("-");
     printf("\n");
     printf("   ");
     for (int i = 0; i < game_nb_rows(g); i++) {
         printf("%d", game_get_expected_nb_tents_col(g, i));
     }
-    printf("\n\n");
+    printf("\n");
 }
 
 /**
