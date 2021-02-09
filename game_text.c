@@ -14,6 +14,7 @@ void printHelp()
     printf("- press \'e <i> <j>\' to erase square (i,j)\n");
     printf("- press \'r\' to restart\n");
     printf("- press \'q\' to quit\n");
+    printf("- press \'s\' to save the current game\n");
 }
 
 /**
@@ -107,6 +108,7 @@ game game_default_solution_without_grass(void)
  */
 int answerProcessing(game g, char inst, int row, int column)
 {
+    
     // 1st treatment of scanf()
     if (row == -1 && column == -1) {
         switch (inst) {
@@ -126,6 +128,11 @@ int answerProcessing(game g, char inst, int row, int column)
         case 'y':
             game_redo(g);
             return 1;
+        case 's': ;
+            char * saveName = "";
+            printf("Enter the save name \n");
+            scanf("%c",saveName);
+            game_save(g,saveName);
         default:
             break;
         }
@@ -195,20 +202,14 @@ int answerProcessing(game g, char inst, int row, int column)
 int main(int argc, char* argv[])
 {
     game g ;
-    if (argc == 1 )
+    if (argv[1] == NULL)
     {
-    g = game_default();
-    }
-    else if (argc == 2)
-    {
-        g = game_load(argv[1]);
-
+        g = game_default();
     }
     else
     {
-    fprintf(stderr,"Error: Invalid argument | Wrong file format");
-    exit(EXIT_FAILURE);
-    } 
+        g = game_load(argv[1]);
+    }
     while (!game_is_over(g)) {
         //Default values
         char instruction = '\n';
