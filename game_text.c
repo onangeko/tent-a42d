@@ -129,8 +129,8 @@ int answerProcessing(game g, char inst, int row, int column)
             game_redo(g);
             return 1;
         case 's': ;
-        
             game_save(g,current);
+            return 1;
         default:
             break;
         }

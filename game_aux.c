@@ -27,34 +27,31 @@ char sqrToChar(square s)
  * Prints the game state in the terminal.
  * @param g the game state
  */
-void game_print(cgame g)
-{
-    printf("   ");
-    for (uint j = 0; j < game_nb_cols(g); j++)
-        printf("%d", j);
-    printf("\n");
-    printf("   ");
-    for (uint j = 0; j < game_nb_cols(g); j++)
-        printf("-");
-    printf("\n");
-    for (uint i = 0; i < game_nb_rows(g); i++) {
-        printf("%d |", i);
-        for (int j = 0; j < game_nb_cols(g); j++) {
-            square s = game_get_square(g, i, j);
-            printf("%c", sqrToChar(s));
-        }
-        printf("| %d\n", game_get_expected_nb_tents_row(g, i));
-    }
-    printf("   ");
-    for (uint j = 0; j < game_nb_cols(g); j++)
-        printf("-");
-    printf("\n");
-    printf("   ");
+
+void game_print(cgame g) {
+  printf("   ");
+  for (uint j = 0; j < game_nb_cols(g); j++) printf("%d", j);
+  printf("\n");
+  printf("   ");
+  for (uint j = 0; j < game_nb_cols(g); j++) printf("-");
+  printf("\n");
+  for (uint i = 0; i < game_nb_rows(g); i++) {
+    printf("%d |", i);
     for (uint j = 0; j < game_nb_cols(g); j++) {
-        printf("%d", game_get_expected_nb_tents_col(g, j));
+      square s = game_get_square(g, i, j);
+      char c = sqrToChar(s);
+      printf("%c", c);
     }
-    printf("\n");
+    printf("| %d\n", game_get_expected_nb_tents_row(g, i));
+  }
+  printf("   ");
+  for (uint j = 0; j < game_nb_cols(g); j++) printf("-");
+  printf("\n");
+  printf("   ");
+  for (uint j = 0; j < game_nb_cols(g); j++) printf("%d", game_get_expected_nb_tents_col(g, j));
+  printf("\n");
 }
+
 
 /**
  * Returns a default game according to the original game on the website.
