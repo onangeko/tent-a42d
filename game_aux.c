@@ -37,7 +37,7 @@ void game_print(cgame g)
     for (uint j = 0; j < game_nb_cols(g); j++)
         printf("-");
     printf("\n");
-    for (int i = 0; i < game_nb_rows(g); i++) {
+    for (uint i = 0; i < game_nb_rows(g); i++) {
         printf("%d |", i);
         for (int j = 0; j < game_nb_cols(g); j++) {
             square s = game_get_square(g, i, j);
@@ -50,8 +50,8 @@ void game_print(cgame g)
         printf("-");
     printf("\n");
     printf("   ");
-    for (int i = 0; i < game_nb_rows(g); i++) {
-        printf("%d", game_get_expected_nb_tents_col(g, i));
+    for (uint j = 0; j < game_nb_cols(g); j++) {
+        printf("%d", game_get_expected_nb_tents_col(g, j));
     }
     printf("\n");
 }
