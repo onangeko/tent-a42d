@@ -108,7 +108,7 @@ game game_default_solution_without_grass(void)
  */
 int answerProcessing(game g, char inst, int row, int column)
 {
-    char * current = "current.tnt";
+    char* current = "current.tnt";
     // 1st treatment of scanf()
     if (row == -1 && column == -1) {
         switch (inst) {
@@ -128,8 +128,8 @@ int answerProcessing(game g, char inst, int row, int column)
         case 'y':
             game_redo(g);
             return 1;
-        case 's': ;
-            game_save(g,current);
+        case 's':;
+            game_save(g, current);
             return 1;
         default:
             break;
@@ -199,13 +199,10 @@ int answerProcessing(game g, char inst, int row, int column)
 
 int main(int argc, char* argv[])
 {
-    game g ;
-    if (argv[1] == NULL)
-    {
+    game g;
+    if (argv[1] == NULL) {
         g = game_default();
-    }
-    else
-    {
+    } else {
         g = game_load(argv[1]);
     }
     while (!game_is_over(g)) {
@@ -230,6 +227,4 @@ int main(int argc, char* argv[])
     // free the game
     game_delete(g);
     return EXIT_SUCCESS;
-}  
-
-
+}
