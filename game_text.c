@@ -108,7 +108,7 @@ game game_default_solution_without_grass(void)
  */
 int answerProcessing(game g, char inst, int row, int column)
 {
-    
+    char * current = "current.tnt";
     // 1st treatment of scanf()
     if (row == -1 && column == -1) {
         switch (inst) {
@@ -129,10 +129,8 @@ int answerProcessing(game g, char inst, int row, int column)
             game_redo(g);
             return 1;
         case 's': ;
-            char * saveName = "";
-            printf("Enter the save name \n");
-            scanf("%c",saveName);
-            game_save(g,saveName);
+        
+            game_save(g,current);
         default:
             break;
         }
