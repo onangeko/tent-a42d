@@ -37,18 +37,24 @@ game game_load(char* filename)
     uint nb_tents_row[nb_rows];
     for (int i = 0; i < nb_rows; i++) {
         sscanf(str, "%u ", &nb_tents_row[i]);
+        str += 2;
     }
+    str -= nb_rows * 2;
     //3rd Line
     fgets(str, MAXCHAR, fp);
     uint nb_tents_col[nb_cols];
-    for (int i = 0; i < nb_rows; i++) {
+    for (int i = 0; i < nb_cols; i++) {
         sscanf(str, "%u ", &nb_tents_col[i]);
+        str += 2;
     }
+    str -= nb_cols * 2;
     //The board
     square* squares = malloc(sizeof(square) * nb_rows * nb_cols);
     for (uint i = 0; i < nb_rows; i++) {
         fgets(str, MAXCHAR, fp);
         for (uint j = 0; j < nb_cols; j++) {
+            char charSquare;
+            sscanf(str, "%c", &charSquare);
             square sq;
             switch (str[j]) {
             case 'x':
@@ -98,7 +104,7 @@ void game_save(cgame g, char* filename)
     fprintf(f, "\n");
     for (int i = 0; i < game_nb_rows(g); i++) {
         for (int j = 0; j < game_nb_cols(g); j++) {
-            fprintf(f, "%c ", sqrToCharTool(game_get_square(g, i, j)));
+            fprintf(f, "%c", sqrToCharTool(game_get_square(g, i, j)));
         }
         fprintf(f, "\n");
     }

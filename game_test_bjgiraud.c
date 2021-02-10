@@ -127,12 +127,10 @@ void test_game_nb_cols() // need to be mod
 
 void test_game_save_and_load()
 {
+    game g = game_default();
 
-    game g = game_new_empty_ext(2, 2, false, false);
-    game g2 = g;
-
-    game_save(g2, "s");
-    game_load("s");
+    game_save(g, "saveTest.tnt");
+    game g2 = game_load("saveTest.tnt");
 
     assert(game_equal(g, g2));
 }
