@@ -65,7 +65,7 @@ add_library(game game.c game_aux.c game_tools.c)
 
 #Set flags for compiling
 
-set(CMAKE_C_FLAGS "-std=c99 -g -Wall")
+set(CMAKE_C_FLAGS "-std=c99 -g --coverage -Wall")
 
 #Put executables with dependencies on projets
 
