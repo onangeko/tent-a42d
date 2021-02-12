@@ -70,7 +70,7 @@ game game_load(char* filename)
                 sq = TENT;
                 break;
             }
-            squares[i * nb_rows + j] = sq;
+            squares[i * nb_cols + j] = sq;
         }
     }
 
