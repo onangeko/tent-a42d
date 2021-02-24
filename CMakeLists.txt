@@ -71,6 +71,8 @@ set(CMAKE_C_FLAGS "-std=c99 -g --coverage -Wall")
 
 add_executable(game_text game_text.c)
 
+add_executable(game_solve game_solve.c)
+
 #Set links to math library used in both projets
 
 target_link_libraries(game_text game)
