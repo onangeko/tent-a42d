@@ -102,3 +102,9 @@ Olivier:
     <squares[1][0]><squares[1][1]>...<squares[1][nb_cols-1]>\n
 
     The first line describes in that order the number of grid rows <nb_rows>, the number of grid columns <nb_cols>, is the topology wrapping or not <is_wrapping> (0 for false and 1 for true) and do diagonals count for ajdacency <is_diagadj> (0 for false and 1 for true). Then, the second line indicates for each line, the number of expected tents (the values are separated by spaces and there is a space at the end of the line). The third line, indicates for each column the number of expected tents (the values are separated by spaces and there is a space at the end of the line). Finally the following lines store the content of each square of the grid with one character (' ' for EMPTY, 'x' for TREE, '*' for TENT, '-' for GRASS). In particular, <squares[i][j]> describes the content of the square in the i-th row and j-th column.
+
+##Solver
+
+#game_solve
+#game_solve.c
+#game_nb_solutions
