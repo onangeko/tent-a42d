@@ -75,6 +75,7 @@ add_executable(game_solve game_solve.c)
 
 #Set links to math library used in both projets
 
+target_link_libraries(game_solve game)
 target_link_libraries(game_text game)
 target_link_libraries(game_test_onangeko game)
 target_link_libraries(game_test_bjgiraud game)

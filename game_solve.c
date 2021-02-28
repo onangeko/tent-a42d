@@ -5,5 +5,6 @@
 #include <stdlib.h>
 
 int main(int argc, char* argv[]){
-
+    game g = game_default();
+    game_solve(g);
 }
