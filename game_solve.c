@@ -6,7 +6,7 @@
 
 int main(int argc, char* argv[])
 {
-    game g = game_load("saveTest.tnt");
+    game g = game_load("10x10.tnt");
     bool solved = game_solve(g);
     printf(solved ? "true" : "false");
     game_print(g);
