@@ -6,8 +6,10 @@
 
 int main(int argc, char* argv[])
 {
-    game g = game_load("10x10.tnt");
-    bool solved = game_solve(g);
-    printf(solved ? "true" : "false");
-    game_print(g);
+    if (argc >= 2) {
+        game g = game_load(argv[1]);
+        game_print(g);
+        printf(game_solve(g) ? "solved\n" : "not solved\n");
+        game_print(g);
+    }
 }
