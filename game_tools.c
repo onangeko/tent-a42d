@@ -130,7 +130,7 @@ bool game_solve_aux(game g, uint row, uint col)
 
     if (game_check_move(g, row, col, TENT) == REGULAR) {
         game_play_move(g, row, col, TENT);
-        //game_print(g);
+        game_print(g);
         if (game_solve_aux(g, i, j)) {
             return true;
         } else {
