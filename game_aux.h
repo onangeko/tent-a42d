@@ -45,7 +45,8 @@ game game_default(void);
 
 /**
  * @brief Creates the default game solution.
- * @details See the description of the default game in @ref index.
+ * @details See the description of the default game in @ref index. Note that
+ * this game must no longer have empty squares and have grass squares instead.
  * @details https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/tents.html#8x8de#911105660705777
  * @return the created game
  **/

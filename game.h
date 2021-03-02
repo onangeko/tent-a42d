@@ -105,8 +105,8 @@ void game_delete(game g);
  * @param j column index
  * @param s the square value
  * @pre @p g must be a valid pointer toward a game structure.
- * @pre @p i < game width
- * @pre @p j < game height
+ * @pre @p i < game height
+ * @pre @p j < game width
  * @pre @p s must be either EMPTY, GRASS, TENT or TREE.
  **/
 void game_set_square(game g, uint i, uint j, square s);
@@ -117,8 +117,8 @@ void game_set_square(game g, uint i, uint j, square s);
  * @param i row index
  * @param j column index
  * @pre @p g must be a valid pointer toward a game structure.
- * @pre @p i < game width
- * @pre @p j < game height
+ * @pre @p i < game height
+ * @pre @p j < game width
  * @return the square value
  **/
 square game_get_square(cgame g, uint i, uint j);
@@ -129,7 +129,7 @@ square game_get_square(cgame g, uint i, uint j);
  * @param i row index
  * @param nb_tents the expected number of tents on this row
  * @pre @p g must be a valid pointer toward a game structure.
- * @pre @p i < game width
+ * @pre @p i < game height
  **/
 void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents);
 
@@ -139,7 +139,7 @@ void game_set_expected_nb_tents_row(game g, uint i, uint nb_tents);
  * @param j column index
  * @param nb_tents the expected number of tents on this column
  * @pre @p g must be a valid pointer toward a game structure.
- * @pre @p j < game height
+ * @pre @p j < game width
  **/
 void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents);
 
@@ -149,7 +149,7 @@ void game_set_expected_nb_tents_col(game g, uint j, uint nb_tents);
  * @param i row index
  * @return the expected number of tents on this row
  * @pre @p g must be a valid pointer toward a game structure.
- * @pre @p i < game width
+ * @pre @p i < game height
  **/
 uint game_get_expected_nb_tents_row(cgame g, uint i);
 
@@ -159,7 +159,7 @@ uint game_get_expected_nb_tents_row(cgame g, uint i);
  * @param j column index
  * @return the expected number of tents on this column
  * @pre @p g must be a valid pointer toward a game structure.
- * @pre @p j < game height
+ * @pre @p j < game width
  **/
 uint game_get_expected_nb_tents_col(cgame g, uint j);
 
@@ -177,7 +177,7 @@ uint game_get_expected_nb_tents_all(cgame g);
  * @param i row index
  * @return the current number of tents on this row
  * @pre @p g must be a valid pointer toward a game structure.
- * @pre @p i < game width
+ * @pre @p i < game height
  **/
 uint game_get_current_nb_tents_row(cgame g, uint i);
 
@@ -187,7 +187,7 @@ uint game_get_current_nb_tents_row(cgame g, uint i);
  * @param j column index
  * @return the expected number of tents on this column
  * @pre @p g must be a valid pointer toward a game structure.
- * @pre @p j < game height
+ * @pre @p j < game width
  **/
 uint game_get_current_nb_tents_col(cgame g, uint j);
 
@@ -208,8 +208,8 @@ uint game_get_current_nb_tents_all(cgame g);
  * @param j column index
  * @param s the square value
  * @pre @p g must be a valid pointer toward a game structure.
- * @pre @p i < game width
- * @pre @p j < game height
+ * @pre @p i < game height
+ * @pre @p j < game width
  * @pre @p s must be either EMPTY, GRASS or TENT (but not TREE).
  * @pre The game square at position (i,j) must not be TREE.
  **/
@@ -225,8 +225,8 @@ void game_play_move(game g, uint i, uint j, square s);
  * @param s the square value
  * @return either REGULAR, LOSING or ILLEGAL depending on the move
  * @pre @p g must be a valid pointer toward a game structure.
- * @pre @p i < game width
- * @pre @p j < game height
+ * @pre @p i < game height
+ * @pre @p j < game width
  * @pre @p s must be either EMPTY, GRASS, TENT or TREE.
  **/
 int game_check_move(cgame g, uint i, uint j, square s);
@@ -249,7 +249,7 @@ bool game_is_over(cgame g);
  * @param g the game
  * @param i row index
  * @pre @p g must be a valid pointer toward a game structure.
- * @pre @p i < game width
+ * @pre @p i < game height
  */
 void game_fill_grass_row(game g, uint i);
 
@@ -260,7 +260,7 @@ void game_fill_grass_row(game g, uint i);
  * @param g the game
  * @param j column index
  * @pre @p g must be a valid pointer toward a game structure.
- * @pre @p j < game height
+ * @pre @p j < game width
  */
 void game_fill_grass_col(game g, uint j);
 
