@@ -164,7 +164,7 @@ uint game_nb_solutions_aux(game g,uint row,uint col){
 
     //If the game is over then a solution has been found
     if (game_is_over(g))
-        return true;
+        return 1;
 
     //If the remaining amount of tents we have to place is more than what we can physically place then the game
     // is not viable and we return false (we multiply it by 2 because two tents cannot be placed next to eachother)
@@ -172,33 +172,33 @@ uint game_nb_solutions_aux(game g,uint row,uint col){
     //then we cannot possibly place 3 tents in 4 squares because one tent has to be next to another so we say that the game
     //is not viable by returning false
     if (game_nb_cols(g) - col + 1 < remaining_tents_on_row * 2) {
-        return false;
+        return 0;
     }
 
     //If the precendent row doesn't have the required amount of tents then the game is not viable and we return false
     if (col == 0 && row != 0 && game_get_current_nb_tents_row(g, row - 1) != game_get_expected_nb_tents_row(g, row - 1)) {
-        return false;
+        return 0;
     }
     //If we reach the end of the board and the game is not over then we return false
     if (row == game_nb_rows(g) - 1 && col == game_nb_cols(g) - 1 && !game_is_over(g)) {
-        return false;
+        return 0;
     }
 
     if (game_check_move(g, row, col, TENT) == REGULAR) {
-        game_play_move(g, row, col, TENT);
-        //system("clear");
-        //game_print(g);
-        //sleep(0.1);
-        if (game_solve_aux(g, i, j)) {
-            return true;
-        } else {
-            game_undo(g);
-        }
+        game g1 = game_copy(g);
+        game_play_move(g1, row, col, TENT);
+        uint nb_sol = game_nb_solutions_aux(g1,i,j);
+        game_delete(g1);
+        return nb_sol + game_nb_solutions_aux(g,i,j);
     }
-    return game_solve_aux(g, i, j);
+
+    return game_nb_solutions_aux(g, i, j);
 }
 
 uint game_nb_solutions(game g)
 {
-    
+    game g1 = game_copy(g);
+    uint nb_sol = game_nb_solutions_aux(g1,0,0);
+    game_delete(g1);
+    return nb_sol;
 }
