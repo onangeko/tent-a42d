@@ -143,9 +143,6 @@ bool game_solve_aux(game g, uint row, uint col)
 
     if (game_check_move(g, row, col, TENT) == REGULAR) {
         game_play_move(g, row, col, TENT);
-        //system("clear");
-        //game_print(g);
-        //sleep(0.1);
         if (game_solve_aux(g, i, j)) {
             return true;
         } else {
