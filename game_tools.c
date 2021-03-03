@@ -114,14 +114,17 @@ void game_save(cgame g, char* filename)
 
 bool game_solve_aux(game g, uint row, uint col)
 {
+    //If the game is over then a solution has been found
+    if (game_is_over(g))
+        return true;
+
+    //If we reach the end of the board and the game is not over then we return false
+    if (row == game_nb_rows(g) && !game_is_over(g))
+        return false;
 
     int i = col == game_nb_cols(g) - 1 && row < game_nb_rows(g) ? row + 1 : row;
     int j = col == game_nb_cols(g) - 1 ? 0 : col + 1;
     int remaining_tents_on_row = game_get_expected_nb_tents_row(g, row) - game_get_current_nb_tents_row(g, row);
-
-    //If the game is over then a solution has been found
-    if (game_is_over(g))
-        return true;
 
     //If the remaining amount of tents we have to place is more than what we can physically place then the game
     // is not viable and we return false (we multiply it by 2 because two tents cannot be placed next to eachother)
@@ -133,10 +136,6 @@ bool game_solve_aux(game g, uint row, uint col)
 
     //If the precendent row doesn't have the required amount of tents then the game is not viable and we return false
     if (col == 0 && row != 0 && game_get_current_nb_tents_row(g, row - 1) != game_get_expected_nb_tents_row(g, row - 1))
-        return false;
-
-    //If we reach the end of the board and the game is not over then we return false
-    if (row == game_nb_rows(g) && !game_is_over(g))
         return false;
 
     if (game_check_move(g, row, col, TENT) == REGULAR) {
