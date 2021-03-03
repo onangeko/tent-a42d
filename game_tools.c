@@ -128,26 +128,25 @@ bool game_solve_aux(game g, uint row, uint col)
     //For example : If there is 3 tents left to place on a specific row in a 8x8 game and we are already at column number 4
     //then we cannot possibly place 3 tents in 4 squares because one tent has to be next to another so we say that the game
     //is not viable by returning false
-    if (game_nb_cols(g) - col + 1 < remaining_tents_on_row * 2) {
+    if (game_nb_cols(g) - col + 1 < remaining_tents_on_row * 2)
         return false;
-    }
 
     //If the precendent row doesn't have the required amount of tents then the game is not viable and we return false
-    if (col == 0 && row != 0 && game_get_current_nb_tents_row(g, row - 1) != game_get_expected_nb_tents_row(g, row - 1)) {
+    if (col == 0 && row != 0 && game_get_current_nb_tents_row(g, row - 1) != game_get_expected_nb_tents_row(g, row - 1))
         return false;
-    }
+
     //If we reach the end of the board and the game is not over then we return false
-    if (row == game_nb_rows(g) - 1 && col == game_nb_cols(g) - 1 && !game_is_over(g)) {
+    if (row == game_nb_rows(g) && !game_is_over(g))
         return false;
-    }
 
     if (game_check_move(g, row, col, TENT) == REGULAR) {
         game_play_move(g, row, col, TENT);
-        if (game_solve_aux(g, i, j)) {
+        i = game_get_expected_nb_tents_row(g, row) == game_get_current_nb_tents_row(g, row) && row != game_nb_rows(g) - 1 ? row + 1 : i;
+        j = game_get_expected_nb_tents_row(g, row) == game_get_current_nb_tents_row(g, row) && row != game_nb_rows(g) - 1 ? 0 : j;
+        if (game_solve_aux(g, i, j))
             return true;
-        } else {
+        else
             game_undo(g);
-        }
     }
     return game_solve_aux(g, i, j);
 }
