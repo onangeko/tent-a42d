@@ -157,7 +157,8 @@ bool game_solve(game g)
     return game_solve_aux(g, 0, 0);
 }
 
-uint game_nb_solutions_aux(game g,uint row,uint col){
+uint game_nb_solutions_aux(game g, uint row, uint col)
+{
     int i = col == game_nb_cols(g) - 1 && row < game_nb_rows(g) ? row + 1 : row;
     int j = col == game_nb_cols(g) - 1 ? 0 : col + 1;
     int remaining_tents_on_row = game_get_expected_nb_tents_row(g, row) - game_get_current_nb_tents_row(g, row);
@@ -187,9 +188,9 @@ uint game_nb_solutions_aux(game g,uint row,uint col){
     if (game_check_move(g, row, col, TENT) == REGULAR) {
         game g1 = game_copy(g);
         game_play_move(g1, row, col, TENT);
-        uint nb_sol = game_nb_solutions_aux(g1,i,j);
+        uint nb_sol = game_nb_solutions_aux(g1, i, j);
         game_delete(g1);
-        return nb_sol + game_nb_solutions_aux(g,i,j);
+        return nb_sol + game_nb_solutions_aux(g, i, j);
     }
 
     return game_nb_solutions_aux(g, i, j);
@@ -198,7 +199,7 @@ uint game_nb_solutions_aux(game g,uint row,uint col){
 uint game_nb_solutions(game g)
 {
     game g1 = game_copy(g);
-    uint nb_sol = game_nb_solutions_aux(g1,0,0);
+    uint nb_sol = game_nb_solutions_aux(g1, 0, 0);
     game_delete(g1);
     return nb_sol;
 }
