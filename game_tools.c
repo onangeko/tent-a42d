@@ -26,6 +26,7 @@ game game_load(char* filename)
     char* str = malloc(sizeof(char) * MAXCHAR);
     FILE* fp = fopen(filename, "r");
     if (fp == NULL) {
+        printf("file %s not opened properly/not found", filename);
         exit(EXIT_FAILURE);
     }
     //1st Line
