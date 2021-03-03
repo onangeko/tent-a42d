@@ -52,6 +52,7 @@ int main(int argc, char* argv[])
             //Saves the output of game_print into the output file
             if (output) {
                 char* solution = malloc((game_nb_rows(g) + 4) * (game_nb_cols(g) * 6) * sizeof(char));
+                solution = "";
                 freopen("/dev/null", "a", stdout);
                 setbuf(stdout, solution);
                 game_print(g);
