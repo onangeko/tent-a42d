@@ -12,6 +12,7 @@ int main(int argc, char* argv[])
     bool count = false;
     bool output = false;
     char* input_file;
+    char* output_file;
     int c;
     while ((c = getopt(argc, argv, "sc")) != -1) {
         switch (c) {
@@ -34,7 +35,8 @@ int main(int argc, char* argv[])
     //Checks if output file is specified
     if (argv[optind + 1] != NULL) {
         output = true;
-        fptr = fopen(argv[optind + 1], "w");
+        output_file = argv[optind + 1];
+        fptr = fopen(output_file, "w");
     }
     //If -c is present
     game g = game_load(input_file);
@@ -51,15 +53,7 @@ int main(int argc, char* argv[])
         if (game_solve(g)) {
             //Saves the output of game_print into the output file
             if (output) {
-                char* solution = malloc((game_nb_rows(g) + 4) * (game_nb_cols(g) * 6) * sizeof(char));
-                freopen("/dev/null", "a", stdout);
-                setbuf(stdout, solution);
-                game_print(g);
-                if (solution == NULL)
-                    solution = "";
-                fprintf(fptr, "%s", solution);
-                fclose(fptr);
-                free(solution);
+                game_save(g, output_file);
             }
             //Else just print the game
             else {
