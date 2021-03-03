@@ -3,7 +3,6 @@
 #include "game_tools.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 #define MAXCHAR = 1000
 
@@ -14,10 +13,6 @@ int main(int argc, char* argv[])
     bool output = false;
     char* input_file;
     int c;
-
-    // put ':' in the starting of the
-    // string so that program can
-    //distinguish between '?' and ':'
     while ((c = getopt(argc, argv, "sc")) != -1) {
         switch (c) {
         case 's':
