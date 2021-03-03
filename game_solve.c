@@ -11,5 +11,6 @@ int main(int argc, char* argv[])
         game_print(g);
         printf(game_solve(g) ? "solved\n" : "not solved\n");
         game_print(g);
+        printf("%d solution(s)\n",game_nb_solutions(g));
     }
 }

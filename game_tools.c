@@ -161,5 +161,16 @@ bool game_solve(game g)
 
 uint game_nb_solutions(game g)
 {
-    return 0;
+    uint cmp = 0;
+    game previousSolution;
+    for(int i = 0;i<game_nb_rows(g);i++){
+        for(int j = 0;j<game_nb_cols(g);j++){
+            if(game_solve_aux(g,i,j) && (previousSolution == NULL || !game_equal(g,previousSolution))){
+                previousSolution = game_copy(g);
+                game_print(g);
+                cmp++;
+            }
+        }
+    }
+    return cmp;
 }
