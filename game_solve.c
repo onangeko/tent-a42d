@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
                 game_print(g);
             }
         } else {
-            printf("No solution found for %s", input_file);
+            printf("No solution found for %s\n", input_file);
         }
     }
     game_delete(g);
