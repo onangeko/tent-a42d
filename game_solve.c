@@ -59,6 +59,8 @@ int main(int argc, char* argv[])
             else {
                 game_print(g);
             }
+        } else {
+            printf("No solution found for %s", input_file);
         }
     }
     game_delete(g);
