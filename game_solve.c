@@ -28,6 +28,7 @@ int main(int argc, char* argv[])
         }
     }
     if (argv[optind] == NULL) {
+        fprintf(stderr,"Rentrez un jeu en argument | error game_solve");
         exit(EXIT_FAILURE);
     }
     input_file = argv[optind];

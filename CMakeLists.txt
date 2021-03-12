@@ -54,6 +54,12 @@ project(game_text C)
 
 include(CTest)
 
+#Solve dependencies
+
+find_package(SDL2 REQUIRED)
+set(SDL2_ALL_INC ${SDL2_INCLUDE_DIRS})
+set(SDL2_ALL_LIBS ${SDL2_LIBRARIES} -lSDL2_ttf -lSDL2_image)
+
 #Put standard options
 
 set(CMAKE_C_STANDARD 11)
@@ -62,16 +68,19 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${game_text_SOURCE_DIR}/cmake)
 #Create library
 
 add_library(game game.c game_aux.c game_tools.c queue.c game_private.c game_ext.c)
+add_library(sdl model.c)
 
 #Set flags for compiling
 
 set(CMAKE_C_FLAGS "-DNDEBUG -O3 -std=c99 -g --coverage -Wall")
 
 #Put executables with dependencies on projets
-
+include_directories(${SDL2_ALL_INC})
 add_executable(game_text game_text.c)
 
 add_executable(game_solve game_solve.c)
+
+add_executable(game_sdl main.c model.c)
 
 #Set links to math library used in both projets
 
@@ -82,6 +91,7 @@ target_link_libraries(game_test_bjgiraud game)
 target_link_libraries(game_test_mlecoeuvre game)
 target_link_libraries(game_test_edatrier game)
 
+target_link_libraries(game_sdl ${SDL2_ALL_LIBS} sdl)
 
 
     
