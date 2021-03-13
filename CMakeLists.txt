@@ -80,7 +80,7 @@ add_executable(game_text game_text.c)
 
 add_executable(game_solve game_solve.c)
 
-add_executable(game_sdl main.c model.c)
+add_executable(game_sdl main.c)
 
 #Set links to math library used in both projets
 

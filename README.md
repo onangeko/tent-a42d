@@ -105,6 +105,28 @@ Olivier:
 
 ##Solver
 
-#game_solve
-#game_solve.c
-#game_nb_solutions
+Bjorn:
+* game_solve.c
+Emile:
+* game_solve
+Mathis:
+* game_nb_solutions
+Olivier:
+* game_solve.c
+
+##SDL
+* init()
+* render()
+* process()
+* clean()
+* adapter l'affichage au dimension courante de la fenetre
+* implémenter les fonctions de game_text (undo, redo, tent, grass, empty, ...)
+* implémenter un affichage pour les illegal et losing move
+
+Bjorn:
+
+Emile:
+
+Mathis:
+
+Olivier:

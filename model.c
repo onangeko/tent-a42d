@@ -26,7 +26,8 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 
 /* **************************************************************** */
 
-void render(SDL_Window *win, SDL_Renderer *ren, Env *env) { /* PUT YOUR CODE HERE TO RENDER TEXTURES, ... */
+void render(SDL_Window *win, SDL_Renderer *ren, Env *env) { 
+
 }
 
 /* **************************************************************** */
