@@ -117,13 +117,15 @@ Olivier:
 ##SDL
 * init()
 * render()
-* process()
-* clean()
+
+
 * adapter l'affichage au dimension courante de la fenetre
 * implémenter les fonctions de game_text (undo, redo, tent, grass, empty, ...)
 * implémenter un affichage pour les illegal et losing move
 
 Bjorn:
+* clean()
+* process()
 
 Emile:
 
