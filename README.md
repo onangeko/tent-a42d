@@ -115,7 +115,6 @@ Olivier:
 * game_solve.c
 
 ##SDL
-* init()
 * render()
 
 
@@ -130,5 +129,6 @@ Bjorn:
 Emile:
 
 Mathis:
+* init()
 
 Olivier:
