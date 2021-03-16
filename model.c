@@ -12,6 +12,8 @@
 #define WATER "water.png"
 #define COCO "coconutTree.png"
 #define SAND "sand.png"
+#define BACKGROUND "background.png"
+#define TABLE "table.png"
 
 /* **************************************************************** */
 
@@ -20,6 +22,8 @@ struct Env_t {
   SDL_Texture* sand;
   SDL_Texture* water;
   SDL_Texture* coco;
+  SDL_Texture* background;
+  SDL_Texture* table;
 };
 
 /* **************************************************************** */
@@ -28,20 +32,28 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   Env *env = malloc(sizeof(struct Env_t));
 
   /* init background texture from PNG image */
-  env->monkey = IMG_LoadTexture(ren, MONKEY)
+  env->monkey = IMG_LoadTexture(ren, MONKEY);
   if (!env->monkey) ERROR("IMG_LoadTexture: %s\n", MONKEY);
 
   /* init background texture from PNG image */
-  env->sand = IMG_LoadTexture(ren, SAND)
+  env->sand = IMG_LoadTexture(ren, SAND);
   if (!env->sand) ERROR("IMG_LoadTexture: %s\n", SAND);
 
   /* init background texture from PNG image */
-  env->coco = IMG_LoadTexture(ren, COCO)
+  env->coco = IMG_LoadTexture(ren, COCO);
   if (!env->coco) ERROR("IMG_LoadTexture: %s\n", COCO);
 
   /* init background texture from PNG image */
-  env->water = IMG_LoadTexture(ren, WATER)
+  env->water = IMG_LoadTexture(ren, WATER);
   if (!env->water) ERROR("IMG_LoadTexture: %s\n", WATER);
+
+  /* init background texture from PNG image */
+  env->background = IMG_LoadTexture(ren, BACKGROUND);
+  if (!env->background) ERROR("IMG_LoadTexture: %s\n", BACKGROUND);
+
+  /* init background texture from PNG image */
+  env->table = IMG_LoadTexture(ren, TABLE);
+  if (!env->table) ERROR("IMG_LoadTexture: %s\n", TABLE);
 
   return env;
 }
