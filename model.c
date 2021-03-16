@@ -66,14 +66,32 @@ void render(SDL_Window *win, SDL_Renderer *ren, Env *env) {
 
 /* **************************************************************** */
 
-bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
+bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e) {
+  int w, h;
+  SDL_GetWindowSize(win, &w, &h);
+
+  /* generic events */
   if (e->type == SDL_QUIT) {
     return true;
   }
+  /* Android events */
+#ifdef __ANDROID__
+  else if (e->type == SDL_FINGERDOWN) {
+    env->mario_x = e->tfinger.x * w; /* tfinger.x, normalized in [0..1] */
+    env->mario_y = e->tfinger.y * h; /* tfinger.y, normalized in [0..1] */
+  }
+  /* other events */
+#else
+  else if (e->type == SDL_MOUSEBUTTONDOWN) {
+    SDL_Point mouse;
+    SDL_GetMouseState(&mouse.x, &mouse.y);
+    env->monkey_x = mouse.x;
+    env->monkey_y = mouse.y;
 
-  /* PUT YOUR CODE HERE TO PROCESS EVENTS */
+  } 
+#endif
 
-  return false;
+  return false; /* don't quit */
 }
 
 /* **************************************************************** */
