@@ -81,7 +81,18 @@ bool process(SDL_Window *win, SDL_Renderer *ren, Env *env, SDL_Event *e) {
 void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
   /* PUT YOUR CODE HERE TO CLEAN MEMORY */
 
-  free(env);
+  if (win == NULL || ren == NULL || env == NULL){
+    exit(0);
+  }
+
+    SDL_DestroyTexture(env->monkey);
+    SDL_DestroyTexture(env->sand);
+    SDL_DestroyTexture(env->water);
+    SDL_DestroyTexture(env->coco);
+    SDL_DestroyTexture(env->background);
+    SDL_DestroyTexture(env->table);
+
+    free(env);
 }
 
 /* **************************************************************** */
