@@ -61,7 +61,44 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 /* **************************************************************** */
 
 void render(SDL_Window *win, SDL_Renderer *ren, Env *env) { 
+  SDL_Rect rect;
 
+  /* get current window size */
+  int w, h;
+  SDL_GetWindowSize(win, &w, &h);
+
+  /* render background texture */
+  SDL_RenderCopy(ren, env->background, NULL, NULL); /* stretch it */
+
+  /* render table texture */
+  SDL_QueryTexture(env->table, NULL, NULL, &rect.w, &rect.h);
+  rect.x = w / 2 - rect.w / 2;
+  rect.y = h / 2 - rect.h / 2;
+  SDL_RenderCopy(ren, env->table, NULL, &rect);
+
+  /* render monkey texture */
+  SDL_QueryTexture(env->monkey, NULL, NULL, &rect.w, &rect.h);
+  rect.x = 100;
+  rect.y = 100;
+  SDL_RenderCopy(ren, env->monkey, NULL, &rect);
+
+  /* render sand texture */
+  SDL_QueryTexture(env->sand, NULL, NULL, &rect.w, &rect.h);
+  rect.x = 10;
+  rect.y = 10;
+  SDL_RenderCopy(ren, env->sand, NULL, &rect);
+
+  /* render coconut texture */
+  SDL_QueryTexture(env->coco, NULL, NULL, &rect.w, &rect.h);
+  rect.x = 100;
+  rect.y = 00;
+  SDL_RenderCopy(ren, env->coco, NULL, &rect);
+
+  /* render water texture */
+  SDL_QueryTexture(env->water, NULL, NULL, &rect.w, &rect.h);
+  rect.x = 300;
+  rect.y = 300;
+  SDL_RenderCopy(ren, env->water, NULL, &rect);
 }
 
 /* **************************************************************** */
@@ -85,9 +122,7 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e) {
   else if (e->type == SDL_MOUSEBUTTONDOWN) {
     SDL_Point mouse;
     SDL_GetMouseState(&mouse.x, &mouse.y);
-    env->monkey_x = mouse.x;
-    env->monkey_y = mouse.y;
-
+  
   } 
 #endif
 
