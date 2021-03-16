@@ -122,6 +122,13 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e) {
   else if (e->type == SDL_MOUSEBUTTONDOWN) {
     SDL_Point mouse;
     SDL_GetMouseState(&mouse.x, &mouse.y);
+
+  SDL_Rect monkey;
+  SDL_QueryTexture(env->monkey, NULL, NULL, &monkey.w, &monkey.h);
+  monkey.x = mouse.x;
+  monkey.y = mouse.y;
+  SDL_RenderCopy(ren, env->monkey, NULL, &monkey);
+
   
   } 
 #endif
