@@ -109,6 +109,9 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e) {
 
   SDL_Rect monkey;
 
+  SDL_Point mouse;
+  SDL_GetMouseState(&mouse.x, &mouse.y);
+
   /* generic events */
   if (e->type == SDL_QUIT) {
     return true;
@@ -119,19 +122,24 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e) {
   {
     switch(e->type)
     {
-      default:
+      //case SDL_MOUSEMOTION:
+      //  printf("%d / %d\n", e->motion.x, e->motion.y);
+      //  break;
+
+      case SDL_MOUSEBUTTONDOWN:
+        printf("Click in %d / %d\n", e->motion.x, e->motion.y);
+
+        SDL_QueryTexture(env->monkey, NULL, NULL, &monkey.w, &monkey.h);
+        monkey.x = 200;
+        monkey.y = 200;
+        SDL_RenderCopy(ren, env->monkey, NULL, &monkey);
+        
+
         break;
 
-      case SDL_MOUSEBUTTONDOWN :
-
-      SDL_Point mouse;
-      SDL_GetMouseState(&mouse.x, &mouse.y);
-
-      SDL_QueryTexture(env->monkey, NULL, NULL, &monkey.w, &monkey.h);
-      monkey.x = 200;
-      monkey.y = 200;
-      SDL_RenderCopy(ren, env->monkey, NULL, &monkey);
-      break;
+      
+      default:
+        break;
     }
   
     
