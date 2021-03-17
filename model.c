@@ -1,7 +1,7 @@
 // SDL2 Demo by aurelien.esnard@u-bordeaux.fr
 
 #include "model.h"
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <SDL_image.h>  // required to load transparent texture from PNG
 #include <SDL_ttf.h>    // required to use TTF fonts
 #include <stdbool.h>
@@ -90,8 +90,8 @@ void render(SDL_Window *win, SDL_Renderer *ren, Env *env) {
 
   /* render coconut texture */
   SDL_QueryTexture(env->coco, NULL, NULL, &rect.w, &rect.h);
-  rect.x = 100;
-  rect.y = 00;
+  rect.x = 120;
+  rect.y = 120;
   SDL_RenderCopy(ren, env->coco, NULL, &rect);
 
   /* render water texture */
@@ -119,18 +119,23 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e) {
   }
   /* other events */
 #else
-  else if (e->type == SDL_MOUSEBUTTONDOWN) {
-    SDL_Point mouse;
-    SDL_GetMouseState(&mouse.x, &mouse.y);
+  
+  
+else if (e->type == SDL_MOUSEBUTTONDOWN)
+  {
 
+  SDL_Point mouse;
+  SDL_GetMouseState(&mouse.x, &mouse.y);
+  
   SDL_Rect monkey;
+  monkey.x = 200;
+  monkey.y = 200;
   SDL_QueryTexture(env->monkey, NULL, NULL, &monkey.w, &monkey.h);
-  monkey.x = mouse.x;
-  monkey.y = mouse.y;
   SDL_RenderCopy(ren, env->monkey, NULL, &monkey);
 
   
-  } 
+}
+
 #endif
 
   return false; /* don't quit */
@@ -141,7 +146,8 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e) {
 void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
   /* PUT YOUR CODE HERE TO CLEAN MEMORY */
 
-  if (win == NULL || ren == NULL || env == NULL){
+  if (win == NULL || ren == NULL || env == NULL)
+  {
     exit(0);
   }
 
