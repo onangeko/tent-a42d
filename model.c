@@ -61,7 +61,11 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 /* **************************************************************** */
 
 void render(SDL_Window *win, SDL_Renderer *ren, Env *env) { 
-  SDL_Rect rect;
+  SDL_Rect rect_monkey;
+  SDL_Rect rect_sand;
+  SDL_Rect rect_water;
+  SDL_Rect rect_coco;
+  SDL_Rect rect_table;
 
   /* get current window size */
   int w, h;
@@ -71,34 +75,34 @@ void render(SDL_Window *win, SDL_Renderer *ren, Env *env) {
   SDL_RenderCopy(ren, env->background, NULL, NULL); /* stretch it */
 
   /* render table texture */
-  SDL_QueryTexture(env->table, NULL, NULL, &rect.w, &rect.h);
-  rect.x = w / 2 - rect.w / 2;
-  rect.y = h / 2 - rect.h / 2;
-  SDL_RenderCopy(ren, env->table, NULL, &rect);
+  SDL_QueryTexture(env->table, NULL, NULL, &rect_table.w, &rect_table.h);
+  rect_table.x = w / 2 - rect_table.w / 2;
+  rect_table.y = h / 2 - rect_table.h / 2;
+  SDL_RenderCopy(ren, env->table, NULL, &rect_table);
 
   /* render monkey texture */
-  SDL_QueryTexture(env->monkey, NULL, NULL, &rect.w, &rect.h);
-  rect.x = 100;
-  rect.y = 100;
-  SDL_RenderCopy(ren, env->monkey, NULL, &rect);
+  SDL_QueryTexture(env->monkey, NULL, NULL, &rect_monkey.w, &rect_monkey.h);
+  rect_monkey.x = 100;
+  rect_monkey.y = 300;
+  SDL_RenderCopy(ren, env->monkey, NULL, &rect_monkey);
 
   /* render sand texture */
-  SDL_QueryTexture(env->sand, NULL, NULL, &rect.w, &rect.h);
-  rect.x = 10;
-  rect.y = 10;
-  SDL_RenderCopy(ren, env->sand, NULL, &rect);
+  SDL_QueryTexture(env->sand, NULL, NULL, &rect_sand.w, &rect_sand.h);
+  rect_sand.x = 10;
+  rect_sand.y = 10;
+  SDL_RenderCopy(ren, env->sand, NULL, &rect_sand);
 
   /* render coconut texture */
-  SDL_QueryTexture(env->coco, NULL, NULL, &rect.w, &rect.h);
-  rect.x = 120;
-  rect.y = 120;
-  SDL_RenderCopy(ren, env->coco, NULL, &rect);
+  SDL_QueryTexture(env->coco, NULL, NULL, &rect_coco.w, &rect_coco.h);
+  rect_coco.x = 120;
+  rect_coco.y = 120;
+  SDL_RenderCopy(ren, env->coco, NULL, &rect_coco);
 
   /* render water texture */
-  SDL_QueryTexture(env->water, NULL, NULL, &rect.w, &rect.h);
-  rect.x = 300;
-  rect.y = 300;
-  SDL_RenderCopy(ren, env->water, NULL, &rect);
+  SDL_QueryTexture(env->water, NULL, NULL, &rect_water.w, &rect_water.h);
+  rect_water.x = 300;
+  rect_water.y = 300;
+  SDL_RenderCopy(ren, env->water, NULL, &rect_water);
 }
 
 /* **************************************************************** */
@@ -107,7 +111,7 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e) {
   int w, h;
   SDL_GetWindowSize(win, &w, &h);
 
-  SDL_Rect monkey;
+  SDL_Rect rect_monkey;
 
   SDL_Point mouse;
   SDL_GetMouseState(&mouse.x, &mouse.y);
@@ -116,7 +120,6 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e) {
   if (e->type == SDL_QUIT) {
     return true;
   }
-  /* Android events */
   
   else 
   {
@@ -129,10 +132,10 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e) {
       case SDL_MOUSEBUTTONDOWN:
         printf("Click in %d / %d\n", e->motion.x, e->motion.y);
 
-        SDL_QueryTexture(env->monkey, NULL, NULL, &monkey.w, &monkey.h);
-        monkey.x = 200;
-        monkey.y = 200;
-        SDL_RenderCopy(ren, env->monkey, NULL, &monkey);
+        SDL_QueryTexture(env->monkey, NULL, NULL, &rect_monkey.w, &rect_monkey.h);
+        rect_monkey.x = e->motion.x;
+        rect_monkey.y = e->motion.y;
+        SDL_RenderCopy(ren, env->monkey, NULL, &rect_monkey);
         
 
         break;
