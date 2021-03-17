@@ -7,6 +7,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "game_aux.h"
+#include "game_ext.h"
+#include "game_tools.h"
 
 #define MONKEY "monkey.png"
 #define WATER "water.png"
@@ -18,6 +21,7 @@
 /* **************************************************************** */
 
 struct Env_t {
+  SDL_Texture* board;
   SDL_Texture* monkey;
   SDL_Texture* sand;
   SDL_Texture* water;
@@ -30,6 +34,15 @@ struct Env_t {
 
 Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   Env *env = malloc(sizeof(struct Env_t));
+  game board = NULL;
+  if(argc < 2)
+    board = game_default();
+  else
+    board = game_load(argv[1]);
+  
+
+  env->board = IMG_LoadTexture(ren, WATER);
+  if (!env->board) ERROR("IMG_LoadTexture: %s\n", WATER);
 
   /* init background texture from PNG image */
   env->monkey = IMG_LoadTexture(ren, MONKEY);

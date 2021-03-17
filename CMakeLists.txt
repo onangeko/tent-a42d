@@ -91,7 +91,7 @@ target_link_libraries(game_test_bjgiraud game)
 target_link_libraries(game_test_mlecoeuvre game)
 target_link_libraries(game_test_edatrier game)
 
-target_link_libraries(game_sdl ${SDL2_ALL_LIBS} sdl)
+target_link_libraries(game_sdl ${SDL2_ALL_LIBS} sdl game)
 
 
     
