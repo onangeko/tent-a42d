@@ -107,36 +107,37 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e) {
   int w, h;
   SDL_GetWindowSize(win, &w, &h);
 
+  SDL_Rect monkey;
+
   /* generic events */
   if (e->type == SDL_QUIT) {
     return true;
   }
   /* Android events */
-#ifdef __ANDROID__
-  else if (e->type == SDL_FINGERDOWN) {
-    env->mario_x = e->tfinger.x * w; /* tfinger.x, normalized in [0..1] */
-    env->mario_y = e->tfinger.y * h; /* tfinger.y, normalized in [0..1] */
-  }
-  /* other events */
-#else
   
-  
-else if (e->type == SDL_MOUSEBUTTONDOWN)
+  else 
   {
+    switch(e->type)
+    {
+      default:
+        break;
 
-  SDL_Point mouse;
-  SDL_GetMouseState(&mouse.x, &mouse.y);
+      case SDL_MOUSEBUTTONDOWN :
+
+      SDL_Point mouse;
+      SDL_GetMouseState(&mouse.x, &mouse.y);
+
+      SDL_QueryTexture(env->monkey, NULL, NULL, &monkey.w, &monkey.h);
+      monkey.x = 200;
+      monkey.y = 200;
+      SDL_RenderCopy(ren, env->monkey, NULL, &monkey);
+      break;
+    }
   
-  SDL_Rect monkey;
-  monkey.x = 200;
-  monkey.y = 200;
-  SDL_QueryTexture(env->monkey, NULL, NULL, &monkey.w, &monkey.h);
-  SDL_RenderCopy(ren, env->monkey, NULL, &monkey);
+    
 
   
-}
-
-#endif
+ }
 
   return false; /* don't quit */
 }
