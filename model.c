@@ -21,7 +21,7 @@
 /* **************************************************************** */
 
 struct Env_t {
-  SDL_Texture* board;
+  SDL_Texture** board;
   SDL_Texture* monkey;
   SDL_Texture* sand;
   SDL_Texture* water;
@@ -39,10 +39,12 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
     board = game_default();
   else
     board = game_load(argv[1]);
-  
-
-  env->board = IMG_LoadTexture(ren, WATER);
-  if (!env->board) ERROR("IMG_LoadTexture: %s\n", WATER);
+  int nb_squares = game_nb_cols(board)*game_nb_rows(board);
+  env->board = malloc(nb_squares * sizeof(SDL_Texture*));
+  for(int i = 0; i<nb_squares;i++){
+    env->board[i] = IMG_LoadTexture(ren,WATER);
+    if (!env->board) ERROR("IMG_LoadTexture: %s\n", WATER);
+  }
 
   /* init background texture from PNG image */
   env->monkey = IMG_LoadTexture(ren, MONKEY);
