@@ -100,12 +100,14 @@ Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
     SDL_Color color2 = { 255, 0, 0, 255 }; /* blue color in RGBA */
     SDL_Surface* surf2 = TTF_RenderText_Blended(font, "Perdu !", color2); // blended rendering for ultra nice text
     env->errorText = SDL_CreateTextureFromSurface(ren, surf2);
-    env->errorText = IMG_LoadTexture(ren, COCO);
-    if (!env->errorText)
-        ERROR("IMG_LoadTexture: %s\n", COCO);
     SDL_FreeSurface(surf2);
-    TTF_CloseFont(font);
 
+
+    SDL_Surface* surf = TTF_RenderText_Blended(font, "", color2);
+    env->displayText = SDL_CreateTextureFromSurface(ren, surf);
+    SDL_FreeSurface(surf);
+
+    TTF_CloseFont(font);
     /* init background texture from PNG image */
     env->monkey = IMG_LoadTexture(ren, MONKEY);
     if (!env->monkey)
@@ -185,6 +187,12 @@ void render(SDL_Window* win, SDL_Renderer* ren, Env* env)
         SDL_RenderCopy(ren, env->nbTentsCol[i], NULL, &rect);
         rect.x += OFFSETTEXTURE;
     }
+    rect.x = 150;
+    rect.y = 150;
+    rect.w = 300;
+    rect.h = 300;
+    SDL_QueryTexture(env->displayText, NULL, NULL, &rect.w, &rect.h);
+    SDL_RenderCopy(ren, env->displayText, NULL, &rect);
 }
 
 /* **************************************************************** */
@@ -216,18 +224,13 @@ void refreshBoard(Env* env)
     }
 }
 
-void displayMessage(SDL_Renderer* ren, Env* env, char* msg)
-{
-    SDL_Color color = { 255, 0, 0, 255 }; /* blue color in RGBA */
+void displayMessage(Env* env, SDL_Renderer* ren,char* message){
     TTF_Font* font = TTF_OpenFont(FONT, FONTSIZE);
-    SDL_Surface* surf = TTF_RenderText_Blended(font, msg, color);
-    env->displayText = SDL_CreateTextureFromSurface(ren, surf);
-    SDL_FreeSurface(surf);
-    SDL_Rect rect;
-    rect.x = 150;
-    rect.y = 150;
-    SDL_QueryTexture(env->displayText, NULL, NULL, &rect.x, &rect.y);
-    SDL_RenderCopy(ren, env->displayText, NULL, &rect);
+    SDL_Color color = { 255, 0, 0, 255 }; /* blue color in RGBA */
+    SDL_Surface* surf2 = TTF_RenderText_Blended(font, message, color); // blended rendering for ultra nice text
+    env->displayText = SDL_CreateTextureFromSurface(ren, surf2);
+    SDL_FreeSurface(surf2);
+    TTF_CloseFont(font);
 }
 
 bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
@@ -314,7 +317,7 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
         } else if (key == SDLK_t) {
             game_solve(env->board);
         } else if (key == SDLK_h) {
-            displayMessage(ren, env, "Losing Move !");
+            displayMessage(env,ren,"Help!!!");
         }
     }
     refreshBoard(env);
