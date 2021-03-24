@@ -94,18 +94,8 @@ Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
             }
         }
     }
-<<<<<<< HEAD
     //Initialise displayText field
     SDL_Surface* surf = TTF_RenderText_Blended(font, "", color);
-=======
-
-    SDL_Color color2 = { 255, 0, 0, 255 }; /* blue color in RGBA */
-    SDL_Surface* surf2 = TTF_RenderText_Blended(font, "Perdu !", color2); // blended rendering for ultra nice text
-    env->errorText = SDL_CreateTextureFromSurface(ren, surf2);
-    SDL_FreeSurface(surf2);
-
-    SDL_Surface* surf = TTF_RenderText_Blended(font, "", color2);
->>>>>>> 8334df7b4762b1f05fcdce6c5f3b7da2d963af45
     env->displayText = SDL_CreateTextureFromSurface(ren, surf);
     SDL_FreeSurface(surf);
 
