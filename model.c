@@ -60,7 +60,7 @@ Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
     env->nbTentsCol = malloc(game_nb_cols(board) * sizeof(SDL_Texture*));
     env->SDLboard = malloc(game_nb_cols(board) * sizeof(SDLSquare*));
 
-    SDL_Color color = { 0, 0, 255, 255 }; /* blue color in RGBA */
+    SDL_Color color = { 255, 255, 255, 255 }; /* blue color in RGBA */
     TTF_Font* font = TTF_OpenFont(FONT, FONTSIZE);
     if (!font)
         ERROR("TTF_OpenFont: %s\n", FONT);
