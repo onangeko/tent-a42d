@@ -18,6 +18,7 @@
 #define BACKGROUND "background.png"
 #define TABLE "table.png"
 #define OFFSETTEXTURE 45
+#define TEXTURESIZE 40
 
 /* **************************************************************** */
 
@@ -114,6 +115,12 @@ void render(SDL_Window *win, SDL_Renderer *ren, Env *env) {
   int xTable = rect.x;
   for(int i = 0; i<game_nb_cols(env->board);i++){
     for(int j = 0;j<game_nb_rows(env->board);j++){
+      SDL_Rect square;
+      square.h = TEXTURESIZE;
+      square.w = TEXTURESIZE;
+      square.x = rect.x;
+      square.y = rect.y;
+      env->SDLboard[i][j].hitBox = square;
       SDL_QueryTexture(env->SDLboard[i][j].texture, NULL, NULL, &rect.w, &rect.h);
       SDL_RenderCopy(ren, env->SDLboard[i][j].texture, NULL, &rect);
       rect.x += OFFSETTEXTURE;
