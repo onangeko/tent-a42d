@@ -60,7 +60,7 @@ Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
     env->nbTentsCol = malloc(game_nb_cols(board) * sizeof(SDL_Texture*));
     env->SDLboard = malloc(game_nb_cols(board) * sizeof(SDLSquare*));
 
-    SDL_Color color = { 0, 206, 201, 200 }; /* blue color in RGBA */
+    SDL_Color color = { 0, 0, 255, 255 }; /* blue color in RGBA */
     TTF_Font* font = TTF_OpenFont(FONT, FONTSIZE);
     if (!font)
         ERROR("TTF_OpenFont: %s\n", FONT);
@@ -77,7 +77,7 @@ Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
 
         for (int j = 0; j < game_nb_rows(board); j++) {
             char buffer[2];
-            sprintf(buffer, "%d", game_get_expected_nb_tents_row(env->board, i));
+            sprintf(buffer, "%d", game_get_expected_nb_tents_row(env->board, j));
 
             SDL_Surface* surf = TTF_RenderText_Blended(font, buffer, color); // blended rendering for ultra nice text
             env->nbTentsRow[i] = SDL_CreateTextureFromSurface(ren, surf);
@@ -161,9 +161,10 @@ void render(SDL_Window* win, SDL_Renderer* ren, Env* env)
             SDL_QueryTexture(env->SDLboard[i][j].texture, NULL, NULL, &rect.w, &rect.h);
             SDL_RenderCopy(ren, env->SDLboard[i][j].texture, NULL, &rect);
             rect.x += OFFSETTEXTURE;
-            if (j == game_nb_rows(env->board)-1) {
-                SDL_QueryTexture(env->nbTentsRow[i], NULL, NULL, &rect.w, &rect.h);
-                SDL_RenderCopy(ren, env->nbTentsRow[i], NULL, &rect);
+            if (j == game_nb_rows(env->board)) {
+                rect.x += OFFSETTEXTURE;
+                SDL_QueryTexture(env->nbTentsRow[j], NULL, NULL, &rect.w, &rect.h);
+                SDL_RenderCopy(ren, env->nbTentsRow[j], NULL, &rect);
             }
         }
         rect.y += OFFSETTEXTURE;
@@ -278,7 +279,7 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
         } else if (key == SDLK_y) {
             game_redo(env->board);
         } else if (key == SDLK_s) {
-            game_save(env->board, ("save %s.tnt", __DATE__));
+            game_save(env->board, "save.tnt");
         } else if (key == SDLK_q || key == SDLK_ESCAPE) {
             return true;
         }
