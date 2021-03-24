@@ -21,7 +21,8 @@
 /* **************************************************************** */
 
 struct Env_t {
-  SDL_Texture** board;
+  SDL_Texture*** SDLboard;
+  game board;
   SDL_Texture* monkey;
   SDL_Texture* sand;
   SDL_Texture* water;
@@ -39,11 +40,22 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
     board = game_default();
   else
     board = game_load(argv[1]);
-  int nb_squares = game_nb_cols(board)*game_nb_rows(board);
-  env->board = malloc(nb_squares * sizeof(SDL_Texture*));
-  for(int i = 0; i<nb_squares;i++){
-    env->board[i] = IMG_LoadTexture(ren,WATER);
-    if (!env->board) ERROR("IMG_LoadTexture: %s\n", WATER);
+  env->board = board;
+  env->SDLboard = malloc(game_nb_cols(board) * sizeof(SDL_Texture**));
+  for(int i =0;i<game_nb_cols(board);i++){
+    env->SDLboard[i] = malloc(game_nb_rows(board) * sizeof(SDL_Texture*));
+  }
+  for(int i = 0; i<game_nb_cols(board);i++){
+    for(int j = 0;j<game_nb_rows(board);j++){
+      if(game_get_square(board,i,j) == TREE){
+        env->SDLboard[i][j] = IMG_LoadTexture(ren,COCO);
+        if (!env->SDLboard[i][j]) ERROR("IMG_LoadTexture: %s\n", COCO);
+      }
+      else{
+        env->SDLboard[i][j] = IMG_LoadTexture(ren,WATER);
+        if (!env->SDLboard[i][j]) ERROR("IMG_LoadTexture: %s\n", WATER);
+      }
+    }
   }
 
   /* init background texture from PNG image */
@@ -91,29 +103,17 @@ void render(SDL_Window *win, SDL_Renderer *ren, Env *env) {
   rect.y = h / 2 - rect.h / 2;
   SDL_RenderCopy(ren, env->table, NULL, &rect);
 
-  /* render monkey texture */
-  SDL_QueryTexture(env->monkey, NULL, NULL, &rect.w, &rect.h);
-  rect.x = 100;
-  rect.y = 100;
-  SDL_RenderCopy(ren, env->monkey, NULL, &rect);
-
-  /* render sand texture */
-  SDL_QueryTexture(env->sand, NULL, NULL, &rect.w, &rect.h);
-  rect.x = 10;
-  rect.y = 10;
-  SDL_RenderCopy(ren, env->sand, NULL, &rect);
-
-  /* render coconut texture */
-  SDL_QueryTexture(env->coco, NULL, NULL, &rect.w, &rect.h);
-  rect.x = 120;
-  rect.y = 120;
-  SDL_RenderCopy(ren, env->coco, NULL, &rect);
-
-  /* render water texture */
-  SDL_QueryTexture(env->water, NULL, NULL, &rect.w, &rect.h);
-  rect.x = 300;
-  rect.y = 300;
-  SDL_RenderCopy(ren, env->water, NULL, &rect);
+  /* render the board */
+  int xTable = rect.x;
+  for(int i = 0; i<game_nb_cols(env->board);i++){
+    for(int j = 0;j<game_nb_rows(env->board);j++){
+      SDL_QueryTexture(env->SDLboard[i][j], NULL, NULL, &rect.w, &rect.h);
+      SDL_RenderCopy(ren, env->SDLboard[i][j], NULL, &rect);
+      rect.x += 45;
+    }
+    rect.y += 45;
+    rect.x = xTable;
+  }
 }
 
 /* **************************************************************** */
