@@ -305,12 +305,15 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
         } else if (key == SDLK_y) {
             game_redo(env->board);
         } else if (key == SDLK_s) {
-            char text[150];
+            char text[64];
             time_t now = time(NULL);
             struct tm* t = localtime(&now);
             sprintf(text, "%02d-%02d-%04d-%02d-%02d.tnt", t->tm_mday, t->tm_mon + 1,
                 t->tm_year + 1900, t->tm_hour, t->tm_min);
             game_save(env->board, text);
+            char msg[100];
+            sprintf(msg,"Saved file as %s",text);
+            displayMessage(env, ren, msg);
         } else if (key == SDLK_q || key == SDLK_ESCAPE) {
             return true;
         } else if (key == SDLK_r) {
