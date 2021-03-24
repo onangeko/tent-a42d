@@ -102,7 +102,6 @@ Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
     env->errorText = SDL_CreateTextureFromSurface(ren, surf2);
     SDL_FreeSurface(surf2);
 
-
     SDL_Surface* surf = TTF_RenderText_Blended(font, "", color2);
     env->displayText = SDL_CreateTextureFromSurface(ren, surf);
     SDL_FreeSurface(surf);
@@ -224,8 +223,9 @@ void refreshBoard(Env* env)
     }
 }
 
-void displayMessage(Env* env, SDL_Renderer* ren,char* message){
-    TTF_Font* font = TTF_OpenFont(FONT, FONTSIZE);
+void displayMessage(Env* env, SDL_Renderer* ren, char* message)
+{
+    TTF_Font* font = TTF_OpenFont(FONT, FONTSIZE / 2);
     SDL_Color color = { 255, 0, 0, 255 }; /* blue color in RGBA */
     SDL_Surface* surf2 = TTF_RenderText_Blended(font, message, color); // blended rendering for ultra nice text
     env->displayText = SDL_CreateTextureFromSurface(ren, surf2);
@@ -258,7 +258,11 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
                         if (game_get_square(env->board, i, j) != TENT) {
                             switch (game_check_move(env->board, i, j, TENT)) {
                             case LOSING:
+                                displayMessage(env, ren, "Warning Losing Move!");
+                                game_play_move(env->board, i, j, TENT);
+                                break;
                             case REGULAR:
+                                displayMessage(env, ren, "");
                                 game_play_move(env->board, i, j, TENT);
                                 break;
                             default:
@@ -284,8 +288,11 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
                     if (game_get_square(env->board, i, j) != GRASS) {
                         switch (game_check_move(env->board, i, j, GRASS)) {
                         case LOSING:
-                            //TODO AFFICHER TEXT LOSING
+                            displayMessage(env, ren, "Warning Losing Move!");
+                            game_play_move(env->board, i, j, GRASS);
+                            break;
                         case REGULAR:
+                            displayMessage(env, ren, "");
                             game_play_move(env->board, i, j, GRASS);
                             break;
                         default:
@@ -316,8 +323,6 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
             game_restart(env->board);
         } else if (key == SDLK_t) {
             game_solve(env->board);
-        } else if (key == SDLK_h) {
-            displayMessage(env,ren,"Help!!!");
         }
     }
     refreshBoard(env);

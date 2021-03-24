@@ -121,6 +121,13 @@ Olivier:
 * adapter l'affichage au dimension courante de la fenetre
 * implémenter les fonctions de game_text (undo, redo, tent, grass, empty, ...)
 * implémenter un affichage pour les illegal et losing move
+* Raccourcis claviers pour le jeu en graphique:
+* z : Undo
+* y : Redo
+* r : Restart
+* s : Save
+* t : Solve
+* q/ESC : Quit
 
 Bjorn:
 * clean()
