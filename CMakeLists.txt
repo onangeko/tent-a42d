@@ -4,6 +4,11 @@ cmake_minimum_required(VERSION 3.7)
 #Enable tests
 enable_testing()
 
+foreach(file "background.png" "coconutTree.png" "sand.png" "monkey.png" "table.png" "water.png" "Tiki-Tako.ttf")
+  file(COPY ${file} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+endforeach(data_file)
+
+
 add_executable(game_test_edatrier game_test_edatrier.c)
 add_test(test_edatrier_game_new ./game_test_edatrier game_new)
 add_test(test_edatrier_game_new_ext ./game_test_edatrier game_new_ext)
@@ -44,7 +49,6 @@ add_test(test_onangeko_game_get_current_nb_tents_col ./game_test_onangeko game_c
 add_test(test_onangeko_game_print ./game_test_onangeko game_print)
 add_test(test_onangeko_game_is_wrapping ./game_test_onangeko game_is_wrapping)
 add_test(test_onangeko_game_is_diagadj ./game_test_onangeko game_is_diagadj)
-
 
 
 
