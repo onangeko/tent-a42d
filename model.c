@@ -40,7 +40,7 @@ struct Env_t {
     SDL_Texture* coco;
     SDL_Texture* background;
     SDL_Texture* table;
-    SDL_Texture * errorText;
+    SDL_Texture* errorText;
     SDL_Texture** nbTentsRow;
     SDL_Texture** nbTentsCol;
 };
@@ -96,15 +96,14 @@ Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
         }
     }
 
-    SDL_Color color2 = {255,0,0, 255}; /* blue color in RGBA */
-    SDL_Surface* surf2 = TTF_RenderText_Blended(font,"Perdu !",color2);  // blended rendering for ultra nice text
-    env->errorText= SDL_CreateTextureFromSurface(ren, surf2);
+    SDL_Color color2 = { 255, 0, 0, 255 }; /* blue color in RGBA */
+    SDL_Surface* surf2 = TTF_RenderText_Blended(font, "Perdu !", color2); // blended rendering for ultra nice text
+    env->errorText = SDL_CreateTextureFromSurface(ren, surf2);
     env->errorText = IMG_LoadTexture(ren, COCO);
-    if (!env->errorText) ERROR("IMG_LoadTexture: %s\n", COCO);
+    if (!env->errorText)
+        ERROR("IMG_LoadTexture: %s\n", COCO);
     SDL_FreeSurface(surf2);
     TTF_CloseFont(font);
-
-    
 
     /* init background texture from PNG image */
     env->monkey = IMG_LoadTexture(ren, MONKEY);
@@ -171,7 +170,7 @@ void render(SDL_Window* win, SDL_Renderer* ren, Env* env)
             SDL_QueryTexture(env->SDLboard[i][j].texture, NULL, NULL, &rect.w, &rect.h);
             SDL_RenderCopy(ren, env->SDLboard[i][j].texture, NULL, &rect);
             rect.x += OFFSETTEXTURE;
-            if (j == game_nb_rows(env->board)-1) {
+            if (j == game_nb_rows(env->board) - 1) {
                 rect.x += OFFSETTEXTURE;
                 SDL_QueryTexture(env->nbTentsRow[i], NULL, NULL, &rect.w, &rect.h);
                 SDL_RenderCopy(ren, env->nbTentsRow[i], NULL, &rect);
@@ -220,8 +219,6 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
 {
     int w, h;
     SDL_GetWindowSize(win, &w, &h);
-
-    SDL_Rect rect_monkey;
 
     /* generic events */
     if (e->type == SDL_QUIT) {
@@ -294,7 +291,6 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
             struct tm* t = localtime(&now);
             sprintf(text, "%02d-%02d-%04d-%02d-%02d.tnt", t->tm_mday, t->tm_mon + 1,
                 t->tm_year + 1900, t->tm_hour, t->tm_min);
-            printf(text);
             game_save(env->board, text);
         } else if (key == SDLK_q || key == SDLK_ESCAPE) {
             return true;
