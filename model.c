@@ -21,8 +21,13 @@
 
 /* **************************************************************** */
 
+typedef struct SDLSquare{
+  SDL_Texture* texture;
+  SDL_Rect hitBox;
+}SDLSquare;
+
 struct Env_t {
-  SDL_Texture*** SDLboard;
+  SDLSquare** SDLboard;
   game board;
   SDL_Texture* monkey;
   SDL_Texture* sand;
@@ -36,27 +41,28 @@ struct Env_t {
 
 Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   Env *env = malloc(sizeof(struct Env_t));
+
   game board = NULL;
   if(argc < 2)
     board = game_default();
   else
     board = game_load(argv[1]);
   env->board = board;
-  env->SDLboard = malloc(game_nb_cols(board) * sizeof(SDL_Texture**));
-  for(int i =0;i<game_nb_cols(board);i++){
-    env->SDLboard[i] = malloc(game_nb_rows(board) * sizeof(SDL_Texture*));
-  }
+
+  env->SDLboard = malloc(game_nb_cols(board) * sizeof(SDLSquare*));
   for(int i = 0; i<game_nb_cols(board);i++){
+    env->SDLboard[i] = malloc(game_nb_rows(board) * sizeof(SDLSquare));
     for(int j = 0;j<game_nb_rows(board);j++){
       if(game_get_square(board,i,j) == TREE){
-        env->SDLboard[i][j] = IMG_LoadTexture(ren,COCO);
-        if (!env->SDLboard[i][j]) ERROR("IMG_LoadTexture: %s\n", COCO);
+        env->SDLboard[i][j].texture = IMG_LoadTexture(ren,COCO);
+        if (!env->SDLboard[i][j].texture) ERROR("IMG_LoadTexture: %s\n", COCO);
       }
       else{
-        env->SDLboard[i][j] = IMG_LoadTexture(ren,WATER);
-        if (!env->SDLboard[i][j]) ERROR("IMG_LoadTexture: %s\n", WATER);
+        env->SDLboard[i][j].texture = IMG_LoadTexture(ren,WATER);
+        if (!env->SDLboard[i][j].texture) ERROR("IMG_LoadTexture: %s\n", WATER);
       }
     }
+
   }
 
   /* init background texture from PNG image */
@@ -108,8 +114,8 @@ void render(SDL_Window *win, SDL_Renderer *ren, Env *env) {
   int xTable = rect.x;
   for(int i = 0; i<game_nb_cols(env->board);i++){
     for(int j = 0;j<game_nb_rows(env->board);j++){
-      SDL_QueryTexture(env->SDLboard[i][j], NULL, NULL, &rect.w, &rect.h);
-      SDL_RenderCopy(ren, env->SDLboard[i][j], NULL, &rect);
+      SDL_QueryTexture(env->SDLboard[i][j].texture, NULL, NULL, &rect.w, &rect.h);
+      SDL_RenderCopy(ren, env->SDLboard[i][j].texture, NULL, &rect);
       rect.x += OFFSETTEXTURE;
     }
     rect.y += OFFSETTEXTURE;
@@ -177,7 +183,7 @@ void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
 
   for(int i = 0; i<game_nb_cols(env->board);i++){
     for(int j = 0; j<game_nb_rows(env->board);j++){
-      SDL_DestroyTexture(env->SDLboard[i][j]);
+      SDL_DestroyTexture(env->SDLboard[i][j].texture);
     }
     free(env->SDLboard[i]);
   }
