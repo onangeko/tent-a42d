@@ -40,6 +40,7 @@ struct Env_t {
     SDL_Texture* coco;
     SDL_Texture* background;
     SDL_Texture* table;
+    SDL_Texture * errorText;
     SDL_Texture** nbTentsRow;
     SDL_Texture** nbTentsCol;
 };
@@ -76,13 +77,12 @@ Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
         env->nbTentsCol[i] = SDL_CreateTextureFromSurface(ren, surf);
         SDL_FreeSurface(surf);
 
-        for (int j = 0; j < game_nb_rows(board); j++) {
-            char buffer[2];
-            sprintf(buffer, "%d", game_get_expected_nb_tents_row(env->board, j));
+        sprintf(buffer, "%d", game_get_expected_nb_tents_row(env->board, i));
 
-            SDL_Surface* surf = TTF_RenderText_Blended(font, buffer, color); // blended rendering for ultra nice text
-            env->nbTentsRow[i] = SDL_CreateTextureFromSurface(ren, surf);
-            SDL_FreeSurface(surf);
+        surf = TTF_RenderText_Blended(font, buffer, color); // blended rendering for ultra nice text
+        env->nbTentsRow[i] = SDL_CreateTextureFromSurface(ren, surf);
+        SDL_FreeSurface(surf);
+        for (int j = 0; j < game_nb_rows(board); j++) {
 
             if (game_get_square(board, i, j) == TREE) {
                 env->SDLboard[i][j].texture = IMG_LoadTexture(ren, COCO);
@@ -95,7 +95,16 @@ Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
             }
         }
     }
+
+    SDL_Color color2 = {255,0,0, 255}; /* blue color in RGBA */
+    SDL_Surface* surf2 = TTF_RenderText_Blended(font,"Perdu !",color2);  // blended rendering for ultra nice text
+    env->errorText= SDL_CreateTextureFromSurface(ren, surf2);
+    env->errorText = IMG_LoadTexture(ren, COCO);
+    if (!env->errorText) ERROR("IMG_LoadTexture: %s\n", COCO);
+    SDL_FreeSurface(surf2);
     TTF_CloseFont(font);
+
+    
 
     /* init background texture from PNG image */
     env->monkey = IMG_LoadTexture(ren, MONKEY);
@@ -162,10 +171,10 @@ void render(SDL_Window* win, SDL_Renderer* ren, Env* env)
             SDL_QueryTexture(env->SDLboard[i][j].texture, NULL, NULL, &rect.w, &rect.h);
             SDL_RenderCopy(ren, env->SDLboard[i][j].texture, NULL, &rect);
             rect.x += OFFSETTEXTURE;
-            if (j == game_nb_rows(env->board)) {
+            if (j == game_nb_rows(env->board)-1) {
                 rect.x += OFFSETTEXTURE;
-                SDL_QueryTexture(env->nbTentsRow[j], NULL, NULL, &rect.w, &rect.h);
-                SDL_RenderCopy(ren, env->nbTentsRow[j], NULL, &rect);
+                SDL_QueryTexture(env->nbTentsRow[i], NULL, NULL, &rect.w, &rect.h);
+                SDL_RenderCopy(ren, env->nbTentsRow[i], NULL, &rect);
             }
         }
         rect.y += OFFSETTEXTURE;
