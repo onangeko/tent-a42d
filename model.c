@@ -20,6 +20,9 @@
 #define OFFSETTEXTURE 45
 #define TEXTURESIZE 40
 
+#define FONT "Tiki-Tako.ttf"
+#define FONTSIZE 36
+
 /* **************************************************************** */
 
 typedef struct SDLSquare{
@@ -36,6 +39,8 @@ struct Env_t {
   SDL_Texture* coco;
   SDL_Texture* background;
   SDL_Texture* table;
+  SDL_Texture** nbTentsRow;
+  SDL_Texture** nbTentsCol;
 };
 
 /* **************************************************************** */
@@ -50,10 +55,33 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
     board = game_load(argv[1]);
   env->board = board;
 
+  env->nbTentsRow = malloc(game_nb_rows(board) * sizeof(SDL_Texture*));
+  env->nbTentsCol = malloc(game_nb_cols(board) * sizeof(SDL_Texture*));
   env->SDLboard = malloc(game_nb_cols(board) * sizeof(SDLSquare*));
+
+  SDL_Color color = {0, 0, 255, 255}; /* blue color in RGBA */
+  TTF_Font* font = TTF_OpenFont(FONT, FONTSIZE);
+
   for(int i = 0; i<game_nb_cols(board);i++){
     env->SDLboard[i] = malloc(game_nb_rows(board) * sizeof(SDLSquare));
+
+    if (!font) ERROR("TTF_OpenFont: %s\n", FONT);
+
+    char buffer[2];
+    sprintf(buffer,"%d",game_get_expected_nb_tents_col(env->board,i));
+
+    SDL_Surface* surf = TTF_RenderText_Blended(font, buffer, color);  // blended rendering for ultra nice text
+    env->nbTentsCol[i] = SDL_CreateTextureFromSurface(ren, surf);
+    SDL_FreeSurface(surf);
+
     for(int j = 0;j<game_nb_rows(board);j++){
+      char buffer[2];
+      sprintf(buffer,"%d",game_get_expected_nb_tents_row(env->board,j));
+
+      SDL_Surface* surf = TTF_RenderText_Blended(font, buffer, color);  // blended rendering for ultra nice text
+      env->nbTentsRow[i] = SDL_CreateTextureFromSurface(ren, surf);
+      SDL_FreeSurface(surf);
+
       if(game_get_square(board,i,j) == TREE){
         env->SDLboard[i][j].texture = IMG_LoadTexture(ren,COCO);
         if (!env->SDLboard[i][j].texture) ERROR("IMG_LoadTexture: %s\n", COCO);
@@ -62,8 +90,9 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
         env->SDLboard[i][j].texture = IMG_LoadTexture(ren,WATER);
         if (!env->SDLboard[i][j].texture) ERROR("IMG_LoadTexture: %s\n", WATER);
       }
-    }
 
+    }
+    TTF_CloseFont(font);
   }
 
   /* init background texture from PNG image */
@@ -124,9 +153,19 @@ void render(SDL_Window *win, SDL_Renderer *ren, Env *env) {
       SDL_QueryTexture(env->SDLboard[i][j].texture, NULL, NULL, &rect.w, &rect.h);
       SDL_RenderCopy(ren, env->SDLboard[i][j].texture, NULL, &rect);
       rect.x += OFFSETTEXTURE;
+      if(j==game_nb_rows(env->board)){
+        rect.x += OFFSETTEXTURE;
+        //SDL_QueryTexture(env->nbTentsRow[j], NULL, NULL, &rect.w, &rect.h);
+        //SDL_RenderCopy(ren, env->nbTentsRow[j], NULL, &rect);
+      }
     }
     rect.y += OFFSETTEXTURE;
     rect.x = xTable;
+  }
+  for(int i=0;i<game_nb_cols(env->board);i++){
+    //SDL_QueryTexture(env->nbTentsCol[i], NULL, NULL, &rect.w, &rect.h);
+    //SDL_RenderCopy(ren, env->nbTentsCol[i], NULL, &rect);
+    rect.x += OFFSETTEXTURE;
   }
 }
 
