@@ -179,6 +179,33 @@ void render(SDL_Window* win, SDL_Renderer* ren, Env* env)
 
 /* **************************************************************** */
 
+void refreshBoard(Env* env)
+{
+    for (int i = 0; i < game_nb_rows(env->board); i++) {
+        for (int j = 0; j < game_nb_cols(env->board); j++) {
+            switch (game_get_square(env->board, i, j)) {
+            case TENT:
+                if (env->SDLboard[i][j].texture != env->monkey) {
+                    env->SDLboard[i][j].texture = env->monkey;
+                }
+                break;
+            case GRASS:
+                if (env->SDLboard[i][j].texture != env->sand) {
+                    env->SDLboard[i][j].texture = env->sand;
+                }
+                break;
+            case EMPTY:
+                if (env->SDLboard[i][j].texture != env->water) {
+                    env->SDLboard[i][j].texture = env->water;
+                }
+                break;
+            default:
+                break;
+            }
+        }
+    }
+}
+
 bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
 {
     int w, h;
@@ -208,14 +235,12 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
                                 //TODO AFFICHER TEXT LOSING
                             case REGULAR:
                                 game_play_move(env->board, i, j, TENT);
-                                env->SDLboard[i][j].texture = env->monkey;
                                 break;
                             default:
                                 break;
                             }
                         } else {
                             game_play_move(env->board, i, j, EMPTY);
-                            env->SDLboard[i][j].texture = env->water;
                         }
                     }
                 }
@@ -237,19 +262,29 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
                             //TODO AFFICHER TEXT LOSING
                         case REGULAR:
                             game_play_move(env->board, i, j, GRASS);
-                            env->SDLboard[i][j].texture = env->sand;
                             break;
                         default:
                             break;
                         }
                     } else {
                         game_play_move(env->board, i, j, EMPTY);
-                        env->SDLboard[i][j].texture = env->water;
                     }
                 }
             }
         }
+    } else if (e->type == SDL_KEYDOWN) {
+        SDL_Keycode key = e->key.keysym.sym;
+        if (key == SDLK_z) {
+            game_undo(env->board);
+        } else if (key == SDLK_y) {
+            game_redo(env->board);
+        } else if (key == SDLK_s) {
+            game_save(env->board, ("save %s.tnt", __DATE__));
+        } else if (key == SDLK_q || key == SDLK_ESCAPE) {
+            return true;
+        }
     }
+    refreshBoard(env);
     return game_is_over(env->board); /* don't quit */
 }
 
