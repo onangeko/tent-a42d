@@ -74,12 +74,12 @@ Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
         char buffer[2];
         //For cols
         sprintf(buffer, "%d", game_get_expected_nb_tents_col(env->board, i));
-        SDL_Surface* surf = TTF_RenderText_Blended(font, buffer, color); 
+        SDL_Surface* surf = TTF_RenderText_Blended(font, buffer, color);
         env->nbTentsCol[i] = SDL_CreateTextureFromSurface(ren, surf);
         SDL_FreeSurface(surf);
         //For rows
         sprintf(buffer, "%d", game_get_expected_nb_tents_row(env->board, i));
-        surf = TTF_RenderText_Blended(font, buffer, color); 
+        surf = TTF_RenderText_Blended(font, buffer, color);
         env->nbTentsRow[i] = SDL_CreateTextureFromSurface(ren, surf);
         SDL_FreeSurface(surf);
         for (int j = 0; j < game_nb_rows(board); j++) {
@@ -311,7 +311,7 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
                 t->tm_year + 1900, t->tm_hour, t->tm_min);
             game_save(env->board, text);
             char msg[100];
-            sprintf(msg,"Saved file as %s",text);
+            sprintf(msg, "Saved file as %s", text);
             displayMessage(env, ren, msg);
         } else if (key == SDLK_q || key == SDLK_ESCAPE) {
             return true;
@@ -322,8 +322,8 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
         }
     }
     refreshBoard(env);
-    if(game_is_over(env->board)){
-        displayMessage(env,ren,"Gagne! Appuyez sur 'Q' ou 'Esc' pour quitter");
+    if (game_is_over(env->board)) {
+        displayMessage(env, ren, "Gagne! Appuyez sur 'Q' ou 'Esc' pour quitter");
         return false;
     }
     return false; /* don't quit */
