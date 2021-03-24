@@ -174,14 +174,22 @@ void clean(SDL_Window *win, SDL_Renderer *ren, Env *env) {
     exit(0);
   }
 
-    SDL_DestroyTexture(env->monkey);
-    SDL_DestroyTexture(env->sand);
-    SDL_DestroyTexture(env->water);
-    SDL_DestroyTexture(env->coco);
-    SDL_DestroyTexture(env->background);
-    SDL_DestroyTexture(env->table);
+  for(int i = 0; i<game_nb_cols(env->board);i++){
+    for(int j = 0; j<game_nb_rows(env->board);j++){
+      SDL_DestroyTexture(env->SDLboard[i][j]);
+    }
+    free(env->SDLboard[i]);
+  }
+  free(env->SDLboard);
 
-    free(env);
+  SDL_DestroyTexture(env->monkey);
+  SDL_DestroyTexture(env->sand);
+  SDL_DestroyTexture(env->water);
+  SDL_DestroyTexture(env->coco);
+  SDL_DestroyTexture(env->background);
+  SDL_DestroyTexture(env->table);
+
+  free(env);
 }
 
 /* **************************************************************** */
