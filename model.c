@@ -78,7 +78,7 @@ Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
 
         for (int j = 0; j < game_nb_rows(board); j++) {
             char buffer[2];
-            sprintf(buffer, "%d", game_get_expected_nb_tents_row(env->board, i));
+            sprintf(buffer, "%d", game_get_expected_nb_tents_row(env->board, j));
 
             SDL_Surface* surf = TTF_RenderText_Blended(font, buffer, color); // blended rendering for ultra nice text
             env->nbTentsRow[i] = SDL_CreateTextureFromSurface(ren, surf);
@@ -171,9 +171,10 @@ void render(SDL_Window* win, SDL_Renderer* ren, Env* env)
             SDL_QueryTexture(env->SDLboard[i][j].texture, NULL, NULL, &rect.w, &rect.h);
             SDL_RenderCopy(ren, env->SDLboard[i][j].texture, NULL, &rect);
             rect.x += OFFSETTEXTURE;
-            if (j == game_nb_rows(env->board)-1) {
-                SDL_QueryTexture(env->nbTentsRow[i], NULL, NULL, &rect.w, &rect.h);
-                SDL_RenderCopy(ren, env->nbTentsRow[i], NULL, &rect);
+            if (j == game_nb_rows(env->board)) {
+                rect.x += OFFSETTEXTURE;
+                SDL_QueryTexture(env->nbTentsRow[j], NULL, NULL, &rect.w, &rect.h);
+                SDL_RenderCopy(ren, env->nbTentsRow[j], NULL, &rect);
             }
         }
         rect.y += OFFSETTEXTURE;
@@ -187,6 +188,33 @@ void render(SDL_Window* win, SDL_Renderer* ren, Env* env)
 }
 
 /* **************************************************************** */
+
+void refreshBoard(Env* env)
+{
+    for (int i = 0; i < game_nb_rows(env->board); i++) {
+        for (int j = 0; j < game_nb_cols(env->board); j++) {
+            switch (game_get_square(env->board, i, j)) {
+            case TENT:
+                if (env->SDLboard[i][j].texture != env->monkey) {
+                    env->SDLboard[i][j].texture = env->monkey;
+                }
+                break;
+            case GRASS:
+                if (env->SDLboard[i][j].texture != env->sand) {
+                    env->SDLboard[i][j].texture = env->sand;
+                }
+                break;
+            case EMPTY:
+                if (env->SDLboard[i][j].texture != env->water) {
+                    env->SDLboard[i][j].texture = env->water;
+                }
+                break;
+            default:
+                break;
+            }
+        }
+    }
+}
 
 bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
 {
@@ -217,14 +245,12 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
                                 //TODO AFFICHER TEXT LOSING
                             case REGULAR:
                                 game_play_move(env->board, i, j, TENT);
-                                env->SDLboard[i][j].texture = env->monkey;
                                 break;
                             default:
                                 break;
                             }
                         } else {
                             game_play_move(env->board, i, j, EMPTY);
-                            env->SDLboard[i][j].texture = env->water;
                         }
                     }
                 }
@@ -246,19 +272,29 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
                             //TODO AFFICHER TEXT LOSING
                         case REGULAR:
                             game_play_move(env->board, i, j, GRASS);
-                            env->SDLboard[i][j].texture = env->sand;
                             break;
                         default:
                             break;
                         }
                     } else {
                         game_play_move(env->board, i, j, EMPTY);
-                        env->SDLboard[i][j].texture = env->water;
                     }
                 }
             }
         }
+    } else if (e->type == SDL_KEYDOWN) {
+        SDL_Keycode key = e->key.keysym.sym;
+        if (key == SDLK_z) {
+            game_undo(env->board);
+        } else if (key == SDLK_y) {
+            game_redo(env->board);
+        } else if (key == SDLK_s) {
+            game_save(env->board, "save.tnt");
+        } else if (key == SDLK_q || key == SDLK_ESCAPE) {
+            return true;
+        }
     }
+    refreshBoard(env);
     return game_is_over(env->board); /* don't quit */
 }
 
