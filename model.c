@@ -17,6 +17,7 @@
 #define SAND "sand.png"
 #define BACKGROUND "background.png"
 #define TABLE "table.png"
+#define OFFSETTEXTURE 45
 
 /* **************************************************************** */
 
@@ -109,9 +110,9 @@ void render(SDL_Window *win, SDL_Renderer *ren, Env *env) {
     for(int j = 0;j<game_nb_rows(env->board);j++){
       SDL_QueryTexture(env->SDLboard[i][j], NULL, NULL, &rect.w, &rect.h);
       SDL_RenderCopy(ren, env->SDLboard[i][j], NULL, &rect);
-      rect.x += 45;
+      rect.x += OFFSETTEXTURE;
     }
-    rect.y += 45;
+    rect.y += OFFSETTEXTURE;
     rect.x = xTable;
   }
 }
