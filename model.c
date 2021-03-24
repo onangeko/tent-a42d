@@ -31,7 +31,6 @@ typedef struct SDLSquare {
 } SDLSquare;
 
 struct Env_t {
-<<<<<<< HEAD
   SDLSquare** SDLboard;
   game board;
   SDL_Texture* monkey;
@@ -42,21 +41,10 @@ struct Env_t {
   SDL_Texture* table;
   SDL_Texture** nbTentsRow;
   SDL_Texture** nbTentsCol;
-=======
-    SDLSquare** SDLboard;
-    game board;
-    SDL_Texture* monkey;
-    SDL_Texture* sand;
-    SDL_Texture* water;
-    SDL_Texture* coco;
-    SDL_Texture* background;
-    SDL_Texture* table;
->>>>>>> f0777e1902ac64b5357938c660a2609b52b66779
 };
 
 /* **************************************************************** */
 
-<<<<<<< HEAD
 Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   Env *env = malloc(sizeof(struct Env_t));
 
@@ -73,11 +61,11 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
 
   SDL_Color color = {0, 0, 255, 255}; /* blue color in RGBA */
   TTF_Font* font = TTF_OpenFont(FONT, FONTSIZE);
+  if (!font) ERROR("TTF_OpenFont: %s\n", FONT);
 
   for(int i = 0; i<game_nb_cols(board);i++){
     env->SDLboard[i] = malloc(game_nb_rows(board) * sizeof(SDLSquare));
 
-    if (!font) ERROR("TTF_OpenFont: %s\n", FONT);
 
     char buffer[2];
     sprintf(buffer,"%d",game_get_expected_nb_tents_col(env->board,i));
@@ -104,8 +92,8 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
       }
 
     }
-    TTF_CloseFont(font);
   }
+  TTF_CloseFont(font);
 
   /* init background texture from PNG image */
   env->monkey = IMG_LoadTexture(ren, MONKEY);
@@ -132,101 +120,10 @@ Env *init(SDL_Window *win, SDL_Renderer *ren, int argc, char *argv[]) {
   if (!env->table) ERROR("IMG_LoadTexture: %s\n", TABLE);
 
   return env;
-=======
-Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
-{
-    Env* env = malloc(sizeof(struct Env_t));
-
-    game board = NULL;
-    if (argc < 2)
-        board = game_default();
-    else
-        board = game_load(argv[1]);
-    env->board = board;
-
-    env->SDLboard = malloc(game_nb_cols(board) * sizeof(SDLSquare*));
-    for (int i = 0; i < game_nb_cols(board); i++) {
-        env->SDLboard[i] = malloc(game_nb_rows(board) * sizeof(SDLSquare));
-        for (int j = 0; j < game_nb_rows(board); j++) {
-            if (game_get_square(board, i, j) == TREE) {
-                env->SDLboard[i][j].texture = IMG_LoadTexture(ren, COCO);
-                if (!env->SDLboard[i][j].texture)
-                    ERROR("IMG_LoadTexture: %s\n", COCO);
-            } else {
-                env->SDLboard[i][j].texture = IMG_LoadTexture(ren, WATER);
-                if (!env->SDLboard[i][j].texture)
-                    ERROR("IMG_LoadTexture: %s\n", WATER);
-            }
-        }
-    }
-
-    /* init background texture from PNG image */
-    env->monkey = IMG_LoadTexture(ren, MONKEY);
-    if (!env->monkey)
-        ERROR("IMG_LoadTexture: %s\n", MONKEY);
-
-    /* init background texture from PNG image */
-    env->sand = IMG_LoadTexture(ren, SAND);
-    if (!env->sand)
-        ERROR("IMG_LoadTexture: %s\n", SAND);
-
-    /* init background texture from PNG image */
-    env->coco = IMG_LoadTexture(ren, COCO);
-    if (!env->coco)
-        ERROR("IMG_LoadTexture: %s\n", COCO);
-
-    /* init background texture from PNG image */
-    env->water = IMG_LoadTexture(ren, WATER);
-    if (!env->water)
-        ERROR("IMG_LoadTexture: %s\n", WATER);
-
-    /* init background texture from PNG image */
-    env->background = IMG_LoadTexture(ren, BACKGROUND);
-    if (!env->background)
-        ERROR("IMG_LoadTexture: %s\n", BACKGROUND);
-
-    /* init background texture from PNG image */
-    env->table = IMG_LoadTexture(ren, TABLE);
-    if (!env->table)
-        ERROR("IMG_LoadTexture: %s\n", TABLE);
-
-    /* init background texture from PNG image */
-    env->monkey = IMG_LoadTexture(ren, MONKEY);
-    if (!env->monkey)
-        ERROR("IMG_LoadTexture: %s\n", MONKEY);
-
-    /* init background texture from PNG image */
-    env->sand = IMG_LoadTexture(ren, SAND);
-    if (!env->sand)
-        ERROR("IMG_LoadTexture: %s\n", SAND);
-
-    /* init background texture from PNG image */
-    env->coco = IMG_LoadTexture(ren, COCO);
-    if (!env->coco)
-        ERROR("IMG_LoadTexture: %s\n", COCO);
-
-    /* init background texture from PNG image */
-    env->water = IMG_LoadTexture(ren, WATER);
-    if (!env->water)
-        ERROR("IMG_LoadTexture: %s\n", WATER);
-
-    /* init background texture from PNG image */
-    env->background = IMG_LoadTexture(ren, BACKGROUND);
-    if (!env->background)
-        ERROR("IMG_LoadTexture: %s\n", BACKGROUND);
-
-    /* init background texture from PNG image */
-    env->table = IMG_LoadTexture(ren, TABLE);
-    if (!env->table)
-        ERROR("IMG_LoadTexture: %s\n", TABLE);
-
-    return env;
->>>>>>> f0777e1902ac64b5357938c660a2609b52b66779
 }
 
 /* **************************************************************** */
 
-<<<<<<< HEAD
 void render(SDL_Window *win, SDL_Renderer *ren, Env *env) { 
   SDL_Rect rect;
 
@@ -258,54 +155,18 @@ void render(SDL_Window *win, SDL_Renderer *ren, Env *env) {
       rect.x += OFFSETTEXTURE;
       if(j==game_nb_rows(env->board)){
         rect.x += OFFSETTEXTURE;
-        //SDL_QueryTexture(env->nbTentsRow[j], NULL, NULL, &rect.w, &rect.h);
-        //SDL_RenderCopy(ren, env->nbTentsRow[j], NULL, &rect);
+        SDL_QueryTexture(env->nbTentsRow[j], NULL, NULL, &rect.w, &rect.h);
+        SDL_RenderCopy(ren, env->nbTentsRow[j], NULL, &rect);
       }
     }
     rect.y += OFFSETTEXTURE;
     rect.x = xTable;
   }
   for(int i=0;i<game_nb_cols(env->board);i++){
-    //SDL_QueryTexture(env->nbTentsCol[i], NULL, NULL, &rect.w, &rect.h);
-    //SDL_RenderCopy(ren, env->nbTentsCol[i], NULL, &rect);
+    SDL_QueryTexture(env->nbTentsCol[i], NULL, NULL, &rect.w, &rect.h);
+    SDL_RenderCopy(ren, env->nbTentsCol[i], NULL, &rect);
     rect.x += OFFSETTEXTURE;
   }
-=======
-void render(SDL_Window* win, SDL_Renderer* ren, Env* env)
-{
-    SDL_Rect rect;
-
-    /* get current window size */
-    int w, h;
-    SDL_GetWindowSize(win, &w, &h);
-
-    /* render background texture */
-    SDL_RenderCopy(ren, env->background, NULL, NULL); /* stretch it */
-
-    /* render table texture */
-    SDL_QueryTexture(env->table, NULL, NULL, &rect.w, &rect.h);
-    rect.x = w / 2 - rect.w / 2;
-    rect.y = h / 2 - rect.h / 2;
-    SDL_RenderCopy(ren, env->table, NULL, &rect);
-
-    /* render the board */
-    int xTable = rect.x;
-    for (int i = 0; i < game_nb_cols(env->board); i++) {
-        for (int j = 0; j < game_nb_rows(env->board); j++) {
-            SDL_Rect square;
-            square.h = TEXTURESIZE;
-            square.w = TEXTURESIZE;
-            square.x = rect.x;
-            square.y = rect.y;
-            env->SDLboard[i][j].hitBox = square;
-            SDL_QueryTexture(env->SDLboard[i][j].texture, NULL, NULL, &rect.w, &rect.h);
-            SDL_RenderCopy(ren, env->SDLboard[i][j].texture, NULL, &rect);
-            rect.x += OFFSETTEXTURE;
-        }
-        rect.y += OFFSETTEXTURE;
-        rect.x = xTable;
-    }
->>>>>>> f0777e1902ac64b5357938c660a2609b52b66779
 }
 
 /* **************************************************************** */
