@@ -166,7 +166,6 @@ void render(SDL_Window* win, SDL_Renderer* ren, Env* env)
             SDL_RenderCopy(ren, env->SDLboard[i][j].texture, NULL, &rect);
             rect.x += OFFSETTEXTURE;
             if (j == game_nb_rows(env->board) - 1) {
-                rect.x += OFFSETTEXTURE;
                 SDL_QueryTexture(env->nbTentsRow[i], NULL, NULL, &rect.w, &rect.h);
                 SDL_RenderCopy(ren, env->nbTentsRow[i], NULL, &rect);
             }
@@ -180,8 +179,8 @@ void render(SDL_Window* win, SDL_Renderer* ren, Env* env)
         SDL_RenderCopy(ren, env->nbTentsCol[i], NULL, &rect);
         rect.x += OFFSETTEXTURE;
     }
-    rect.x = 150;
-    rect.y = 150;
+    rect.x = xTable;
+    rect.y = 20;
     rect.w = 300;
     rect.h = 300;
     SDL_QueryTexture(env->displayText, NULL, NULL, &rect.w, &rect.h);
@@ -323,6 +322,10 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
         }
     }
     refreshBoard(env);
+    if(game_is_over(env->board)){
+        displayMessage(env,ren,"Gagne! Appuyez sur 'Q' ou 'Esc' pour quitter");
+        return false;
+    }
     return false; /* don't quit */
 }
 
