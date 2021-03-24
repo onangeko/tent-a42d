@@ -40,7 +40,6 @@ struct Env_t {
     SDL_Texture* coco;
     SDL_Texture* background;
     SDL_Texture* table;
-    SDL_Texture* errorText;
     SDL_Texture* displayText;
     SDL_Texture** nbTentsRow;
     SDL_Texture** nbTentsCol;
@@ -51,40 +50,39 @@ struct Env_t {
 Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
 {
     Env* env = malloc(sizeof(struct Env_t));
-
+    //Define the abstract board
     game board = NULL;
     if (argc < 2)
         board = game_default();
     else
         board = game_load(argv[1]);
     env->board = board;
-
+    //Initialise the expected number of tents
     env->nbTentsRow = malloc(game_nb_rows(board) * sizeof(SDL_Texture*));
     env->nbTentsCol = malloc(game_nb_cols(board) * sizeof(SDL_Texture*));
+    //Initialise the graphic board
     env->SDLboard = malloc(game_nb_cols(board) * sizeof(SDLSquare*));
 
     SDL_Color color = { 0, 0, 255, 255 }; /* blue color in RGBA */
     TTF_Font* font = TTF_OpenFont(FONT, FONTSIZE);
     if (!font)
         ERROR("TTF_OpenFont: %s\n", FONT);
-
+    //Initialise squares
     for (int i = 0; i < game_nb_cols(board); i++) {
         env->SDLboard[i] = malloc(game_nb_rows(board) * sizeof(SDLSquare));
-
+        //Convert integer into str
         char buffer[2];
+        //For cols
         sprintf(buffer, "%d", game_get_expected_nb_tents_col(env->board, i));
-
-        SDL_Surface* surf = TTF_RenderText_Blended(font, buffer, color); // blended rendering for ultra nice text
+        SDL_Surface* surf = TTF_RenderText_Blended(font, buffer, color); 
         env->nbTentsCol[i] = SDL_CreateTextureFromSurface(ren, surf);
         SDL_FreeSurface(surf);
-
+        //For rows
         sprintf(buffer, "%d", game_get_expected_nb_tents_row(env->board, i));
-
-        surf = TTF_RenderText_Blended(font, buffer, color); // blended rendering for ultra nice text
+        surf = TTF_RenderText_Blended(font, buffer, color); 
         env->nbTentsRow[i] = SDL_CreateTextureFromSurface(ren, surf);
         SDL_FreeSurface(surf);
         for (int j = 0; j < game_nb_rows(board); j++) {
-
             if (game_get_square(board, i, j) == TREE) {
                 env->SDLboard[i][j].texture = IMG_LoadTexture(ren, COCO);
                 if (!env->SDLboard[i][j].texture)
@@ -96,14 +94,8 @@ Env* init(SDL_Window* win, SDL_Renderer* ren, int argc, char* argv[])
             }
         }
     }
-
-    SDL_Color color2 = { 255, 0, 0, 255 }; /* blue color in RGBA */
-    SDL_Surface* surf2 = TTF_RenderText_Blended(font, "Perdu !", color2); // blended rendering for ultra nice text
-    env->errorText = SDL_CreateTextureFromSurface(ren, surf2);
-    SDL_FreeSurface(surf2);
-
-
-    SDL_Surface* surf = TTF_RenderText_Blended(font, "", color2);
+    //Initialise displayText field
+    SDL_Surface* surf = TTF_RenderText_Blended(font, "", color);
     env->displayText = SDL_CreateTextureFromSurface(ren, surf);
     SDL_FreeSurface(surf);
 
@@ -182,6 +174,7 @@ void render(SDL_Window* win, SDL_Renderer* ren, Env* env)
         rect.y += OFFSETTEXTURE;
         rect.x = xTable;
     }
+    //Initialise the last row
     for (int i = 0; i < game_nb_cols(env->board); i++) {
         SDL_QueryTexture(env->nbTentsCol[i], NULL, NULL, &rect.w, &rect.h);
         SDL_RenderCopy(ren, env->nbTentsCol[i], NULL, &rect);
