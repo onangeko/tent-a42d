@@ -1,4 +1,5 @@
 *
+!*.ttf
 !*.png
 !game.c
 !*.h
