@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define MONKEY "monkey.png"
 #define WATER "water.png"
@@ -279,13 +280,23 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
         } else if (key == SDLK_y) {
             game_redo(env->board);
         } else if (key == SDLK_s) {
-            game_save(env->board, "save.tnt");
+            char text[150];
+            time_t now = time(NULL);
+            struct tm* t = localtime(&now);
+            sprintf(text, "%02d-%02d-%04d-%02d-%02d.tnt", t->tm_mday, t->tm_mon + 1,
+                t->tm_year + 1900, t->tm_hour, t->tm_min);
+            printf(text);
+            game_save(env->board, text);
         } else if (key == SDLK_q || key == SDLK_ESCAPE) {
             return true;
+        } else if (key == SDLK_r) {
+            game_restart(env->board);
+        } else if (key == SDLK_t) {
+            game_solve(env->board);
         }
     }
     refreshBoard(env);
-    return game_is_over(env->board); /* don't quit */
+    return false; /* don't quit */
 }
 
 /* **************************************************************** */
