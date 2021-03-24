@@ -323,7 +323,7 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
     }
     refreshBoard(env);
     if (game_is_over(env->board)) {
-        displayMessage(env, ren, "Gagne! Appuyez sur 'Q' ou 'Esc' pour quitter");
+        displayMessage(env, ren, "Gagne!+ Appuyez sur 'Q' ou 'Esc' pour quitter");
         return false;
     }
     return false; /* don't quit */
