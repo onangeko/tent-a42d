@@ -192,23 +192,26 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
     }
 
     if (e->type == SDL_MOUSEBUTTONDOWN) {
-        printf("Click in %d / %d\n", e->motion.x, e->motion.y);
-        printf("x=%d y=%d", env->SDLboard[0][0].hitBox.x, env->SDLboard[0][0].hitBox.y);
+        //IF LEFT CLICK
         if (e->button.button == SDL_BUTTON_LEFT) {
             for (int i = 0; i < game_nb_rows(env->board); i++) {
                 for (int j = 0; j < game_nb_cols(env->board); j++) {
+                    //If the mouse is inside the square at position i,j▬
                     if (e->motion.x >= env->SDLboard[i][j].hitBox.x
                         && e->motion.x <= env->SDLboard[i][j].hitBox.x + env->SDLboard[i][j].hitBox.w
                         && e->motion.y >= env->SDLboard[i][j].hitBox.y
                         && e->motion.y <= env->SDLboard[i][j].hitBox.y + env->SDLboard[i][j].hitBox.h) {
+                        //If there is not already a Tent on (i,j)
                         if (game_get_square(env->board, i, j) != TENT) {
-                            int check_move = game_check_move(env->board, i, j, TENT);
-                            if (check_move != ILLEGAL) {
-                                if (check_move != LOSING) {
-                                    //TODO AFFICHER TEXT LOSING
-                                }
+                            switch (game_check_move(env->board, i, j, TENT)) {
+                            case LOSING:
+                                //TODO AFFICHER TEXT LOSING
+                            case REGULAR:
                                 game_play_move(env->board, i, j, TENT);
                                 env->SDLboard[i][j].texture = env->monkey;
+                                break;
+                            default:
+                                break;
                             }
                         } else {
                             game_play_move(env->board, i, j, EMPTY);
@@ -218,22 +221,26 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
                 }
             }
         }
+        //IF RIGHT CLICK
     } else if (e->button.button == SDL_BUTTON_RIGHT) {
         for (int i = 0; i < game_nb_rows(env->board); i++) {
             for (int j = 0; j < game_nb_cols(env->board); j++) {
+                //If the mouse is inside the square at position i,j
                 if (e->motion.x >= env->SDLboard[i][j].hitBox.x
                     && e->motion.x <= env->SDLboard[i][j].hitBox.x + env->SDLboard[i][j].hitBox.w
                     && e->motion.y >= env->SDLboard[i][j].hitBox.y
                     && e->motion.y <= env->SDLboard[i][j].hitBox.y + env->SDLboard[i][j].hitBox.h) {
+                    //If there is not already a Grass on (i,j)
                     if (game_get_square(env->board, i, j) != GRASS) {
-                        int check_move = game_check_move(env->board, i, j, GRASS);
-                        printf("%d", check_move);
-                        if (check_move != ILLEGAL) {
-                            if (check_move != LOSING) {
-                                //TODO AFFICHER TEXT LOSING
-                            }
+                        switch (game_check_move(env->board, i, j, GRASS)) {
+                        case LOSING:
+                            //TODO AFFICHER TEXT LOSING
+                        case REGULAR:
                             game_play_move(env->board, i, j, GRASS);
                             env->SDLboard[i][j].texture = env->sand;
+                            break;
+                        default:
+                            break;
                         }
                     } else {
                         game_play_move(env->board, i, j, EMPTY);
