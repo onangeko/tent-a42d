@@ -41,6 +41,7 @@ struct Env_t {
     SDL_Texture* background;
     SDL_Texture* table;
     SDL_Texture* errorText;
+    SDL_Texture* displayText;
     SDL_Texture** nbTentsRow;
     SDL_Texture** nbTentsCol;
 };
@@ -215,8 +216,23 @@ void refreshBoard(Env* env)
     }
 }
 
+void displayMessage(SDL_Renderer* ren, Env* env, char* msg)
+{
+    SDL_Color color = { 255, 0, 0, 255 }; /* blue color in RGBA */
+    TTF_Font* font = TTF_OpenFont(FONT, FONTSIZE);
+    SDL_Surface* surf = TTF_RenderText_Blended(font, msg, color);
+    env->displayText = SDL_CreateTextureFromSurface(ren, surf);
+    SDL_FreeSurface(surf);
+    SDL_Rect rect;
+    rect.x = 150;
+    rect.y = 150;
+    SDL_QueryTexture(env->displayText, NULL, NULL, &rect.x, &rect.y);
+    SDL_RenderCopy(ren, env->displayText, NULL, &rect);
+}
+
 bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
 {
+
     int w, h;
     SDL_GetWindowSize(win, &w, &h);
 
@@ -239,7 +255,6 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
                         if (game_get_square(env->board, i, j) != TENT) {
                             switch (game_check_move(env->board, i, j, TENT)) {
                             case LOSING:
-                                //TODO AFFICHER TEXT LOSING
                             case REGULAR:
                                 game_play_move(env->board, i, j, TENT);
                                 break;
@@ -298,6 +313,8 @@ bool process(SDL_Window* win, SDL_Renderer* ren, Env* env, SDL_Event* e)
             game_restart(env->board);
         } else if (key == SDLK_t) {
             game_solve(env->board);
+        } else if (key == SDLK_h) {
+            displayMessage(ren, env, "Losing Move !");
         }
     }
     refreshBoard(env);
