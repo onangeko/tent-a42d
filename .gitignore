@@ -8,3 +8,9 @@
 !README.md
 !.gitignore
 !.clang-format
+!/android
+android/bin/*
+android/jni/SDL*
+android/libs/*
+android/obj/*
+android/gen/*
