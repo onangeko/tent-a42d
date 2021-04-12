@@ -1,1 +1,1 @@
-game_aux.c
+../../../game_aux.c

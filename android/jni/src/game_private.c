@@ -1,1 +1,1 @@
-game_private.c
+../../../game_private.c
