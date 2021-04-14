@@ -14,7 +14,7 @@
   <!-- Allow writing to external storage -->
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   
-  <application android:label="SDL2 Demo"
+  <application android:label="Coco Frenzy"
                android:icon="@drawable/icon"
                android:allowBackup="true"
                android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
