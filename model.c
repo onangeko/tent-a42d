@@ -4,7 +4,7 @@
 #include "game_aux.h"
 #include "game_ext.h"
 #include "game_tools.h"
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <SDL_image.h> // required to load transparent texture from PNG
 #include <SDL_ttf.h> // required to use TTF fonts
 #include <stdbool.h>
